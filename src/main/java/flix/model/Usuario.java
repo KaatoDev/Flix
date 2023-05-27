@@ -1,25 +1,34 @@
 package flix.model;
 
+import flix.enums.Sexo;
+
 import java.sql.Date;
 
 public class Usuario {
     private final int id, cpf;
-    private String nome, email, senha;
+    private String nome, sobrenome, email, senha;
     private Date nascimento;
+    private Sexo sexo;
     private Perfil perfil1, perfil2, perfil3;
 
-    public Usuario(int id, String nome, int cpf, String email, String senha, Date nascimento, Perfil perfil1, Perfil perfil2, Perfil perfil3) {
+    public Usuario(int id, int cpf, String nome, String sobrenome, String email, String senha, Date nascimento, Sexo sexo) {
         this.id = id;
-        this.nome = nome;
         this.cpf = cpf;
+        this.nome = nome;
+        this.sobrenome = sobrenome;
         this.email = email;
         this.senha = senha;
         this.nascimento = nascimento;
-        this.perfil1 = perfil1;
-        this.perfil2 = perfil2;
-        this.perfil3 = perfil3;
+        this.sexo = sexo;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public int getCpf() {
+        return cpf;
+    }
 
     public String getNome() {
         return nome;
@@ -29,8 +38,12 @@ public class Usuario {
         this.nome = nome;
     }
 
-    public int getCpf() {
-        return cpf;
+    public String getSobrenome() {
+        return sobrenome;
+    }
+
+    public void setSobrenome(String sobrenome) {
+        this.sobrenome = sobrenome;
     }
 
     public String getEmail() {
@@ -57,32 +70,35 @@ public class Usuario {
         this.nascimento = nascimento;
     }
 
-    public int getId() {
-        return id;
+    public Sexo getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(Sexo sexo) {
+        this.sexo = sexo;
     }
 
     public Perfil getPerfil1() {
         return perfil1;
     }
 
-    public Perfil getPerfil2() {
-        return perfil2;
-    }
-
-    public Perfil getPerfil3() {
-        return perfil3;
-    }
-
     public void setPerfil1(Perfil perfil1) {
         this.perfil1 = perfil1;
+    }
+
+    public Perfil getPerfil2() {
+        return perfil2;
     }
 
     public void setPerfil2(Perfil perfil2) {
         this.perfil2 = perfil2;
     }
 
+    public Perfil getPerfil3() {
+        return perfil3;
+    }
+
     public void setPerfil3(Perfil perfil3) {
         this.perfil3 = perfil3;
     }
-    
 }
