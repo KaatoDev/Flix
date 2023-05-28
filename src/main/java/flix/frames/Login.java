@@ -4,6 +4,12 @@
  */
 package flix.frames;
 
+import flix.Main;
+
+import javax.swing.*;
+
+import static flix.util.DbManager.getUsuario;
+
 /**
  *
  * @author Gago3
@@ -46,16 +52,16 @@ public class Login extends javax.swing.JFrame {
         jPanel1.setMinimumSize(new java.awt.Dimension(300, 500));
         jPanel1.setPreferredSize(new java.awt.Dimension(300, 500));
 
-        loginF.setText("login");
-        loginF.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loginFActionPerformed(evt);
-            }
-        });
+        loginF.setText("admin");
 
-        passF.setText("pass");
+        passF.setText("admin");
 
         loginB.setText("Login");
+        loginB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginBActionPerformed(evt);
+            }
+        });
 
         recPassB.setText("Esqueci a senha");
         recPassB.setBorder(null);
@@ -97,9 +103,22 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void loginFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginFActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_loginFActionPerformed
+    private void loginBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBActionPerformed
+        String nome = loginF.getText();
+        String senha = new String(passF.getPassword());
+        try {
+            Main.usuario = getUsuario(nome, senha);
+            System.out.println("Logado com sucesso!");
+            this.dispose();
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                public void run() {
+                    new CadFilme().setVisible(true);
+                }
+            });
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Usuário ou senha inválida!");
+        }
+    }//GEN-LAST:event_loginBActionPerformed
 
     /**
      * @param args the command line arguments

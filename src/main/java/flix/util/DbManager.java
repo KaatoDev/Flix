@@ -11,15 +11,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class DbManager {
-    public static boolean exists(Usuario user) throws Exception {
+    public static boolean exists(String user) {
         String sql = "select nome from usuarios where nome=?";
+        if (user.contains("@"))
+            sql = "select email from usuarios where email=?";
         try (Connection c = Database.connect();
              PreparedStatement ps = c.prepareStatement(sql)) {
-            ps.setString(1, user.getNome());
-            ps.setString(2, user.getSenha());
+            ps.setString(1, user);
             try (ResultSet rs = ps.executeQuery()) {
                 return rs.next();
             }
+        } catch (Exception e) {
+            return false;
         }
     }
 
@@ -68,27 +71,34 @@ public class DbManager {
         }
     }
 
-    public static Usuario getUsuario(String email, String senha) {
-        String sql = "select * from usuarios where email=? and senha=?";
-        try (Connection c = Database.connect();
-             PreparedStatement ps = c.prepareStatement(sql)) {
-            ps.setString(1, email);
-            ps.setString(2, senha);
-            try (ResultSet rs = ps.executeQuery()) {
-                int id = rs.getInt("id");
-                int cpf = rs.getInt("cpf");
-                String nome = rs.getString("nome");
-                String sobrenome = rs.getString("sobrenome");
-                Date nascimento = rs.getDate("nascimento");
-                Sexo sexo = Sexo.NAO_BINARIO;
-                for (Sexo s : Sexo.values())
-                    if (s.id() == rs.getInt("sexo"))
-                        sexo = s;
-                return new Usuario(id, cpf, nome, sobrenome, email, senha, nascimento, sexo);
+    public static Usuario getUsuario(String user, String senha) throws Exception {
+        String sql = "select * from usuarios where nome=?";
+        if (exists(user)) {
+            try (Connection c = Database.connect();
+                 PreparedStatement ps = c.prepareStatement(sql)) {
+                ps.setString(1, user);
+                try (ResultSet rs = ps.executeQuery()) {
+                    rs.next();
+                    String pass = rs.getString("senha");
+                    System.out.println("asdasd2");
+                    if (!pass.equals(senha)) {
+                        System.out.println("asdasd");
+                        return null;
+                    }
+                    int id = rs.getInt("id");
+                    int cpf = rs.getInt("cpf");
+                    String nome = rs.getString("nome");
+                    String email = rs.getString("email");
+                    String sobrenome = rs.getString("sobrenome");
+                    Date nascimento = rs.getDate("nascimento");
+                    Sexo sexo = Sexo.NAO_BINARIO;
+                    for (Sexo s : Sexo.values())
+                        if (s.id() == rs.getInt("sexo"))
+                            sexo = s;
+                    return new Usuario(id, cpf, nome, sobrenome, email, pass, nascimento, sexo);
+                }
             }
-        } catch (Exception e) {
-            return null;
-        }
+        } return null;
     }
 
     public static boolean registrarFilme(Usuario user, String nome, String sinopse, String capa, String icone, int ano, double nota, Classificacao classificacao, boolean kid, Genero genero1, Genero genero2) {
