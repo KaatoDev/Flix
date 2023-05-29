@@ -13,7 +13,7 @@ public class Main {
         System.out.println("Inicializando aplicação...");
         iniciarDatabase();
 
-        java.awt.EventQueue.invokeLater(() -> new Login().setVisible(true));
+        new Login().setVisible(true);
     }
 
         public static void iniciarDatabase() {

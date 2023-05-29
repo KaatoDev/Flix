@@ -37,6 +37,7 @@ public class Login extends javax.swing.JFrame {
         passF = new javax.swing.JPasswordField();
         loginB = new javax.swing.JButton();
         recPassB = new javax.swing.JButton();
+        criarB = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1280, 720));
@@ -53,6 +54,11 @@ public class Login extends javax.swing.JFrame {
         jPanel1.setPreferredSize(new java.awt.Dimension(300, 500));
 
         loginF.setText("admin");
+        loginF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginFActionPerformed(evt);
+            }
+        });
 
         passF.setText("admin");
 
@@ -66,36 +72,47 @@ public class Login extends javax.swing.JFrame {
         recPassB.setText("Esqueci a senha");
         recPassB.setBorder(null);
 
+        criarB.setText("Criar conta");
+        criarB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                criarBActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(76, 76, 76)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(loginF, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(passF, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(100, 100, 100)
+                        .addGap(60, 60, 60)
+                        .addComponent(recPassB))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
                         .addComponent(loginB))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(67, 67, 67)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(recPassB)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(loginF, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
-                                .addComponent(passF)))))
-                .addContainerGap(91, Short.MAX_VALUE))
+                        .addGap(30, 30, 30)
+                        .addComponent(criarB)))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(174, 174, 174)
+                .addGap(136, 136, 136)
                 .addComponent(loginF, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addGap(29, 29, 29)
                 .addComponent(passF, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(13, 13, 13)
                 .addComponent(recPassB)
-                .addGap(26, 26, 26)
+                .addGap(24, 24, 24)
                 .addComponent(loginB)
-                .addContainerGap())
+                .addGap(7, 7, 7)
+                .addComponent(criarB)
+                .addContainerGap(147, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, new java.awt.GridBagConstraints());
@@ -110,15 +127,21 @@ public class Login extends javax.swing.JFrame {
             Main.usuario = getUsuario(nome, senha);
             System.out.println("Logado com sucesso!");
             this.dispose();
-            java.awt.EventQueue.invokeLater(new Runnable() {
-                public void run() {
-                    new CadFilme().setVisible(true);
-                }
-            });
+            new CadFilme().setVisible(true);
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Usuário ou senha inválida!");
         }
     }//GEN-LAST:event_loginBActionPerformed
+
+    private void loginFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_loginFActionPerformed
+
+    private void criarBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarBActionPerformed
+        this.dispose();
+        new CadUser().setVisible(true);
+    }//GEN-LAST:event_criarBActionPerformed
 
     /**
      * @param args the command line arguments
@@ -156,6 +179,7 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton criarB;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton loginB;
     private javax.swing.JTextField loginF;

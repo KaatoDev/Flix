@@ -5,10 +5,12 @@ import flix.enums.Genero;
 import flix.enums.Sexo;
 import flix.model.Usuario;
 
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
 
 public class DbManager {
     public static boolean exists(String user) {
@@ -26,47 +28,56 @@ public class DbManager {
         }
     }
 
-    public static boolean registrarUsusario(String nome, int cpf, String email, String senha, Date nascimento, Sexo sexo, boolean kid, int icon, Genero genFav1, Genero genFav2) {
-        if (registrarPerfil(nome, cpf, kid, icon, genFav1, genFav2)) {
-            String sqlfind = "select * from perfis where nome=? and cpf=:?";
-            String sqluser = "insert into usuarios values(default, ?, ?, ?, ?, ?, ?, ?, null, null)";
+    public static boolean registrarUsuario(String nome, String sobrenome, long cpf, String email, String senha, LocalDate nascimento, Sexo sexo, Genero genFav1, Genero genFav2) {
+        System.out.println("bbbbbb");
+        if (registrarPerfil(nome, cpf, false, 1, genFav1, genFav2)) {
+            String sqlfind = "select * from perfis where display=? and cpf=?";
+            String sqluser = "insert into usuarios values(default, ?, ?, ?, ?, ?, ?, ?, ?, null, null)";
+            System.out.println("cccccccc");
             try (Connection c = Database.connect();
                  PreparedStatement ps = c.prepareStatement(sqlfind);
                  PreparedStatement ps2 = c.prepareStatement(sqluser)) {
+                System.out.println("ddddddd");
                 ps.setString(1, nome);
-                ps.setInt(2, cpf);
+                ps.setLong(2, cpf);
                 ResultSet rs = ps.executeQuery();
-
+                rs.next();
                 ps2.setString(1, nome);
-                ps2.setInt(2, cpf);
-                ps2.setString(3, email);
-                ps2.setString(4, senha);
-                ps2.setDate(5, nascimento);
-                ps2.setInt(6, sexo.id());
-                ps2.setInt(7, rs.getInt("id"));
+                ps2.setString(2, sobrenome);
+                ps2.setLong(3, cpf);
+                ps2.setString(4, email);
+                ps2.setString(5, senha);
+                ps2.setDate(6, Date.valueOf(nascimento));
+                ps2.setInt(7, sexo.id());
+                ps2.setInt(8, rs.getInt("id"));
 
-                ps2.executeQuery();
+                ps2.execute();
+                JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
                 return true;
             } catch (Exception e) {
+                e.printStackTrace();
                 return false;
             }
         } else return false;
     }
 
-    public static boolean registrarPerfil(String nome, int cpf, boolean kid, int icon, Genero genFav1, Genero genFav2) {
+    public static boolean registrarPerfil(String nome, long cpf, boolean kid, int icon, Genero genFav1, Genero genFav2) {
+        System.out.println("eeeeeee");
         String sqlprofile = "insert into perfis values(default, ?, ?, ?, ?, ?, ?)";
         try (Connection c = Database.connect();
              PreparedStatement ps1 = c.prepareStatement(sqlprofile)) {
+            System.out.println("fffffff");
 
             ps1.setString(1, nome);
-            ps1.setInt(2, cpf);
+            ps1.setLong(2, cpf);
             ps1.setBoolean(3, kid);
             ps1.setInt(4, icon);
             ps1.setInt(5, genFav1.id());
             ps1.setInt(6, genFav2.id());
-            ps1.executeQuery();
+            ps1.execute();
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
@@ -101,11 +112,10 @@ public class DbManager {
         } return null;
     }
 
-    public static boolean registrarFilme(Usuario user, String nome, String sinopse, String capa, String icone, int ano, double nota, Classificacao classificacao, boolean kid, Genero genero1, Genero genero2) {
-        String sql;
-        if (genero2 == null)
+    public static boolean registrarFilme(Usuario user, String nome, String sinopse, String capa, String icone, int ano, double nota, String classificacao, boolean kid, Genero genero1, Genero genero2) {
+        String sql = "insert into filmes values(default, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        if (genero1 == genero2)
             sql = "insert into filmes values(default, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, null)";
-        else sql = "insert into filmes values(default, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection c = Database.connect();
              PreparedStatement ps = c.prepareStatement(sql)) {
 
@@ -116,14 +126,14 @@ public class DbManager {
             ps.setString(5, icone);
             ps.setInt(6, ano);
             ps.setDouble(7, nota);
-            ps.setInt(8, classificacao.id());
+            ps.setInt(8, Classificacao.valueOf(classificacao).id());
             ps.setBoolean(9, kid);
             ps.setInt(10, genero1.id());
-            if (genero2 != null) ps.setInt(11, genero2.id());
-
-            ps.executeQuery();
+            if (genero1 != genero2) ps.setInt(11, genero2.id());
+            ps.execute();
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
