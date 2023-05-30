@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Database {
-    private static final String host = "35.247.235.64",
+    private static final String host = "lo",
             porta = "3306",
             user = "admin",
             pass = "admin",
