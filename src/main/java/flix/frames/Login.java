@@ -4,11 +4,10 @@
  */
 package flix.frames;
 
-import flix.Main;
-
 import javax.swing.*;
 
-import static flix.util.DbManager.getUsuario;
+import static flix.Main.cadUser;
+import static flix.util.DbManager.*;
 
 /**
  *
@@ -123,16 +122,17 @@ public class Login extends javax.swing.JFrame {
     private void loginBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBActionPerformed
         String nome = loginF.getText();
         String senha = new String(passF.getPassword());
-        try {
-            Main.usuario = getUsuario(nome, senha);
-            System.out.println("Logado com sucesso!");
-            this.dispose();
-            new CadFilme().setVisible(true);
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Usuário ou senha inválida!");
-        }
-    }//GEN-LAST:event_loginBActionPerformed
+        if (!exists(nome)) JOptionPane.showMessageDialog(null, "Usuário não existe.");
+        else if (!logar(nome, senha)) JOptionPane.showMessageDialog(null, "Senha inválida.");
+        else try {
+                cadUser(nome, senha);
+                System.out.println("Logado com sucesso!");
+                this.dispose();
+                new CadFilme().setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Usuário ou senha inválida!");
+            }
+    }
 
     private void loginFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginFActionPerformed
         // TODO add your handling code here:

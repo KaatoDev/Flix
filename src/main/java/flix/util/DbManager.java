@@ -2,6 +2,7 @@ package flix.util;
 
 import flix.enums.Classificacao;
 import flix.enums.Genero;
+import flix.enums.Ordem;
 import flix.enums.Sexo;
 import flix.model.Usuario;
 
@@ -11,8 +12,26 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
+import java.util.Arrays;
 
 public class DbManager {
+    public static boolean isAdmin(Usuario user) {
+        String sql = "select nome from usuarios where nome=?";
+        try (Connection c = Database.connect();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setString(1, user.getNome());
+            try (ResultSet rs = ps.executeQuery()) {
+                return Arrays.equals(rs.getString("email").getBytes(), user.getEmail().getBytes()) &&
+                    Arrays.equals(rs.getString("nome").getBytes(), user.getNome().getBytes()) &&
+                    Arrays.equals(rs.getString("senha").getBytes(), user.getSenha().getBytes()) &&
+                    Integer.parseInt(rs.getString("id")) == user.getId();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
     public static boolean exists(String user) {
         String sql = "select nome from usuarios where nome=?";
         if (user.contains("@"))
@@ -22,6 +41,70 @@ public class DbManager {
             ps.setString(1, user);
             try (ResultSet rs = ps.executeQuery()) {
                 return rs.next();
+            }
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    public static boolean catalogoGeral(Ordem ordem) {
+        String sql = "select * from filmes";
+        switch (ordem) {
+            case NOME -> sql = "select * from filmes order by nome";
+            case NOME_DE -> sql = "select * from filmes order by nome";
+            case NOTA_IMDB -> sql = "select * from filmes order by notaimdb";
+            case NOTA_IMDB_DE -> sql = "select * from filmes order by notaimdb";
+            case NOTA_USER -> sql = "select * from filmes order by nota";
+            case NOTA_USER_DE -> sql = "select * from filmes order by nota";
+            case ANO -> sql = "select * from filmes order by ano";
+            case ANO_DE -> sql = "select * from filmes order by ano";
+        }
+        try (Connection c = Database.connect();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setString(1, user);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    public static boolean usuarios() {
+        String sql = "select * from usuarios";
+        try (Connection c = Database.connect();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setString(1, user);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    public static boolean deletarUsuario(Usuario user) {
+        if (logar())
+        String sql = "";
+        try (Connection c = Database.connect();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setString(1, user);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    public static boolean logar(String user, String senha) {
+        String sql = "select * from usuarios where nome=?";
+        if (user.contains("@"))
+            sql = "select * from usuarios where email=?";
+        try (Connection c = Database.connect();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setString(1, user);
+            try (ResultSet rs = ps.executeQuery()) {
+                rs.next();
+                System.out.println(senha);
+                System.out.println(rs.getString("senha"));
+                return Arrays.equals(senha.getBytes(), rs.getString("senha").getBytes());
             }
         } catch (Exception e) {
             return false;

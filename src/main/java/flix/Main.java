@@ -6,6 +6,8 @@ import flix.util.Database;
 
 import java.sql.Connection;
 
+import static flix.util.DbManager.getUsuario;
+
 public class Main {
     public static Connection db;
     public static Usuario usuario;
@@ -21,6 +23,13 @@ public class Main {
         else {
             System.out.println("Banco de dados conectada com sucesso!");
             db = Database.connect();
+        }
+    }
+    public static void cadUser(String nome, String senha) {
+        try {
+            usuario = getUsuario(nome, senha);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }
