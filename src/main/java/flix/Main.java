@@ -1,11 +1,14 @@
 package flix;
 
 import flix.frames.Login;
+import flix.model.Filme;
 import flix.model.Usuario;
 import flix.util.Database;
 
 import java.sql.Connection;
+import java.util.List;
 
+import static flix.util.DbManager.genFilmes;
 import static flix.util.DbManager.getUsuario;
 
 public class Main {
@@ -15,6 +18,7 @@ public class Main {
         System.out.println("Inicializando aplicação...");
         iniciarDatabase();
 
+        int s = genFilmes().size();
         new Login().setVisible(true);
     }
 

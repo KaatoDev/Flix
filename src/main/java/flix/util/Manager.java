@@ -41,12 +41,17 @@ public class Manager {
             a[i][2] = s.getAno();
             a[i][3] = s.getNota_IMDB();
             a[i][4] = s.getNota();
-            a[i][5] = s.getAvaliacoes();
-            a[i][6] = s.getGenero1();
-            a[i][7] = s.getGenero2();
-            a[i][8] = s.getClassificacao();
-            a[i][9] = s.isKid();
-            a[i][10] = s.getUsuario();
+            a[i][5] = s.getGenero1();
+            a[i][6] = s.getGenero2();
+            a[i][7] = s.getClassificacao();
+            a[i][8] = s.isKid();
+            a[i][9] = s.getUsuario();
+            /*jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                    getFilmes(),
+                    new String [] {
+                            "Nome", "Sinopse", "Ano", "Nota IMDB", "Nota público", "Gênero", "Subgênero", "Classificação", "Infantil", "Adicionado por"
+                    }
+            ));*/
         }
         return a;
     }

@@ -1,7 +1,7 @@
 package flix.enums;
 
 public enum GeneroFilme {
-    ADMIN(1), ACAO(2), COMEDIA(3), ROMANCE(4), SUSPENSE(5), TERROR(6);
+    ACAO(1), COMEDIA(2), ROMANCE(3), SUSPENSE(4), TERROR(5);
     final int id;
     GeneroFilme(int i) {
         id = i;

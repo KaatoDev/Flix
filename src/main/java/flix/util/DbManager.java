@@ -65,19 +65,32 @@ public class DbManager {
         } catch (Exception e) {
             return false;
         }
-    }
-    public static boolean usuarios() {
+    }*/
+    public static List<Usuario> getUsuarios() {
         String sql = "select * from usuarios";
         try (Connection c = Database.connect();
              PreparedStatement ps = c.prepareStatement(sql)) {
-            ps.setString(1, user);
             try (ResultSet rs = ps.executeQuery()) {
-                return rs.next();
+                List<Usuario> usuarios = new ArrayList<>();
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String nome = rs.getString("nome"), sobrenome = rs.getString("sobrenome"),
+                            email = rs.getString("email");
+                    long cpf = rs.getLong("cpf");
+                    Date nascimento = rs.getDate("nascimento");
+                    Genero genero = Arrays.stream(Genero.values()).toList().get(rs.getInt("genero"));
+                    GeneroFilme genero1 = Arrays.stream(GeneroFilme.values()).toList().get(rs.getInt("genero1"));
+                    GeneroFilme genero2 = Arrays.stream(GeneroFilme.values()).toList().get(rs.getInt("genero2"));
+                    if (genero1 == genero2) genero2 = null;
+                    usuarios.add(new Usuario(id, cpf, nome, sobrenome, email, nascimento, genero, genero1, genero2));
+                }
+                return usuarios;
             }
         } catch (Exception e) {
-            return false;
+            e.printStackTrace();
+            return null;
         }
-    }*/
+    }
     public static boolean deletarUsuario(String user) {
         if (!exists(user))
             return false;
@@ -92,13 +105,12 @@ public class DbManager {
         return true;
     }
     public static List<Filme> genFilmes() {
-        String sql = "select (select count(notas.id) from notas where notas.filmeId = filmes.id) quantidade_notas, filmes.id, nome, sinopse, userId, capa, icone, classificacao, kid, genero1, genero2, (select avg(notas.nota) from notas where notas.filmeId = filmes.id) nota_publico, filmes.nota nota_IMDB from notas inner join filmes where notas.filmeId = filmes.id group by filmes.id order by filmes.id";
+        String sql = "select (select count(notas.id) from notas where notas.filmeId = filmes.id) quantidade_notas, filmes.id, nome, sinopse, ano, userId, capa, icone, classificacao, kid, genero1, genero2, (select avg(notas.nota) from notas where notas.filmeId = filmes.id) nota_publico, filmes.nota nota_IMDB from notas inner join filmes where notas.filmeId = filmes.id group by filmes.id order by filmes.id";
         try (Connection c = Database.connect();
              PreparedStatement ps = c.prepareStatement(sql)) {
             try (ResultSet rs = ps.executeQuery()) {
                 List<Filme> filmes = new ArrayList<>();
                 while (rs.next()) {
-                    System.out.println(rs.getInt("ano"));
                     int id = rs.getInt("id"), ano = rs.getInt("ano"), userId = rs.getInt("userId"), qtt = rs.getInt("quantidade_notas");
                     String nome = rs.getString("nome"), sinopse = rs.getString("sinopse");
                     Blob capa = rs.getBlob("capa"), icone = rs.getBlob("icone");
@@ -107,11 +119,13 @@ public class DbManager {
                     Classificacao classificacao = Arrays.stream(Classificacao.values()).toList().get(rs.getInt("classificacao"));
                     GeneroFilme genero1 = Arrays.stream(GeneroFilme.values()).toList().get(rs.getInt("genero1"));
                     GeneroFilme genero2 = Arrays.stream(GeneroFilme.values()).toList().get(rs.getInt("genero2"));
+                    if (genero1 == genero2) genero2 = null;
                     filmes.add(new Filme(id, nome, sinopse, imdb, nota, qtt, ano, getNome(userId), icone, capa, kid, classificacao, genero1, genero2));
                 }
                 return filmes;
             }
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
@@ -215,18 +229,16 @@ public class DbManager {
                     String pass = rs.getString("senha");
                     System.out.println("asdasd2");
                     int id = rs.getInt("id");
-                    int cpf = rs.getInt("cpf");
+                    long cpf = rs.getLong("cpf");
                     String nome = rs.getString("nome");
                     String email = rs.getString("email");
                     String sobrenome = rs.getString("sobrenome");
                     Date nascimento = rs.getDate("nascimento");
-                    Genero genero = Genero.NAO_BINARIO;
-                    for (Genero s : Genero.values())
-                        if (s.id() == rs.getInt("sexo"))
-                            genero = s;
-                    return new Usuario(id, cpf, nome, sobrenome, email, nascimento, genero);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
+                    Genero genero = Arrays.stream(Genero.values()).toList().get(rs.getInt("genero"));
+                    GeneroFilme genero1 = Arrays.stream(GeneroFilme.values()).toList().get(rs.getInt("genero1"));
+                    GeneroFilme genero2 = Arrays.stream(GeneroFilme.values()).toList().get(rs.getInt("genero2"));
+                    if (genero1 == genero2) genero2 = null;
+                    return new Usuario(id, cpf, nome, sobrenome, email, nascimento, genero, genero1, genero2);
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
