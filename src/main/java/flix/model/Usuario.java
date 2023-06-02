@@ -1,25 +1,24 @@
 package flix.model;
 
-import flix.enums.Sexo;
+import flix.enums.Genero;
 
 import java.sql.Date;
 
 public class Usuario {
     private final int id, cpf;
-    private String nome, sobrenome, email, senha;
+    private String nome, sobrenome, email;
     private Date nascimento;
-    private Sexo sexo;
+    private Genero genero;
     private Perfil perfil1, perfil2, perfil3;
 
-    public Usuario(int id, int cpf, String nome, String sobrenome, String email, String senha, Date nascimento, Sexo sexo) {
+    public Usuario(int id, int cpf, String nome, String sobrenome, String email, Date nascimento, Genero genero) {
         this.id = id;
         this.cpf = cpf;
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.email = email;
-        this.senha = senha;
         this.nascimento = nascimento;
-        this.sexo = sexo;
+        this.genero = genero;
     }
 
     public int getId() {
@@ -54,14 +53,6 @@ public class Usuario {
         this.email = email;
     }
 
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
     public Date getNascimento() {
         return nascimento;
     }
@@ -70,12 +61,12 @@ public class Usuario {
         this.nascimento = nascimento;
     }
 
-    public Sexo getSexo() {
-        return sexo;
+    public Genero getSexo() {
+        return genero;
     }
 
-    public void setSexo(Sexo sexo) {
-        this.sexo = sexo;
+    public void setSexo(Genero genero) {
+        this.genero = genero;
     }
 
     public Perfil getPerfil1() {

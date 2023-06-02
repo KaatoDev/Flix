@@ -20,7 +20,7 @@ public class Login extends javax.swing.JFrame {
      * Creates new form Login
      */
     public Login() {
-        super("MyImagePro");
+        super("(Desconectado) MyImagePro - Login");
         initComponents();
     }
 
@@ -39,7 +39,6 @@ public class Login extends javax.swing.JFrame {
         forgetPassB = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         background = new javax.swing.JLabel();
-        loginB = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(new ImageIcon(getClass().getResource("/icon1.png")).getImage());
@@ -93,33 +92,10 @@ public class Login extends javax.swing.JFrame {
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bbb2 login.png"))); // NOI18N
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        loginB.setText("Login");
-        loginB.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        loginB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loginBActionPerformed(evt);
-            }
-        });
-        getContentPane().add(loginB, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 190, 140, 60));
-
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void loginBActionPerformed(java.awt.event.ActionEvent evt) {                                       
-        String nome = loginF.getText();
-        String senha = new String(passF.getPassword());
-        if (!exists(nome)) JOptionPane.showMessageDialog(null, "Usuário não existe.");
-        else if (!logar(nome, senha)) JOptionPane.showMessageDialog(null, "Senha inválida.");
-        else try {
-                cadUser(nome, senha);
-                System.out.println("Logado com sucesso!");
-                this.dispose();
-                new CadFilme().setVisible(true);
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Usuário ou senha inválida!");
-            }
-    }
 
     private void loginFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginFActionPerformed
         // TODO add your handling code here:
@@ -136,10 +112,13 @@ public class Login extends javax.swing.JFrame {
         else if (!logar(nome, senha)) JOptionPane.showMessageDialog(null, "Senha inválida.");
         else try {
                 cadUser(nome, senha);
-                System.out.println("Logado com sucesso!");
                 this.dispose();
-                new CadFilme().setVisible(true);
+                if (nome.equals("admin"))
+                    new Usuarios().setVisible(true);
+                else new Catalogo().setVisible(true);
+                JOptionPane.showMessageDialog(null, "Logado com sucesso!");
             } catch (Exception e) {
+                e.printStackTrace();
                 JOptionPane.showMessageDialog(null, "Usuário ou senha inválida!");
             }
     }//GEN-LAST:event_jLabel1MouseClicked
@@ -183,7 +162,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel background;
     private javax.swing.JLabel forgetPassB;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JButton loginB;
     private javax.swing.JTextField loginF;
     private javax.swing.JPanel panelLogin;
     private javax.swing.JPasswordField passF;

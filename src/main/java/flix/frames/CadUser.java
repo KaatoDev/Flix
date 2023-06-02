@@ -4,13 +4,16 @@
  */
 package flix.frames;
 
+import flix.enums.GeneroFilme;
 import flix.enums.Genero;
-import flix.enums.Sexo;
 
+import javax.swing.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import static flix.Main.usuario;
 import static flix.util.DbManager.registrarUsuario;
+import static flix.util.Manager.cpf;
 
 /**
  *
@@ -22,6 +25,7 @@ public class CadUser extends javax.swing.JFrame {
      * Creates new form CadFilme
      */
     public CadUser() {
+        super("(Usuário: " + usuario.getNome() + " ) MyImagePro - Cadastro de usuário");
         initComponents();
     }
 
@@ -164,16 +168,19 @@ public class CadUser extends javax.swing.JFrame {
 
 
     private void cadastroBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastroBActionPerformed
-        System.out.println("aaaa");
-        Genero a1 = Genero.valueOf(genFav1.getSelectedItem().toString().toUpperCase()), a2 = Genero.valueOf(genFav2.getSelectedItem().toString().toUpperCase());
-        String a = "02/03/2002";
+        GeneroFilme a1 = GeneroFilme.valueOf(genFav1.getSelectedItem().toString().toUpperCase()), a2 = GeneroFilme.valueOf(genFav2.getSelectedItem().toString().toUpperCase());
+        String a = nascimentoF.getText();
+        if (!cpf(cpfF.getText())) {
+            JOptionPane.showMessageDialog(null, "Insira um pf válido!");
+            return;
+        }
         int dia = Integer.parseInt(a.substring(0, a.indexOf("/"))),
                 mes = Integer.parseInt(a.substring(a.indexOf("/")+1, a.lastIndexOf("/"))),
                 ano = Integer.parseInt(a.substring(a.lastIndexOf("/")+1));
         LocalDate ld = LocalDate.of(ano, mes, dia);
         System.out.println(dia + "/" + mes + "/" + ano);
         System.out.println(ld.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-        registrarUsuario(nomeF.getText(), sobrenomeF.getText(), Long.parseLong(cpfF.getText()), emailF.getText(), new String(senhaF.getPassword()), ld, Sexo.valueOf(sexoCB.getSelectedItem().toString().toUpperCase()), a1, a2);
+        registrarUsuario(nomeF.getText(), sobrenomeF.getText(), Long.parseLong(cpfF.getText()), emailF.getText(), new String(senhaF.getPassword()), ld, Genero.valueOf(sexoCB.getSelectedItem().toString().toUpperCase()), a1, a2);
     }//GEN-LAST:event_cadastroBActionPerformed
 
     private void genFav1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_genFav1ActionPerformed

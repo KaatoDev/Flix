@@ -4,11 +4,11 @@
  */
 package flix.frames;
 
-import flix.Main;
-import flix.enums.Genero;
+import flix.enums.GeneroFilme;
 
 import javax.swing.*;
 
+import static flix.Main.usuario;
 import static flix.util.DbManager.registrarFilme;
 
 /**
@@ -21,6 +21,7 @@ public class CadFilme extends javax.swing.JFrame {
      * Creates new form CadFilme
      */
     public CadFilme() {
+        super("(Usuário: " + usuario.getNome() + ") MyImagePro - Cadastro de filmes");
         initComponents();
     }
 
@@ -220,8 +221,8 @@ public class CadFilme extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Genero a1 = Genero.valueOf(genCB1.getSelectedItem().toString().toUpperCase()), a2 = Genero.valueOf(genCB2.getSelectedItem().toString().toUpperCase());
-        if (registrarFilme(Main.usuario, nomeF.getText(), sinopseF.getText(), capaF.getText(), iconF.getText(), Integer.parseInt(anoF.getText()), Double.parseDouble(notaF.getText().replace(",", ".")), classCB.getSelectedItem().toString(), kidB.isSelected(), a1, a2)) {
+        GeneroFilme a1 = GeneroFilme.valueOf(genCB1.getSelectedItem().toString().toUpperCase()), a2 = GeneroFilme.valueOf(genCB2.getSelectedItem().toString().toUpperCase());
+        if (registrarFilme(usuario, nomeF.getText(), sinopseF.getText(), capaF.getText(), iconF.getText(), Integer.parseInt(anoF.getText()), Double.parseDouble(notaF.getText().replace(",", ".")), classCB.getSelectedItem().toString(), kidB.isSelected(), a1, a2)) {
             JOptionPane.showMessageDialog(null, "Filme <" + nomeF.getText() +  "> cadastrado com sucesso!");
             this.dispose();
             new Catalogo().setVisible(true);

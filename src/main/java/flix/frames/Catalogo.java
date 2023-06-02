@@ -4,6 +4,9 @@
  */
 package flix.frames;
 
+import static flix.Main.usuario;
+import static flix.util.Manager.getFilmes;
+
 /**
  *
  * @author Gago3
@@ -14,6 +17,7 @@ public class Catalogo extends javax.swing.JFrame {
      * Creates new form Catalogo
      */
     public Catalogo() {
+        super("(Usuário: " + usuario.getNome() + " ) MyImagePro - Catálogo de filmes");
         initComponents();
     }
 
@@ -25,8 +29,8 @@ public class Catalogo extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
+        jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -35,17 +39,16 @@ public class Catalogo extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1280, 720));
         setMinimumSize(new java.awt.Dimension(1280, 720));
-        setPreferredSize(new java.awt.Dimension(1280, 720));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon2.png"))); // NOI18N
+        jButton1.setBorder(null);
+        jButton1.setOpaque(false);
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 530, -1, -1));
+
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
+            getFilmes(),
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
@@ -110,6 +113,7 @@ public class Catalogo extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel background;
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;

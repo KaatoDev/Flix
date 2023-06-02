@@ -1,17 +1,17 @@
 package flix.util;
 
 import flix.enums.Classificacao;
+import flix.enums.GeneroFilme;
 import flix.enums.Genero;
-import flix.enums.Sexo;
+import flix.model.Filme;
 import flix.model.Usuario;
 
 import javax.swing.*;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class DbManager {
     public static boolean isAdmin(Usuario user) {
@@ -22,7 +22,6 @@ public class DbManager {
             try (ResultSet rs = ps.executeQuery()) {
                 return Arrays.equals(rs.getString("email").getBytes(), user.getEmail().getBytes()) &&
                     Arrays.equals(rs.getString("nome").getBytes(), user.getNome().getBytes()) &&
-                    Arrays.equals(rs.getString("senha").getBytes(), user.getSenha().getBytes()) &&
                     Integer.parseInt(rs.getString("id")) == user.getId();
             }
         } catch (Exception e) {
@@ -92,6 +91,44 @@ public class DbManager {
         }
         return true;
     }
+    public static List<Filme> genFilmes() {
+        String sql = "select (select count(notas.id) from notas where notas.filmeId = filmes.id) quantidade_notas, filmes.id, nome, sinopse, userId, capa, icone, classificacao, kid, genero1, genero2, (select avg(notas.nota) from notas where notas.filmeId = filmes.id) nota_publico, filmes.nota nota_IMDB from notas inner join filmes where notas.filmeId = filmes.id group by filmes.id order by filmes.id";
+        try (Connection c = Database.connect();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            try (ResultSet rs = ps.executeQuery()) {
+                List<Filme> filmes = new ArrayList<>();
+                while (rs.next()) {
+                    System.out.println(rs.getInt("ano"));
+                    int id = rs.getInt("id"), ano = rs.getInt("ano"), userId = rs.getInt("userId"), qtt = rs.getInt("quantidade_notas");
+                    String nome = rs.getString("nome"), sinopse = rs.getString("sinopse");
+                    Blob capa = rs.getBlob("capa"), icone = rs.getBlob("icone");
+                    double imdb = rs.getDouble("nota_IMDB"), nota = rs.getDouble("nota_publico");
+                    boolean kid = rs.getBoolean("kid");
+                    Classificacao classificacao = Arrays.stream(Classificacao.values()).toList().get(rs.getInt("classificacao"));
+                    GeneroFilme genero1 = Arrays.stream(GeneroFilme.values()).toList().get(rs.getInt("genero1"));
+                    GeneroFilme genero2 = Arrays.stream(GeneroFilme.values()).toList().get(rs.getInt("genero2"));
+                    filmes.add(new Filme(id, nome, sinopse, imdb, nota, qtt, ano, getNome(userId), icone, capa, kid, classificacao, genero1, genero2));
+                }
+                return filmes;
+            }
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    public static String getNome(int usuarioId) {
+        String sql = "select nome from usuarios where id=?";
+        try (Connection c = Database.connect();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setInt(1, usuarioId);
+            try (ResultSet rs = ps.executeQuery()) {
+                rs.next();
+                return rs.getString("nome");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     public static boolean logar(String user, String senha) {
         String sql = "select * from usuarios where nome=?";
         if (user.contains("@"))
@@ -101,16 +138,17 @@ public class DbManager {
             ps.setString(1, user);
             try (ResultSet rs = ps.executeQuery()) {
                 rs.next();
-                System.out.println(senha);
-                System.out.println(rs.getString("senha"));
-                return Arrays.equals(senha.getBytes(), rs.getString("senha").getBytes());
+                System.out.println(Arrays.toString(senha.getBytes()));
+                System.out.println(Arrays.toString(rs.getString("senha").getBytes()));
+                return senha.equals(rs.getString("senha"));
             }
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
 
-    public static boolean registrarUsuario(String nome, String sobrenome, long cpf, String email, String senha, LocalDate nascimento, Sexo sexo, Genero genFav1, Genero genFav2) {
+    public static boolean registrarUsuario(String nome, String sobrenome, long cpf, String email, String senha, LocalDate nascimento, Genero genero, GeneroFilme genFav1, GeneroFilme genFav2) {
         System.out.println("bbbbbb");
         if (registrarPerfil(nome, cpf, false, 1, genFav1, genFav2)) {
             String sqlfind = "select * from perfis where display=? and cpf=?";
@@ -130,7 +168,7 @@ public class DbManager {
                 ps2.setString(4, email);
                 ps2.setString(5, senha);
                 ps2.setDate(6, Date.valueOf(nascimento));
-                ps2.setInt(7, sexo.id());
+                ps2.setInt(7, genero.id());
                 ps2.setInt(8, rs.getInt("id"));
 
                 ps2.execute();
@@ -143,7 +181,7 @@ public class DbManager {
         } else return false;
     }
 
-    public static boolean registrarPerfil(String nome, long cpf, boolean kid, int icon, Genero genFav1, Genero genFav2) {
+    public static boolean registrarPerfil(String nome, long cpf, boolean kid, int icon, GeneroFilme genFav1, GeneroFilme genFav2) {
         System.out.println("eeeeeee");
         String sqlprofile = "insert into perfis values(default, ?, ?, ?, ?, ?, ?)";
         try (Connection c = Database.connect();
@@ -164,8 +202,10 @@ public class DbManager {
         }
     }
 
-    public static Usuario getUsuario(String user, String senha) throws Exception {
+    public static Usuario getUsuario(String user, String senha) {
         String sql = "select * from usuarios where nome=?";
+        if (user.contains("@"))
+            sql = "select * from usuarios where email=?";
         if (exists(user)) {
             try (Connection c = Database.connect();
                  PreparedStatement ps = c.prepareStatement(sql)) {
@@ -174,27 +214,27 @@ public class DbManager {
                     rs.next();
                     String pass = rs.getString("senha");
                     System.out.println("asdasd2");
-                    if (!pass.equals(senha)) {
-                        System.out.println("asdasd");
-                        return null;
-                    }
                     int id = rs.getInt("id");
                     int cpf = rs.getInt("cpf");
                     String nome = rs.getString("nome");
                     String email = rs.getString("email");
                     String sobrenome = rs.getString("sobrenome");
                     Date nascimento = rs.getDate("nascimento");
-                    Sexo sexo = Sexo.NAO_BINARIO;
-                    for (Sexo s : Sexo.values())
+                    Genero genero = Genero.NAO_BINARIO;
+                    for (Genero s : Genero.values())
                         if (s.id() == rs.getInt("sexo"))
-                            sexo = s;
-                    return new Usuario(id, cpf, nome, sobrenome, email, pass, nascimento, sexo);
+                            genero = s;
+                    return new Usuario(id, cpf, nome, sobrenome, email, nascimento, genero);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
                 }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
         } return null;
     }
 
-    public static boolean registrarFilme(Usuario user, String nome, String sinopse, String capa, String icone, int ano, double nota, String classificacao, boolean kid, Genero genero1, Genero genero2) {
+    public static boolean registrarFilme(Usuario user, String nome, String sinopse, String capa, String icone, int ano, double nota, String classificacao, boolean kid, GeneroFilme genero1, GeneroFilme genero2) {
         String sql = "insert into filmes values(default, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         if (genero1 == genero2)
             sql = "insert into filmes values(default, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, null)";
