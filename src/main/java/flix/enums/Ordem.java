@@ -1,5 +1,5 @@
 package flix.enums;
 
 public enum Ordem {
-    NOME(1), NOME_DE(2), NOTA_IMDB(3), NOTA_IMDB_DE(4), NOTA_USER(5), NOTA_USER_DE(6), ANO(7), ANO_DE;
+    NOME, NOME_DE, NOTA_IMDB, NOTA_IMDB_DE, NOTA_USER, NOTA_USER_DE, ANO, ANO_DE;
 }

@@ -2,7 +2,6 @@ package flix.util;
 
 import flix.enums.Classificacao;
 import flix.enums.Genero;
-import flix.enums.Ordem;
 import flix.enums.Sexo;
 import flix.model.Usuario;
 
@@ -46,7 +45,7 @@ public class DbManager {
             return false;
         }
     }
-    public static boolean catalogoGeral(Ordem ordem) {
+    /*public static boolean catalogoGeral(Ordem ordem) {
         String sql = "select * from filmes";
         switch (ordem) {
             case NOME -> sql = "select * from filmes order by nome";
@@ -79,19 +78,19 @@ public class DbManager {
         } catch (Exception e) {
             return false;
         }
-    }
-    public static boolean deletarUsuario(Usuario user) {
-        if (logar())
-        String sql = "";
+    }*/
+    public static boolean deletarUsuario(String user) {
+        if (!exists(user))
+            return false;
+        String sql = "delete from usuarios where nome=?";
         try (Connection c = Database.connect();
              PreparedStatement ps = c.prepareStatement(sql)) {
             ps.setString(1, user);
-            try (ResultSet rs = ps.executeQuery()) {
-                return rs.next();
-            }
+            ps.execute();
         } catch (Exception e) {
             return false;
         }
+        return true;
     }
     public static boolean logar(String user, String senha) {
         String sql = "select * from usuarios where nome=?";

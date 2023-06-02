@@ -7,7 +7,8 @@ package flix.frames;
 import javax.swing.*;
 
 import static flix.Main.cadUser;
-import static flix.util.DbManager.*;
+import static flix.util.DbManager.exists;
+import static flix.util.DbManager.logar;
 
 /**
  *
@@ -19,6 +20,7 @@ public class Login extends javax.swing.JFrame {
      * Creates new form Login
      */
     public Login() {
+        super("MyImagePro");
         initComponents();
     }
 
@@ -31,95 +33,80 @@ public class Login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        panelLogin = new javax.swing.JPanel();
         loginF = new javax.swing.JTextField();
         passF = new javax.swing.JPasswordField();
+        forgetPassB = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        background = new javax.swing.JLabel();
         loginB = new javax.swing.JButton();
-        recPassB = new javax.swing.JButton();
-        criarB = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(new ImageIcon(getClass().getResource("/icon1.png")).getImage());
         setMaximumSize(new java.awt.Dimension(1280, 720));
-        setMinimumSize(new java.awt.Dimension(400, 600));
+        setMinimumSize(new java.awt.Dimension(1280, 720));
         setName("loginFrame"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(1280, 720));
-        getContentPane().setLayout(new java.awt.GridBagLayout());
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel1.setAlignmentX(0.0F);
-        jPanel1.setAlignmentY(0.0F);
-        jPanel1.setMaximumSize(new java.awt.Dimension(300, 500));
-        jPanel1.setMinimumSize(new java.awt.Dimension(300, 500));
-        jPanel1.setPreferredSize(new java.awt.Dimension(300, 500));
+        panelLogin.setBackground(new java.awt.Color(10, 16, 21));
+        panelLogin.setAlignmentX(0.0F);
+        panelLogin.setAlignmentY(0.0F);
+        panelLogin.setMaximumSize(new java.awt.Dimension(300, 500));
+        panelLogin.setOpaque(false);
+        panelLogin.setPreferredSize(new java.awt.Dimension(300, 500));
+        panelLogin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        loginF.setFont(new java.awt.Font("Segoe UI Semilight", 0, 14)); // NOI18N
         loginF.setText("admin");
+        loginF.setBorder(null);
         loginF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loginFActionPerformed(evt);
             }
         });
+        panelLogin.add(loginF, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 200, 20));
 
+        passF.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         passF.setText("admin");
+        passF.setBorder(null);
+        passF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passFActionPerformed(evt);
+            }
+        });
+        panelLogin.add(passF, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 200, -1));
+
+        forgetPassB.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        panelLogin.add(forgetPassB, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 160, 70, 20));
+
+        jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
+        panelLogin.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 210, 135, 55));
+
+        getContentPane().add(panelLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 170, 290, 290));
+
+        background.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bbb2 login.png"))); // NOI18N
+        getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         loginB.setText("Login");
+        loginB.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         loginB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loginBActionPerformed(evt);
             }
         });
-
-        recPassB.setText("Esqueci a senha");
-        recPassB.setBorder(null);
-
-        criarB.setText("Criar conta");
-        criarB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                criarBActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(76, 76, 76)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(loginF, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(passF, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(60, 60, 60)
-                        .addComponent(recPassB))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(loginB))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(criarB)))
-                .addContainerGap(77, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(136, 136, 136)
-                .addComponent(loginF, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(passF, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(13, 13, 13)
-                .addComponent(recPassB)
-                .addGap(24, 24, 24)
-                .addComponent(loginB)
-                .addGap(7, 7, 7)
-                .addComponent(criarB)
-                .addContainerGap(147, Short.MAX_VALUE))
-        );
-
-        getContentPane().add(jPanel1, new java.awt.GridBagConstraints());
+        getContentPane().add(loginB, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 190, 140, 60));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void loginBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBActionPerformed
+    private void loginBActionPerformed(java.awt.event.ActionEvent evt) {                                       
         String nome = loginF.getText();
         String senha = new String(passF.getPassword());
         if (!exists(nome)) JOptionPane.showMessageDialog(null, "Usuário não existe.");
@@ -138,10 +125,24 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_loginFActionPerformed
 
-    private void criarBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarBActionPerformed
-        this.dispose();
-        new CadUser().setVisible(true);
-    }//GEN-LAST:event_criarBActionPerformed
+    private void passFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passFActionPerformed
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        String nome = loginF.getText();
+        String senha = new String(passF.getPassword());
+        if (!exists(nome)) JOptionPane.showMessageDialog(null, "Usuário não existe.");
+        else if (!logar(nome, senha)) JOptionPane.showMessageDialog(null, "Senha inválida.");
+        else try {
+                cadUser(nome, senha);
+                System.out.println("Logado com sucesso!");
+                this.dispose();
+                new CadFilme().setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Usuário ou senha inválida!");
+            }
+    }//GEN-LAST:event_jLabel1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -179,11 +180,12 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton criarB;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel background;
+    private javax.swing.JLabel forgetPassB;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JButton loginB;
     private javax.swing.JTextField loginF;
+    private javax.swing.JPanel panelLogin;
     private javax.swing.JPasswordField passF;
-    private javax.swing.JButton recPassB;
     // End of variables declaration//GEN-END:variables
 }

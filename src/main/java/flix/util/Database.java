@@ -5,10 +5,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Database {
-    private static final String host = "localhost",
+    private static final String host = "35.247.235.64",
             porta = "3306",
-            user = "root",
-            pass = "anima123",
+            user = "admin",
+            pass = "admin",
             database = "db_flix";
     public static Connection connect() {
         try {
