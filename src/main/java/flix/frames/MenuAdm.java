@@ -5,6 +5,13 @@
  */
 package flix.frames;
 
+import flix.Main;
+
+import javax.swing.*;
+
+import static flix.Main.usuario;
+import static flix.util.Manager.icon;
+
 /**
  *
  * @author 823115101
@@ -15,6 +22,7 @@ public class MenuAdm extends javax.swing.JFrame {
      * Creates new form Menu
      */
     public MenuAdm() {
+        super("(Usuário: " + usuario.getNome() + ") MyImagePro - Menu Admin");
         initComponents();
     }
 
@@ -27,6 +35,7 @@ public class MenuAdm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        sair5 = new javax.swing.JButton();
         menuP = new javax.swing.JPanel();
         catalogoB = new javax.swing.JButton();
         cadUserB = new javax.swing.JButton();
@@ -35,8 +44,20 @@ public class MenuAdm extends javax.swing.JFrame {
         background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(icon(this.getClass()));
+        setMaximumSize(new java.awt.Dimension(1280, 720));
         setMinimumSize(new java.awt.Dimension(1280, 720));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        sair5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon2.png"))); // NOI18N
+        sair5.setBorder(null);
+        sair5.setBorderPainted(false);
+        sair5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sair5ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(sair5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1130, 580, -1, -1));
 
         menuP.setOpaque(false);
         menuP.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -55,7 +76,7 @@ public class MenuAdm extends javax.swing.JFrame {
                 cadUserBActionPerformed(evt);
             }
         });
-        menuP.add(cadUserB, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, -1, -1));
+        menuP.add(cadUserB, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, -1, -1));
 
         managerUserB.setText("Gerenciar usuários");
         managerUserB.addActionListener(new java.awt.event.ActionListener() {
@@ -63,7 +84,7 @@ public class MenuAdm extends javax.swing.JFrame {
                 managerUserBActionPerformed(evt);
             }
         });
-        menuP.add(managerUserB, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 180, -1, -1));
+        menuP.add(managerUserB, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 180, -1, -1));
 
         managerFilmeB.setText("Gerenciar filmes");
         managerFilmeB.addActionListener(new java.awt.event.ActionListener() {
@@ -71,7 +92,7 @@ public class MenuAdm extends javax.swing.JFrame {
                 managerFilmeBActionPerformed(evt);
             }
         });
-        menuP.add(managerFilmeB, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 230, -1, -1));
+        menuP.add(managerFilmeB, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 230, -1, -1));
 
         getContentPane().add(menuP, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 150, 420, 340));
 
@@ -102,6 +123,12 @@ public class MenuAdm extends javax.swing.JFrame {
         new Filmes().setVisible(true);
     }//GEN-LAST:event_managerFilmeBActionPerformed
 
+    private void sair5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sair5ActionPerformed
+        this.dispose();
+        Main.usuario = null;
+        new Login().setVisible(true);
+    }//GEN-LAST:event_sair5ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -113,29 +140,20 @@ public class MenuAdm extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MenuAdm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MenuAdm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MenuAdm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
+                 UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(MenuAdm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MenuAdm().setVisible(true);
-            }
-        });
+        java.awt.EventQueue.invokeLater(() -> new MenuAdm().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -145,5 +163,6 @@ public class MenuAdm extends javax.swing.JFrame {
     private javax.swing.JButton managerFilmeB;
     private javax.swing.JButton managerUserB;
     private javax.swing.JPanel menuP;
+    private javax.swing.JButton sair5;
     // End of variables declaration//GEN-END:variables
 }

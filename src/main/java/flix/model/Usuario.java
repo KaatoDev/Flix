@@ -3,7 +3,7 @@ package flix.model;
 import flix.enums.Genero;
 import flix.enums.GeneroFilme;
 
-import java.sql.Blob;
+import javax.swing.*;
 import java.sql.Date;
 
 public class Usuario {
@@ -13,9 +13,9 @@ public class Usuario {
     private Genero genero;
     private String nome, sobrenome, email;
     private Date nascimento;
-    private Blob icon;
+    private ImageIcon icon;
 
-    public Usuario(int id, long cpf, String nome, String sobrenome, String email, Date nascimento, Genero genero, Blob icon, GeneroFilme genero1, GeneroFilme genero2) {
+    public Usuario(int id, long cpf, String nome, String sobrenome, String email, Date nascimento, Genero genero, int icon, GeneroFilme genero1, GeneroFilme genero2) {
         this.cpf = cpf;
         this.id = id;
         this.genero1 = genero1;
@@ -25,14 +25,14 @@ public class Usuario {
         this.sobrenome = sobrenome;
         this.email = email;
         this.nascimento = nascimento;
-        this.icon = icon;
+        this.icon = new ImageIcon(this.getClass().getResource("/perfil" + icon + ".png"));
     }
 
-    public Blob getIcon() {
+    public ImageIcon getIcon() {
         return icon;
     }
 
-    public void setIcon(Blob icon) {
+    public void setIcon(ImageIcon icon) {
         this.icon = icon;
     }
 

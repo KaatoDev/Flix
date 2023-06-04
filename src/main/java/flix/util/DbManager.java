@@ -1,12 +1,14 @@
 package flix.util;
 
 import flix.enums.Classificacao;
-import flix.enums.GeneroFilme;
 import flix.enums.Genero;
+import flix.enums.GeneroFilme;
 import flix.model.Filme;
 import flix.model.Usuario;
 
 import javax.swing.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -66,7 +68,7 @@ public class DbManager {
             return false;
         }
     }*/
-    public static List<Usuario> getUsuarios() {
+    public static List<Usuario> genUsuarios() {
         String sql = "select * from usuarios";
         try (Connection c = Database.connect();
              PreparedStatement ps = c.prepareStatement(sql)) {
@@ -78,11 +80,12 @@ public class DbManager {
                             email = rs.getString("email");
                     long cpf = rs.getLong("cpf");
                     Date nascimento = rs.getDate("nascimento");
+                    int icon = rs.getInt("icon");
                     Genero genero = Arrays.stream(Genero.values()).toList().get(rs.getInt("genero"));
                     GeneroFilme genero1 = Arrays.stream(GeneroFilme.values()).toList().get(rs.getInt("genero1"));
                     GeneroFilme genero2 = Arrays.stream(GeneroFilme.values()).toList().get(rs.getInt("genero2"));
                     if (genero1 == genero2) genero2 = null;
-                    usuarios.add(new Usuario(id, cpf, nome, sobrenome, email, nascimento, genero, genero1, genero2));
+                    usuarios.add(new Usuario(id, cpf, nome, sobrenome, email, nascimento, genero, icon, genero1, genero2));
                 }
                 return usuarios;
             }
@@ -91,36 +94,69 @@ public class DbManager {
             return null;
         }
     }
-    public static boolean deletarUsuario(String user) {
-        if (!exists(user))
+    public static boolean deletarUsuario(Usuario user) {
+        if (!exists(user.getNome()))
             return false;
-        String sql = "delete from usuarios where nome=?";
+        String sql = "delete from usuarios where nome=? and id=? and cpf=?";
         try (Connection c = Database.connect();
              PreparedStatement ps = c.prepareStatement(sql)) {
-            ps.setString(1, user);
+            ps.setString(1, user.getNome());
+            ps.setInt(2, user.getId());
+            ps.setLong(2, user.getCpf());
             ps.execute();
+            return true;
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
-        return true;
+    }
+    public static boolean cadUsuario(String nome, String sobrenome, long cpf, String email, String senha, LocalDate nascimento, Genero genero, GeneroFilme genero1, GeneroFilme genero2) {
+
+        if (!exists(nome) && !exists(email))
+            return false;
+        String sql = "insert into usuarios values(default, ?, ?, ?, ?, ?, ?, ?, 1, ?, null)";
+        if (genero2 == null)
+            sql = "insert into usuarios values(default, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?)";
+        try (Connection c = Database.connect();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setString(1, nome);
+            ps.setLong(2, cpf);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            ps.setString(1, nome);
+            ps.setString(2, sobrenome);
+            ps.setLong(3, cpf);
+            ps.setString(4, email);
+            ps.setString(5, senha);
+            ps.setDate(6, Date.valueOf(nascimento));
+            ps.setInt(7, genero.id());
+            ps.setInt(8, genero1.id());
+            if (genero2 != null) ps.setInt(9, genero2.id());
+
+            ps.execute();
+            JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
     public static List<Filme> genFilmes() {
-        String sql = "select (select count(notas.id) from notas where notas.filmeId = filmes.id) quantidade_notas, filmes.id, nome, sinopse, ano, userId, capa, icone, classificacao, kid, genero1, genero2, (select avg(notas.nota) from notas where notas.filmeId = filmes.id) nota_publico, filmes.nota nota_IMDB from notas inner join filmes where notas.filmeId = filmes.id group by filmes.id order by filmes.id";
+        String sql = "select (select count(notas.id) from notas where notas.filmeId = filmes.id) quantidade_notas, filmes.id, nome, sinopse, ano, userId, capa, icon, classificacao, kid, genero1, genero2, (select avg(notas.nota) from notas where notas.filmeId = filmes.id) nota_publico, filmes.nota nota_IMDB from notas inner join filmes where notas.filmeId = filmes.id group by filmes.id order by filmes.id";
         try (Connection c = Database.connect();
              PreparedStatement ps = c.prepareStatement(sql)) {
             try (ResultSet rs = ps.executeQuery()) {
                 List<Filme> filmes = new ArrayList<>();
                 while (rs.next()) {
                     int id = rs.getInt("id"), ano = rs.getInt("ano"), userId = rs.getInt("userId"), qtt = rs.getInt("quantidade_notas");
-                    String nome = rs.getString("nome"), sinopse = rs.getString("sinopse");
-                    Blob capa = rs.getBlob("capa"), icone = rs.getBlob("icone");
+                    String nome = rs.getString("nome"), sinopse = rs.getString("sinopse"), capa = rs.getString("capa"), icon = rs.getString("icon");
                     double imdb = rs.getDouble("nota_IMDB"), nota = rs.getDouble("nota_publico");
                     boolean kid = rs.getBoolean("kid");
                     Classificacao classificacao = Arrays.stream(Classificacao.values()).toList().get(rs.getInt("classificacao"));
                     GeneroFilme genero1 = Arrays.stream(GeneroFilme.values()).toList().get(rs.getInt("genero1"));
                     GeneroFilme genero2 = Arrays.stream(GeneroFilme.values()).toList().get(rs.getInt("genero2"));
                     if (genero1 == genero2) genero2 = null;
-                    filmes.add(new Filme(id, nome, sinopse, imdb, nota, qtt, ano, getNome(userId), icone, capa, kid, classificacao, genero1, genero2));
+                    filmes.add(new Filme(id, nome, sinopse, imdb, nota, qtt, ano, getNome(userId), icon, capa, kid, classificacao, genero1, genero2));
                 }
                 return filmes;
             }
@@ -152,64 +188,8 @@ public class DbManager {
             ps.setString(1, user);
             try (ResultSet rs = ps.executeQuery()) {
                 rs.next();
-                System.out.println(Arrays.toString(senha.getBytes()));
-                System.out.println(Arrays.toString(rs.getString("senha").getBytes()));
                 return senha.equals(rs.getString("senha"));
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    public static boolean registrarUsuario(String nome, String sobrenome, long cpf, String email, String senha, LocalDate nascimento, Genero genero, GeneroFilme genFav1, GeneroFilme genFav2) {
-        System.out.println("bbbbbb");
-        if (registrarPerfil(nome, cpf, false, 1, genFav1, genFav2)) {
-            String sqlfind = "select * from perfis where display=? and cpf=?";
-            String sqluser = "insert into usuarios values(default, ?, ?, ?, ?, ?, ?, ?, ?, null, null)";
-            System.out.println("cccccccc");
-            try (Connection c = Database.connect();
-                 PreparedStatement ps = c.prepareStatement(sqlfind);
-                 PreparedStatement ps2 = c.prepareStatement(sqluser)) {
-                System.out.println("ddddddd");
-                ps.setString(1, nome);
-                ps.setLong(2, cpf);
-                ResultSet rs = ps.executeQuery();
-                rs.next();
-                ps2.setString(1, nome);
-                ps2.setString(2, sobrenome);
-                ps2.setLong(3, cpf);
-                ps2.setString(4, email);
-                ps2.setString(5, senha);
-                ps2.setDate(6, Date.valueOf(nascimento));
-                ps2.setInt(7, genero.id());
-                ps2.setInt(8, rs.getInt("id"));
-
-                ps2.execute();
-                JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
-                return true;
-            } catch (Exception e) {
-                e.printStackTrace();
-                return false;
-            }
-        } else return false;
-    }
-
-    public static boolean registrarPerfil(String nome, long cpf, boolean kid, int icon, GeneroFilme genFav1, GeneroFilme genFav2) {
-        System.out.println("eeeeeee");
-        String sqlprofile = "insert into perfis values(default, ?, ?, ?, ?, ?, ?)";
-        try (Connection c = Database.connect();
-             PreparedStatement ps1 = c.prepareStatement(sqlprofile)) {
-            System.out.println("fffffff");
-
-            ps1.setString(1, nome);
-            ps1.setLong(2, cpf);
-            ps1.setBoolean(3, kid);
-            ps1.setInt(4, icon);
-            ps1.setInt(5, genFav1.id());
-            ps1.setInt(6, genFav2.id());
-            ps1.execute();
-            return true;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -227,18 +207,18 @@ public class DbManager {
                 try (ResultSet rs = ps.executeQuery()) {
                     rs.next();
                     String pass = rs.getString("senha");
-                    System.out.println("asdasd2");
                     int id = rs.getInt("id");
                     long cpf = rs.getLong("cpf");
                     String nome = rs.getString("nome");
                     String email = rs.getString("email");
                     String sobrenome = rs.getString("sobrenome");
                     Date nascimento = rs.getDate("nascimento");
+                    int icone = rs.getInt("icon");
                     Genero genero = Arrays.stream(Genero.values()).toList().get(rs.getInt("genero"));
                     GeneroFilme genero1 = Arrays.stream(GeneroFilme.values()).toList().get(rs.getInt("genero1"));
                     GeneroFilme genero2 = Arrays.stream(GeneroFilme.values()).toList().get(rs.getInt("genero2"));
                     if (genero1 == genero2) genero2 = null;
-                    return new Usuario(id, cpf, nome, sobrenome, email, nascimento, genero, genero1, genero2);
+                    return new Usuario(id, cpf, nome, sobrenome, email, nascimento, genero, icone, genero1, genero2);
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -246,7 +226,23 @@ public class DbManager {
         } return null;
     }
 
-    public static boolean registrarFilme(Usuario user, String nome, String sinopse, String capa, String icone, int ano, double nota, String classificacao, boolean kid, GeneroFilme genero1, GeneroFilme genero2) {
+    public static URL genIcone(int icone) {
+        String sql = "select * from icones where id=?";
+        try (Connection c = Database.connect();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setInt(1, icone);
+            try (ResultSet rs = ps.executeQuery()) {
+                rs.next();
+                return new URL(rs.getString("imagem"));
+            } catch (MalformedURLException e) {
+                throw new RuntimeException(e);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static boolean registrarFilme(Usuario user, String nome, String sinopse, String capa, String icon, int ano, double nota, String classificacao, boolean kid, GeneroFilme genero1, GeneroFilme genero2) {
         String sql = "insert into filmes values(default, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         if (genero1 == genero2)
             sql = "insert into filmes values(default, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, null)";
@@ -257,7 +253,7 @@ public class DbManager {
             ps.setString(2, nome);
             ps.setString(3, sinopse);
             ps.setString(4, capa);
-            ps.setString(5, icone);
+            ps.setString(5, icon);
             ps.setInt(6, ano);
             ps.setDouble(7, nota);
             ps.setInt(8, Classificacao.valueOf(classificacao).id());

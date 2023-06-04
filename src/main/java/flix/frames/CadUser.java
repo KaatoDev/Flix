@@ -4,16 +4,16 @@
  */
 package flix.frames;
 
-import flix.enums.GeneroFilme;
 import flix.enums.Genero;
+import flix.enums.GeneroFilme;
 
 import javax.swing.*;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 import static flix.Main.usuario;
-import static flix.util.DbManager.registrarUsuario;
+import static flix.util.DbManager.cadUsuario;
 import static flix.util.Manager.cpf;
+import static flix.util.Manager.icon;
 
 /**
  *
@@ -45,23 +45,30 @@ public class CadUser extends javax.swing.JFrame {
         emailF = new javax.swing.JTextField();
         senhaF = new javax.swing.JPasswordField();
         nascimentoF = new javax.swing.JFormattedTextField();
-        sexoCB = new javax.swing.JComboBox<>();
+        genero = new javax.swing.JComboBox<>();
         cadastroB = new javax.swing.JButton();
         genFav1 = new javax.swing.JComboBox<>();
         genFav2 = new javax.swing.JComboBox<>();
         voltarB = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setFocusTraversalPolicyProvider(true);
+        setIconImage(icon(this.getClass()));
         setLocationByPlatform(true);
         setMinimumSize(new java.awt.Dimension(1280, 720));
-        getContentPane().setLayout(new java.awt.GridBagLayout());
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Cadastre-se"));
 
         nomeF.setBorder(javax.swing.BorderFactory.createTitledBorder("Nome"));
 
         sobrenomeF.setBorder(javax.swing.BorderFactory.createTitledBorder("Sobrenome"));
+        sobrenomeF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sobrenomeFActionPerformed(evt);
+            }
+        });
 
         cpfF.setBorder(javax.swing.BorderFactory.createTitledBorder("CPF"));
 
@@ -72,8 +79,8 @@ public class CadUser extends javax.swing.JFrame {
         nascimentoF.setBorder(javax.swing.BorderFactory.createTitledBorder("Data de Nascimento"));
         nascimentoF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
 
-        sexoCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nao_Binario", "Masculino", "Feminino" }));
-        sexoCB.setBorder(javax.swing.BorderFactory.createTitledBorder("Gênero"));
+        genero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Não-binário", "Masculino", "Feminino" }));
+        genero.setBorder(javax.swing.BorderFactory.createTitledBorder("Gênero"));
 
         cadastroB.setText("Cadastrar");
         cadastroB.addActionListener(new java.awt.event.ActionListener() {
@@ -82,7 +89,7 @@ public class CadUser extends javax.swing.JFrame {
             }
         });
 
-        genFav1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Acao", "Comedia", "Romance", "Suspense", "Terror" }));
+        genFav1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ação", "Comédia", "Romance", "Suspense", "Terror" }));
         genFav1.setBorder(javax.swing.BorderFactory.createTitledBorder("Gênero favorito 1"));
         genFav1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -90,7 +97,7 @@ public class CadUser extends javax.swing.JFrame {
             }
         });
 
-        genFav2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Acao", "Comedia", "Romance", "Suspense", "Terror" }));
+        genFav2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ação", "Comédia", "Romance", "Suspense", "Terror" }));
         genFav2.setBorder(javax.swing.BorderFactory.createTitledBorder("Gênero favorito 2"));
 
         voltarB.setText("Voltar");
@@ -119,7 +126,7 @@ public class CadUser extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(sexoCB, 0, 123, Short.MAX_VALUE)
+                            .addComponent(genero, 0, 123, Short.MAX_VALUE)
                             .addComponent(genFav1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -148,7 +155,7 @@ public class CadUser extends javax.swing.JFrame {
                 .addComponent(emailF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(sexoCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(genero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nascimentoF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -161,7 +168,17 @@ public class CadUser extends javax.swing.JFrame {
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel1, new java.awt.GridBagConstraints());
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(271, 147, -1, -1));
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon2.png"))); // NOI18N
+        jButton1.setBorder(null);
+        jButton1.setBorderPainted(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 580, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -178,9 +195,7 @@ public class CadUser extends javax.swing.JFrame {
                 mes = Integer.parseInt(a.substring(a.indexOf("/")+1, a.lastIndexOf("/"))),
                 ano = Integer.parseInt(a.substring(a.lastIndexOf("/")+1));
         LocalDate ld = LocalDate.of(ano, mes, dia);
-        System.out.println(dia + "/" + mes + "/" + ano);
-        System.out.println(ld.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-        registrarUsuario(nomeF.getText(), sobrenomeF.getText(), Long.parseLong(cpfF.getText()), emailF.getText(), new String(senhaF.getPassword()), ld, Genero.valueOf(sexoCB.getSelectedItem().toString().toUpperCase()), a1, a2);
+        cadUsuario(nomeF.getText(), sobrenomeF.getText(), Long.parseLong(cpfF.getText()), emailF.getText(), new String(senhaF.getPassword()), ld, Genero.valueOf(genero.getSelectedItem().toString().toUpperCase()), a1, a2);
     }//GEN-LAST:event_cadastroBActionPerformed
 
     private void genFav1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_genFav1ActionPerformed
@@ -192,17 +207,35 @@ public class CadUser extends javax.swing.JFrame {
         new Login().setVisible(true);
     }//GEN-LAST:event_voltarBActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.dispose();
+        new MenuAdm().setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Windows".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
+                 UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(CadUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CadUser().setVisible(true);
-            }
-        });
+        java.awt.EventQueue.invokeLater(() -> new CadUser().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -211,11 +244,12 @@ public class CadUser extends javax.swing.JFrame {
     private javax.swing.JTextField emailF;
     private javax.swing.JComboBox<String> genFav1;
     private javax.swing.JComboBox<String> genFav2;
+    private javax.swing.JComboBox<String> genero;
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JFormattedTextField nascimentoF;
     private javax.swing.JTextField nomeF;
     private javax.swing.JPasswordField senhaF;
-    private javax.swing.JComboBox<String> sexoCB;
     private javax.swing.JTextField sobrenomeF;
     private javax.swing.JButton voltarB;
     // End of variables declaration//GEN-END:variables

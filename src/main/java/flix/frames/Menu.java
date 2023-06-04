@@ -5,6 +5,13 @@
  */
 package flix.frames;
 
+import flix.Main;
+
+import javax.swing.*;
+
+import static flix.Main.usuario;
+import static flix.util.Manager.icon;
+
 /**
  *
  * @author 823115101
@@ -15,6 +22,7 @@ public class Menu extends javax.swing.JFrame {
      * Creates new form Menu
      */
     public Menu() {
+        super("(Usuário: " + usuario.getNome() + ") MyImagePro - Menu");
         initComponents();
     }
 
@@ -30,9 +38,12 @@ public class Menu extends javax.swing.JFrame {
         menuP = new javax.swing.JPanel();
         catalogoB = new javax.swing.JButton();
         cadFilmeB = new javax.swing.JButton();
+        jToggleButton1 = new javax.swing.JToggleButton();
+        sair = new javax.swing.JButton();
         background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(icon(this.getClass()));
         setMaximumSize(new java.awt.Dimension(1280, 720));
         setMinimumSize(new java.awt.Dimension(1280, 720));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -56,7 +67,25 @@ public class Menu extends javax.swing.JFrame {
         });
         menuP.add(cadFilmeB, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, -1, -1));
 
+        jToggleButton1.setText("perfil");
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton1ActionPerformed(evt);
+            }
+        });
+        menuP.add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 170, -1, -1));
+
         getContentPane().add(menuP, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 150, 420, 340));
+
+        sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon2.png"))); // NOI18N
+        sair.setBorder(null);
+        sair.setBorderPainted(false);
+        sair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sairActionPerformed(evt);
+            }
+        });
+        getContentPane().add(sair, new org.netbeans.lib.awtextra.AbsoluteConstraints(1130, 580, -1, -1));
 
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bbb2.png"))); // NOI18N
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -75,6 +104,17 @@ public class Menu extends javax.swing.JFrame {
         new CadFilme().setVisible(true);
     }//GEN-LAST:event_cadFilmeBActionPerformed
 
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        this.dispose();
+        new Dashboard().setVisible(true);
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
+
+    private void sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sairActionPerformed
+        this.dispose();
+        Main.usuario = null;
+        new Login().setVisible(true);
+    }//GEN-LAST:event_sairActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -86,34 +126,27 @@ public class Menu extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
+                 UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Menu().setVisible(true);
-            }
-        });
+        java.awt.EventQueue.invokeLater(() -> new Menu().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel background;
     private javax.swing.JButton cadFilmeB;
     private javax.swing.JButton catalogoB;
+    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JPanel menuP;
+    private javax.swing.JButton sair;
     // End of variables declaration//GEN-END:variables
 }

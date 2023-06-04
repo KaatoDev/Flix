@@ -6,9 +6,10 @@ package flix.frames;
 
 import javax.swing.*;
 
-import static flix.Main.cadUser;
+import static flix.Main.login;
 import static flix.util.DbManager.exists;
 import static flix.util.DbManager.logar;
+import static flix.util.Manager.icon;
 
 /**
  *
@@ -41,7 +42,7 @@ public class Login extends javax.swing.JFrame {
         background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setIconImage(new ImageIcon(getClass().getResource("/icon1.png")).getImage());
+        setIconImage(icon(this.getClass()));
         setMaximumSize(new java.awt.Dimension(1280, 720));
         setMinimumSize(new java.awt.Dimension(1280, 720));
         setName("loginFrame"); // NOI18N
@@ -111,11 +112,11 @@ public class Login extends javax.swing.JFrame {
         if (!exists(nome)) JOptionPane.showMessageDialog(null, "Usuário não existe.");
         else if (!logar(nome, senha)) JOptionPane.showMessageDialog(null, "Senha inválida.");
         else try {
-                cadUser(nome, senha);
-                this.dispose();
+                login(nome, senha);
                 if (nome.equals("admin"))
-                    new Usuarios().setVisible(true);
-                else new Catalogo().setVisible(true);
+                    new MenuAdm().setVisible(true);
+                else new Menu().setVisible(true);
+                dispose();
                 JOptionPane.showMessageDialog(null, "Logado com sucesso!");
             } catch (Exception e) {
                 e.printStackTrace();
@@ -134,28 +135,19 @@ public class Login extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
+                 UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Login().setVisible(true);
-            }
-        });
+        java.awt.EventQueue.invokeLater(() -> new Login().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

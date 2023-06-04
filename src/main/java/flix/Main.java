@@ -1,12 +1,10 @@
 package flix;
 
 import flix.frames.Login;
-import flix.model.Filme;
 import flix.model.Usuario;
 import flix.util.Database;
 
 import java.sql.Connection;
-import java.util.List;
 
 import static flix.util.DbManager.genFilmes;
 import static flix.util.DbManager.getUsuario;
@@ -29,7 +27,7 @@ public class Main {
             db = Database.connect();
         }
     }
-    public static void cadUser(String nome, String senha) {
+    public static void login(String nome, String senha) {
         try {
             usuario = getUsuario(nome, senha);
         } catch (Exception e) {

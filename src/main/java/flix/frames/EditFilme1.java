@@ -16,12 +16,12 @@ import static flix.util.Manager.icon;
  *
  * @author Gago3
  */
-public class CadFilme extends javax.swing.JFrame {
+public class EditFilme1 extends javax.swing.JFrame {
 
     /**
      * Creates new form CadFilme
      */
-    public CadFilme() {
+    public EditFilme1() {
         super("(Usuário: " + usuario.getNome() + ") MyImagePro - Cadastro de filmes");
         initComponents();
     }
@@ -48,16 +48,14 @@ public class CadFilme extends javax.swing.JFrame {
         classCB = new javax.swing.JComboBox<>();
         genCB2 = new javax.swing.JComboBox<>();
         genCB1 = new javax.swing.JComboBox<>();
-        cadastrarB = new javax.swing.JButton();
-        menu = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setFocusTraversalPolicyProvider(true);
         setIconImage(icon(this.getClass()));
         setLocationByPlatform(true);
-        setMaximumSize(new java.awt.Dimension(1920, 1080));
         setMinimumSize(new java.awt.Dimension(1280, 720));
-        setPreferredSize(new java.awt.Dimension(1280, 720));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -127,24 +125,24 @@ public class CadFilme extends javax.swing.JFrame {
         notaF.setMinimumSize(new java.awt.Dimension(105, 40));
         notaF.setPreferredSize(new java.awt.Dimension(150, 50));
 
-        classCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Livre", "10+", "12+", "14+", "16+", "18+" }));
+        classCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AL", "A10", "A12", "A14", "A16", "A18" }));
         classCB.setBorder(javax.swing.BorderFactory.createTitledBorder("Classsificação etária"));
         classCB.setMaximumSize(new java.awt.Dimension(125, 50));
         classCB.setMinimumSize(new java.awt.Dimension(125, 50));
         classCB.setPreferredSize(new java.awt.Dimension(125, 50));
 
-        genCB2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ação", "Comédia", "Romance", "Suspense", "Terror" }));
+        genCB2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Acao", "Comedia", "Romance", "Suspense", "Terror" }));
         genCB2.setBorder(javax.swing.BorderFactory.createTitledBorder("Gênero 2"));
 
-        genCB1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ação", "Comédia", "Romance", "Suspense", "Terror" }));
+        genCB1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Acao", "Comedia", "Romance", "Suspense", "Terror" }));
         genCB1.setBorder(javax.swing.BorderFactory.createTitledBorder("Gênero 1"));
         genCB1.setMaximumSize(new java.awt.Dimension(92, 43));
 
-        cadastrarB.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        cadastrarB.setText("Cadastrar");
-        cadastrarB.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton1.setText("Cadastrar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cadastrarBActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -183,7 +181,7 @@ public class CadFilme extends javax.swing.JFrame {
                         .addGap(28, 28, 28)
                         .addComponent(genCB2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(81, 81, 81)
-                        .addComponent(cadastrarB, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -214,38 +212,42 @@ public class CadFilme extends javax.swing.JFrame {
                             .addComponent(genCB1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(cadastrarB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(214, 79, -1, -1));
 
-        menu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon2.png"))); // NOI18N
-        menu.setBorder(null);
-        menu.setBorderPainted(false);
-        menu.addActionListener(new java.awt.event.ActionListener() {
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon2.png"))); // NOI18N
+        jButton2.setBorder(null);
+        jButton2.setBorderPainted(false);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuActionPerformed(evt);
+                jButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 580, -1, -1));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 580, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cadastrarBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarBActionPerformed
-        GeneroFilme a1 = GeneroFilme.valueOf(genCB1.get.getSelectedItem().toString().toUpperCase()), a2 = GeneroFilme.valueOf(genCB2.getSelectedItem().toString().toUpperCase());
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        GeneroFilme a1 = GeneroFilme.valueOf(genCB1.getSelectedItem().toString().toUpperCase()), a2 = GeneroFilme.valueOf(genCB2.getSelectedItem().toString().toUpperCase());
         if (registrarFilme(usuario, nomeF.getText(), sinopseF.getText(), capaF.getText(), iconF.getText(), Integer.parseInt(anoF.getText()), Double.parseDouble(notaF.getText().replace(",", ".")), classCB.getSelectedItem().toString(), kidB.isSelected(), a1, a2)) {
             JOptionPane.showMessageDialog(null, "Filme <" + nomeF.getText() +  "> cadastrado com sucesso!");
             this.dispose();
             new Catalogo().setVisible(true);
         }
-    }//GEN-LAST:event_cadastrarBActionPerformed
+    }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void menuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.dispose();
         new Menu().setVisible(true);
-    }//GEN-LAST:event_menuActionPerformed
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void cadastrarBActionPerformed(java.awt.event.ActionEvent evt) {
+        
+    }
 
     /**
      * @param args the command line arguments
@@ -265,28 +267,28 @@ public class CadFilme extends javax.swing.JFrame {
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
                  UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CadFilme.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditFilme1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new CadFilme().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new EditFilme1().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFormattedTextField anoF;
-    private javax.swing.JButton cadastrarB;
     private javax.swing.JTextArea capaF;
     private javax.swing.JComboBox<String> classCB;
     private javax.swing.JComboBox<String> genCB1;
     private javax.swing.JComboBox<String> genCB2;
     private javax.swing.JTextArea iconF;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JCheckBox kidB;
-    private javax.swing.JButton menu;
     private javax.swing.JTextField nomeF;
     private javax.swing.JFormattedTextField notaF;
     private javax.swing.JTextArea sinopseF;

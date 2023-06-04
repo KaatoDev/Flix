@@ -5,11 +5,10 @@
  */
 package flix.frames;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.net.URL;
 
 import static flix.Main.usuario;
+import static flix.util.Manager.icon;
 
 /**
  *
@@ -21,6 +20,7 @@ public class Dashboard extends javax.swing.JFrame {
      * Creates new form Dashboard
      */
     public Dashboard() {
+        super("(Usuário: " + usuario.getNome() + ") MyImagePro - Dashboard");
         initComponents();
     }
 
@@ -33,42 +33,91 @@ public class Dashboard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        background = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        nomeL = new javax.swing.JLabel();
+        sobrenomeL = new javax.swing.JLabel();
+        nascimentoL = new javax.swing.JLabel();
+        generoL = new javax.swing.JLabel();
+        generoFav1L = new javax.swing.JLabel();
+        generoFav2L = new javax.swing.JLabel();
+        sair = new javax.swing.JButton();
+        menu = new javax.swing.JButton();
+        background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(icon(this.getClass()));
         setMaximumSize(new java.awt.Dimension(1280, 720));
         setMinimumSize(new java.awt.Dimension(1280, 720));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel3.setBackground(new java.awt.Color(100, 100, 100));
+        jLabel3.setIcon(usuario.getIcon());
+        jLabel3.setMaximumSize(new java.awt.Dimension(200, 200));
+        jLabel3.setMinimumSize(new java.awt.Dimension(200, 200));
+        jLabel3.setOpaque(true);
+        jLabel3.setPreferredSize(new java.awt.Dimension(200, 200));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, -1, -1));
+
+        nomeL.setText(usuario.getNome());
+        jPanel1.add(nomeL, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 70, 250, 80));
+
+        sobrenomeL.setText(usuario.getSobrenome());
+        jPanel1.add(sobrenomeL, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 160, 260, 80));
+
+        nascimentoL.setText(String.valueOf(usuario.getNascimento()));
+        jPanel1.add(nascimentoL, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 280, 180, 60));
+
+        generoL.setText(usuario.getGenero().toString());
+        jPanel1.add(generoL, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 280, 200, 60));
+
+        generoFav1L.setText(usuario.getGenero1().toString());
+        jPanel1.add(generoFav1L, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 430, -1, -1));
+
+        generoFav2L.setText(usuario.getGenero2().toString());
+        jPanel1.add(generoFav2L, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 430, -1, -1));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, 830, 670));
+
+        sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon2.png"))); // NOI18N
+        sair.setBorder(null);
+        sair.setBorderPainted(false);
+        sair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sairActionPerformed(evt);
+            }
+        });
+        getContentPane().add(sair, new org.netbeans.lib.awtextra.AbsoluteConstraints(1130, 580, -1, -1));
+
+        menu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon2.png"))); // NOI18N
+        menu.setBorder(null);
+        menu.setBorderPainted(false);
+        menu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuActionPerformed(evt);
+            }
+        });
+        getContentPane().add(menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 580, -1, -1));
+
         background.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bbb2.png"))); // NOI18N
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bbb2 catalogo.png"))); // NOI18N
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-
-        jLabel1.setIcon(new ImageIcon(ImageIO.read(new URL(usuario.getIcon().toString()))));
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(jLabel1)
-                .addContainerGap(389, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(jLabel1)
-                .addContainerGap(304, Short.MAX_VALUE))
-        );
-
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 150, 420, 340));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sairActionPerformed
+        this.dispose();
+        usuario = null;
+        new Login().setVisible(true);
+    }//GEN-LAST:event_sairActionPerformed
+
+    private void menuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuActionPerformed
+        this.dispose();
+        new MenuAdm().setVisible(true);
+    }//GEN-LAST:event_menuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -81,33 +130,32 @@ public class Dashboard extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
+                 UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Dashboard().setVisible(true);
-            }
-        });
+        java.awt.EventQueue.invokeLater(() -> new Dashboard().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel background;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel generoFav1L;
+    private javax.swing.JLabel generoFav2L;
+    private javax.swing.JLabel generoL;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton menu;
+    private javax.swing.JLabel nascimentoL;
+    private javax.swing.JLabel nomeL;
+    private javax.swing.JButton sair;
+    private javax.swing.JLabel sobrenomeL;
     // End of variables declaration//GEN-END:variables
 }

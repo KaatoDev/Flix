@@ -8,7 +8,7 @@ public class Database {
     private static final String host = "localhost",
             porta = "3306",
             user = "root",
-            pass = "anima123",
+            pass = "1234",
             database = "db_flix";
     public static Connection connect() {
         try {

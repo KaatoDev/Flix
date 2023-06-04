@@ -3,8 +3,6 @@ package flix.model;
 import flix.enums.Classificacao;
 import flix.enums.GeneroFilme;
 
-import java.sql.Blob;
-
 public class Filme {
     private final int id;
     private final Classificacao classificacao;
@@ -14,10 +12,10 @@ public class Filme {
     private GeneroFilme genero1, genero2;
     private String nome, sinopse;
     private double nota_IMDB, nota;
-    private Blob icone, capa;
+    private String icone, capa;
     private int avaliacoes;
 
-    public Filme(int id, String nome, String sinopse, double nota_IMDB, double nota, int avaliacoes, int ano, String usuario, Blob icone, Blob capa, boolean kid, Classificacao classificacao, GeneroFilme genero1, GeneroFilme genero2) {
+    public Filme(int id, String nome, String sinopse, double nota_IMDB, double nota, int avaliacoes, int ano, String usuario, String icone, String capa, boolean kid, Classificacao classificacao, GeneroFilme genero1, GeneroFilme genero2) {
         this.id = id;
         this.nome = nome;
         this.sinopse = sinopse;
@@ -110,19 +108,19 @@ public class Filme {
         this.nota = nota;
     }
 
-    public Blob getIcone() {
+    public String getIcone() {
         return icone;
     }
 
-    public void setIcone(Blob icone) {
+    public void setIcone(String icone) {
         this.icone = icone;
     }
 
-    public Blob getCapa() {
+    public String getCapa() {
         return capa;
     }
 
-    public void setCapa(Blob capa) {
+    public void setCapa(String capa) {
         this.capa = capa;
     }
 }
