@@ -4,11 +4,17 @@
  */
 package flix.frames;
 
+import flix.enums.Classificacao;
+import flix.enums.Filtro;
+import flix.enums.GeneroFilme;
+
 import javax.swing.*;
+import java.util.HashMap;
 
 import static flix.Main.usuario;
-import static flix.util.Manager.getFilmes;
-import static flix.util.Manager.icon;
+import static flix.enums.Filtro.*;
+import static flix.util.DbManager.getIdFrom;
+import static flix.util.Manager.*;
 
 /**
  *
@@ -33,10 +39,18 @@ public class Filmes extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        sairB = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        filmesT = new javax.swing.JTable();
+        generoCB = new javax.swing.JComboBox<>();
+        userCB = new javax.swing.JComboBox<>();
+        anoCB = new javax.swing.JComboBox<>();
+        classificacaoCB = new javax.swing.JComboBox<>();
+        kidC = new javax.swing.JCheckBox();
+        nomeF = new javax.swing.JTextField();
+        filtrarB = new javax.swing.JButton();
+        limparB = new javax.swing.JButton();
         background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -45,35 +59,66 @@ public class Filmes extends javax.swing.JFrame {
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon2.png"))); // NOI18N
-        jButton1.setBorder(null);
-        jButton1.setOpaque(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        sairB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon2.png"))); // NOI18N
+        sairB.setBorder(null);
+        sairB.setBorderPainted(false);
+        sairB.setContentAreaFilled(false);
+        sairB.setOpaque(false);
+        sairB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                sairBActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 530, -1, -1));
+        getContentPane().add(sairB, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 530, -1, -1));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            getFilmes(),
+        jPanel2.setOpaque(false);
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        filmesT.setModel(new javax.swing.table.DefaultTableModel(
+            getFilmes(null),
             new String [] {
                 "Nome", "Sinopse", "Ano", "Nota IMDB", "Nota público", "Gênero", "Subgênero", "Classificação", "Infantil", "Adicionado por"
             }
         ));
-        jTable1.setOpaque(false);
-        jScrollPane1.setViewportView(jTable1);
+        filmesT.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        filmesT.setFocusable(false);
+        filmesT.setOpaque(false);
+        filmesT.setAutoCreateRowSorter(true);
+        jScrollPane1.setViewportView(filmesT);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 830, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
-        );
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 830, 540));
+
+        generoCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Gênero", "Ação", "Comédia", "Romance", "Suspense", "Terror" }));
+        jPanel2.add(generoCB, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 60, -1, -1));
+
+        userCB.setModel(new javax.swing.DefaultComboBoxModel<>(users()));
+        jPanel2.add(userCB, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 60, 170, -1));
+
+        anoCB.setModel(new javax.swing.DefaultComboBoxModel<>(anos()));
+        jPanel2.add(anoCB, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 60, 70, -1));
+
+        classificacaoCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Livre", "10+", "12+", "14+", "16+", "18+" }));
+        jPanel2.add(classificacaoCB, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 60, -1, -1));
+
+        kidC.setText("Infantil");
+        jPanel2.add(kidC, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 60, -1, -1));
+        jPanel2.add(nomeF, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 220, 40));
+
+        filtrarB.setText("Filtrar");
+        filtrarB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                filtrarBActionPerformed(evt);
+            }
+        });
+        jPanel2.add(filtrarB, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 10, 330, 40));
+
+        limparB.setText("Limpar");
+        limparB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                limparBActionPerformed(evt);
+            }
+        });
+        jPanel2.add(limparB, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 10, 70, 40));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 30, 830, 650));
 
@@ -85,10 +130,53 @@ public class Filmes extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        this.dispose();
-        new Menu().setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void sairBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sairBActionPerformed
+        dispose();
+        if (usuario.getNome().equals("admin"))
+            new MenuAdm().setVisible(true);
+        else new Menu().setVisible(true);
+    }//GEN-LAST:event_sairBActionPerformed
+
+    private void filtrarBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filtrarBActionPerformed
+        HashMap<Filtro, String> ob = new HashMap<>();
+        if (!nomeF.getText().equals(""))
+            ob.put(NOME, nomeF.getText());
+        if (!userCB.getSelectedItem().toString().equals("Selecione o usuário"))
+            ob.put(USERID, String.valueOf(getIdFrom(userCB.getSelectedItem().toString())));
+        if (!anoCB.getSelectedItem().toString().equals("Ano"))
+            ob.put(ANO, anoCB.getSelectedItem().toString());
+        if (!generoCB.getSelectedItem().toString().equals("Gênero")) {
+            GeneroFilme g = (GeneroFilme) getE(generoCB.getSelectedItem().toString());
+            ob.put(GENERO, String.valueOf(g.id()));
+        }
+        if (!classificacaoCB.getSelectedItem().toString().equals("Todos")) {
+            Classificacao c = (Classificacao) getE(classificacaoCB.getSelectedItem().toString());
+            ob.put(CLASSIFICACAO, String.valueOf(c.id()-1));
+        }
+        if (kidC.isSelected())
+            ob.put(KID, "true");
+        if (ob.isEmpty()) filmesT.setModel(new javax.swing.table.DefaultTableModel(
+                    getFilmes(null),
+                    new String[]{
+                            "Nome", "Sinopse", "Ano", "Nota IMDB", "Nota público", "Gênero", "Subgênero", "Classificação", "Infantil", "Adicionado por"
+                    }
+            ));
+        else filmesT.setModel(new javax.swing.table.DefaultTableModel(
+                getFilmes(ob),
+                new String[]{
+                        "Nome", "Sinopse", "Ano", "Nota IMDB", "Nota público", "Gênero", "Subgênero", "Classificação", "Infantil", "Adicionado por"
+                }
+        ));
+    }//GEN-LAST:event_filtrarBActionPerformed
+
+    private void limparBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limparBActionPerformed
+        nomeF.setText("");
+        userCB.setSelectedItem(userCB.getItemAt(0));
+        anoCB.setSelectedItem(anoCB.getItemAt(0));
+        generoCB.setSelectedItem(generoCB.getItemAt(0));
+        classificacaoCB.setSelectedItem(classificacaoCB.getItemAt(0));
+        kidC.setSelected(false);
+    }//GEN-LAST:event_limparBActionPerformed
 
     /**
      * @param args the command line arguments
@@ -118,10 +206,18 @@ public class Filmes extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> anoCB;
     private javax.swing.JLabel background;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<String> classificacaoCB;
+    private javax.swing.JTable filmesT;
+    private javax.swing.JButton filtrarB;
+    private javax.swing.JComboBox<String> generoCB;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JCheckBox kidC;
+    private javax.swing.JButton limparB;
+    private javax.swing.JTextField nomeF;
+    private javax.swing.JButton sairB;
+    private javax.swing.JComboBox<String> userCB;
     // End of variables declaration//GEN-END:variables
 }

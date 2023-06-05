@@ -4,7 +4,10 @@
  */
 package flix.frames;
 
+import flix.enums.Filtro;
+
 import javax.swing.*;
+import java.util.HashMap;
 
 import static flix.Main.usuario;
 import static flix.util.Manager.getUsuarios;
@@ -34,10 +37,12 @@ public class Usuarios extends javax.swing.JFrame {
     private void initComponents() {
 
         menu = new javax.swing.JButton();
-        sair = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        usuariosT = new javax.swing.JTable();
+        nomeF = new javax.swing.JTextField();
+        emailF = new javax.swing.JTextField();
+        filtrarB = new javax.swing.JButton();
         background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -49,6 +54,7 @@ public class Usuarios extends javax.swing.JFrame {
         menu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon2.png"))); // NOI18N
         menu.setBorder(null);
         menu.setBorderPainted(false);
+        menu.setContentAreaFilled(false);
         menu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuActionPerformed(evt);
@@ -56,41 +62,44 @@ public class Usuarios extends javax.swing.JFrame {
         });
         getContentPane().add(menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 580, -1, -1));
 
-        sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon2.png"))); // NOI18N
-        sair.setBorder(null);
-        sair.setBorderPainted(false);
-        sair.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sairActionPerformed(evt);
-            }
-        });
-        getContentPane().add(sair, new org.netbeans.lib.awtextra.AbsoluteConstraints(1130, 580, -1, -1));
+        jPanel2.setOpaque(false);
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            getUsuarios(),
+        usuariosT.setModel(new javax.swing.table.DefaultTableModel(
+            getUsuarios(null, null),
             new String [] {
-                "Nome", "Sobrenome", "CPF", "Email", "Gênero", "Gênero favotiro 1", "Gênero favotiro 2", "Infantil"
+                "Nome", "Sobrenome", "CPF", "Email", "Idade", "Gênero", "Gênero favotiro 1", "Gênero favorito 2"
             }
         ));
-        jTable1.setEnabled(false);
-        jTable1.setOpaque(false);
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+        usuariosT.setToolTipText("");
+        usuariosT.setColumnSelectionAllowed(true);
+        usuariosT.setEnabled(false);
+        usuariosT.setFocusable(false);
+        usuariosT.setOpaque(false);
+        usuariosT.getTableHeader().setReorderingAllowed(false);
+        usuariosT.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
+                usuariosTMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(usuariosT);
+        usuariosT.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 830, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
-        );
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 830, 550));
+
+        nomeF.setText("nome usuario");
+        jPanel2.add(nomeF, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, 220, 40));
+
+        emailF.setText("email usuario");
+        jPanel2.add(emailF, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 50, 200, 40));
+
+        filtrarB.setText("Filtrar");
+        filtrarB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                filtrarBActionPerformed(evt);
+            }
+        });
+        jPanel2.add(filtrarB, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 50, 100, 40));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 30, 830, 650));
 
@@ -103,19 +112,29 @@ public class Usuarios extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void menuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuActionPerformed
-        this.dispose();
+        dispose();
         new MenuAdm().setVisible(true);
     }//GEN-LAST:event_menuActionPerformed
 
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+    private void usuariosTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_usuariosTMouseClicked
 
-    }//GEN-LAST:event_jTable1MouseClicked
+    }//GEN-LAST:event_usuariosTMouseClicked
 
-    private void sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sairActionPerformed
-        this.dispose();
-        usuario = null;
-        new Login().setVisible(true);
-    }//GEN-LAST:event_sairActionPerformed
+    private void filtrarBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filtrarBActionPerformed
+        HashMap<Filtro, String> ob = new HashMap<>();
+        if (ob.isEmpty()) usuariosT.setModel(new javax.swing.table.DefaultTableModel(
+                getUsuarios(null, null),
+                new String[]{
+                        "Nome", "Sobrenome", "CPF", "Email", "Idade", "Gênero", "Gênero favotiro 1", "Gênero favorito 2"
+                }
+        ));
+        else usuariosT.setModel(new javax.swing.table.DefaultTableModel(
+                getUsuarios(nomeF.getText(), emailF.getText()),
+                new String[]{
+                        "Nome", "Sobrenome", "CPF", "Email", "Idade", "Gênero", "Gênero favotiro 1", "Gênero favorito 2"
+                }
+        ));
+    }//GEN-LAST:event_filtrarBActionPerformed
 
     /**
      * @param args the command line arguments
@@ -148,10 +167,12 @@ public class Usuarios extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel background;
+    private javax.swing.JTextField emailF;
+    private javax.swing.JButton filtrarB;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JButton menu;
-    private javax.swing.JButton sair;
+    private javax.swing.JTextField nomeF;
+    private javax.swing.JTable usuariosT;
     // End of variables declaration//GEN-END:variables
 }

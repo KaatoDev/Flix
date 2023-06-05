@@ -38,7 +38,9 @@ public class Menu extends javax.swing.JFrame {
         menuP = new javax.swing.JPanel();
         catalogoB = new javax.swing.JButton();
         cadFilmeB = new javax.swing.JButton();
-        jToggleButton1 = new javax.swing.JToggleButton();
+        dashboardB = new javax.swing.JButton();
+        avaliarB = new javax.swing.JButton();
+        catalogoF = new javax.swing.JLabel();
         sair = new javax.swing.JButton();
         background = new javax.swing.JLabel();
 
@@ -51,35 +53,49 @@ public class Menu extends javax.swing.JFrame {
         menuP.setOpaque(false);
         menuP.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        catalogoB.setText("catalogo");
+        catalogoB.setBorderPainted(false);
+        catalogoB.setContentAreaFilled(false);
         catalogoB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 catalogoBActionPerformed(evt);
             }
         });
-        menuP.add(catalogoB, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 80, -1, -1));
+        menuP.add(catalogoB, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 50, 120, 30));
 
-        cadFilmeB.setText("Cadastrar filme");
+        cadFilmeB.setBorderPainted(false);
+        cadFilmeB.setContentAreaFilled(false);
         cadFilmeB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cadFilmeBActionPerformed(evt);
             }
         });
-        menuP.add(cadFilmeB, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, -1, -1));
+        menuP.add(cadFilmeB, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 120, 190, 40));
 
-        jToggleButton1.setText("perfil");
-        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+        dashboardB.setBorderPainted(false);
+        dashboardB.setContentAreaFilled(false);
+        dashboardB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton1ActionPerformed(evt);
+                dashboardBActionPerformed(evt);
             }
         });
-        menuP.add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 170, -1, -1));
+        menuP.add(dashboardB, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, 90, 40));
+
+        avaliarB.setBorderPainted(false);
+        avaliarB.setContentAreaFilled(false);
+        avaliarB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                avaliarBActionPerformed(evt);
+            }
+        });
+        menuP.add(avaliarB, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 260, 110, 40));
+        menuP.add(catalogoF, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 40, 130, 50));
 
         getContentPane().add(menuP, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 150, 420, 340));
 
         sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon2.png"))); // NOI18N
         sair.setBorder(null);
         sair.setBorderPainted(false);
+        sair.setContentAreaFilled(false);
         sair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sairActionPerformed(evt);
@@ -87,7 +103,7 @@ public class Menu extends javax.swing.JFrame {
         });
         getContentPane().add(sair, new org.netbeans.lib.awtextra.AbsoluteConstraints(1130, 580, -1, -1));
 
-        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bbb2.png"))); // NOI18N
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bbb2 menu.png"))); // NOI18N
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
@@ -95,25 +111,30 @@ public class Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void catalogoBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_catalogoBActionPerformed
-        this.dispose();
-        new Catalogo().setVisible(true);
+        dispose();
+        new Filmes().setVisible(true);
     }//GEN-LAST:event_catalogoBActionPerformed
 
     private void cadFilmeBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadFilmeBActionPerformed
-        this.dispose();
+        dispose();
         new CadFilme().setVisible(true);
     }//GEN-LAST:event_cadFilmeBActionPerformed
 
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        this.dispose();
-        new Dashboard().setVisible(true);
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
-
     private void sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sairActionPerformed
-        this.dispose();
+        dispose();
         Main.usuario = null;
         new Login().setVisible(true);
     }//GEN-LAST:event_sairActionPerformed
+
+    private void dashboardBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dashboardBActionPerformed
+        dispose();
+        new Dashboard().setVisible(true);
+    }//GEN-LAST:event_dashboardBActionPerformed
+
+    private void avaliarBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_avaliarBActionPerformed
+        dispose();
+        new Avaliar().setVisible(true);
+    }//GEN-LAST:event_avaliarBActionPerformed
 
     /**
      * @param args the command line arguments
@@ -142,10 +163,12 @@ public class Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton avaliarB;
     private javax.swing.JLabel background;
     private javax.swing.JButton cadFilmeB;
     private javax.swing.JButton catalogoB;
-    private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JLabel catalogoF;
+    private javax.swing.JButton dashboardB;
     private javax.swing.JPanel menuP;
     private javax.swing.JButton sair;
     // End of variables declaration//GEN-END:variables

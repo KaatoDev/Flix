@@ -10,6 +10,7 @@ import javax.swing.*;
 
 import static flix.Main.usuario;
 import static flix.util.DbManager.registrarFilme;
+import static flix.util.Manager.getE;
 import static flix.util.Manager.icon;
 
 /**
@@ -34,6 +35,7 @@ public class CadFilme extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        menu = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         nomeF = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -49,24 +51,36 @@ public class CadFilme extends javax.swing.JFrame {
         genCB2 = new javax.swing.JComboBox<>();
         genCB1 = new javax.swing.JComboBox<>();
         cadastrarB = new javax.swing.JButton();
-        menu = new javax.swing.JButton();
+        background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setFocusTraversalPolicyProvider(true);
         setIconImage(icon(this.getClass()));
         setLocationByPlatform(true);
-        setMaximumSize(new java.awt.Dimension(1920, 1080));
+        setMaximumSize(new java.awt.Dimension(1280, 720));
         setMinimumSize(new java.awt.Dimension(1280, 720));
-        setPreferredSize(new java.awt.Dimension(1280, 720));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        menu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon2.png"))); // NOI18N
+        menu.setBorder(null);
+        menu.setBorderPainted(false);
+        menu.setContentAreaFilled(false);
+        menu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuActionPerformed(evt);
+            }
+        });
+        getContentPane().add(menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 580, -1, -1));
+
+        jPanel1.setOpaque(false);
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         nomeF.setText("Velozes e furiosos");
         nomeF.setBorder(javax.swing.BorderFactory.createTitledBorder("Nome do filme"));
         nomeF.setMaximumSize(new java.awt.Dimension(220, 50));
         nomeF.setMinimumSize(new java.awt.Dimension(220, 50));
         nomeF.setPreferredSize(new java.awt.Dimension(220, 50));
+        jPanel1.add(nomeF, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 50, -1, -1));
 
         jScrollPane1.setMaximumSize(new java.awt.Dimension(300, 150));
         jScrollPane1.setMinimumSize(new java.awt.Dimension(300, 150));
@@ -83,6 +97,8 @@ public class CadFilme extends javax.swing.JFrame {
         sinopseF.setPreferredSize(new java.awt.Dimension(250, 100));
         jScrollPane1.setViewportView(sinopseF);
 
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 150, 720, 160));
+
         jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         jScrollPane2.setMaximumSize(new java.awt.Dimension(440, 60));
@@ -98,6 +114,8 @@ public class CadFilme extends javax.swing.JFrame {
         capaF.setPreferredSize(new java.awt.Dimension(440, 60));
         jScrollPane2.setViewportView(capaF);
 
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 470, 720, 50));
+
         jScrollPane3.setBorder(null);
         jScrollPane3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane3.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
@@ -111,6 +129,8 @@ public class CadFilme extends javax.swing.JFrame {
         iconF.setBorder(javax.swing.BorderFactory.createTitledBorder("Link do icon"));
         jScrollPane3.setViewportView(iconF);
 
+        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 370, 720, 50));
+
         anoF.setBorder(javax.swing.BorderFactory.createTitledBorder("Ano de lançamento"));
         anoF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("YYYY"))));
         anoF.setToolTipText("");
@@ -119,26 +139,32 @@ public class CadFilme extends javax.swing.JFrame {
         anoF.setMinimumSize(new java.awt.Dimension(130, 40));
         anoF.setPreferredSize(new java.awt.Dimension(130, 40));
         anoF.setVerifyInputWhenFocusTarget(false);
+        jPanel1.add(anoF, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 50, 130, 50));
 
         kidB.setText("Filme infantil");
+        jPanel1.add(kidB, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 540, 110, 40));
 
         notaF.setBorder(javax.swing.BorderFactory.createTitledBorder("Nota IMDB"));
         notaF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("0.0"))));
         notaF.setMinimumSize(new java.awt.Dimension(105, 40));
         notaF.setPreferredSize(new java.awt.Dimension(150, 50));
+        jPanel1.add(notaF, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 50, 80, -1));
 
         classCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Livre", "10+", "12+", "14+", "16+", "18+" }));
         classCB.setBorder(javax.swing.BorderFactory.createTitledBorder("Classsificação etária"));
         classCB.setMaximumSize(new java.awt.Dimension(125, 50));
         classCB.setMinimumSize(new java.awt.Dimension(125, 50));
         classCB.setPreferredSize(new java.awt.Dimension(125, 50));
+        jPanel1.add(classCB, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 50, -1, -1));
 
         genCB2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ação", "Comédia", "Romance", "Suspense", "Terror" }));
         genCB2.setBorder(javax.swing.BorderFactory.createTitledBorder("Gênero 2"));
+        jPanel1.add(genCB2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 540, 90, 40));
 
         genCB1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ação", "Comédia", "Romance", "Suspense", "Terror" }));
         genCB1.setBorder(javax.swing.BorderFactory.createTitledBorder("Gênero 1"));
         genCB1.setMaximumSize(new java.awt.Dimension(92, 43));
+        jPanel1.add(genCB1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 540, 90, 40));
 
         cadastrarB.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         cadastrarB.setText("Cadastrar");
@@ -147,103 +173,28 @@ public class CadFilme extends javax.swing.JFrame {
                 cadastrarBActionPerformed(evt);
             }
         });
+        jPanel1.add(cadastrarB, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 570, 120, 42));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(110, 110, 110)
-                        .addComponent(nomeF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(62, 62, 62)
-                        .addComponent(anoF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(60, 60, 60)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(classCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(notaF, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(kidB))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(60, 60, 60)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 502, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(60, 60, 60)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 502, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(105, 105, 105)
-                        .addComponent(genCB1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
-                        .addComponent(genCB2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(81, 81, 81)
-                        .addComponent(cadastrarB, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nomeF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(anoF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(classCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(notaF, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(kidB, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(20, 20, 20)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(genCB2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(genCB1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(cadastrarB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 30, 830, 650));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(214, 79, -1, -1));
-
-        menu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon2.png"))); // NOI18N
-        menu.setBorder(null);
-        menu.setBorderPainted(false);
-        menu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuActionPerformed(evt);
-            }
-        });
-        getContentPane().add(menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 580, -1, -1));
+        background.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bbb2 catalogo.png"))); // NOI18N
+        getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void cadastrarBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarBActionPerformed
-        GeneroFilme a1 = GeneroFilme.valueOf(genCB1.get.getSelectedItem().toString().toUpperCase()), a2 = GeneroFilme.valueOf(genCB2.getSelectedItem().toString().toUpperCase());
+        GeneroFilme a1 = (GeneroFilme) getE(genCB1.getSelectedItem().toString()), a2 = (GeneroFilme) getE(genCB1.getSelectedItem().toString());
         if (registrarFilme(usuario, nomeF.getText(), sinopseF.getText(), capaF.getText(), iconF.getText(), Integer.parseInt(anoF.getText()), Double.parseDouble(notaF.getText().replace(",", ".")), classCB.getSelectedItem().toString(), kidB.isSelected(), a1, a2)) {
             JOptionPane.showMessageDialog(null, "Filme <" + nomeF.getText() +  "> cadastrado com sucesso!");
-            this.dispose();
-            new Catalogo().setVisible(true);
+            dispose();
+            new Avaliar().setVisible(true);
         }
     }//GEN-LAST:event_cadastrarBActionPerformed
 
     private void menuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuActionPerformed
-        this.dispose();
+        dispose();
         new Menu().setVisible(true);
     }//GEN-LAST:event_menuActionPerformed
 
@@ -275,6 +226,7 @@ public class CadFilme extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFormattedTextField anoF;
+    private javax.swing.JLabel background;
     private javax.swing.JButton cadastrarB;
     private javax.swing.JTextArea capaF;
     private javax.swing.JComboBox<String> classCB;

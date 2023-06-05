@@ -221,6 +221,7 @@ public class EditFilme1 extends javax.swing.JFrame {
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon2.png"))); // NOI18N
         jButton2.setBorder(null);
         jButton2.setBorderPainted(false);
+        jButton2.setContentAreaFilled(false);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -235,13 +236,13 @@ public class EditFilme1 extends javax.swing.JFrame {
         GeneroFilme a1 = GeneroFilme.valueOf(genCB1.getSelectedItem().toString().toUpperCase()), a2 = GeneroFilme.valueOf(genCB2.getSelectedItem().toString().toUpperCase());
         if (registrarFilme(usuario, nomeF.getText(), sinopseF.getText(), capaF.getText(), iconF.getText(), Integer.parseInt(anoF.getText()), Double.parseDouble(notaF.getText().replace(",", ".")), classCB.getSelectedItem().toString(), kidB.isSelected(), a1, a2)) {
             JOptionPane.showMessageDialog(null, "Filme <" + nomeF.getText() +  "> cadastrado com sucesso!");
-            this.dispose();
-            new Catalogo().setVisible(true);
+            dispose();
+            new Avaliar().setVisible(true);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        this.dispose();
+        dispose();
         new Menu().setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 

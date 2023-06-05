@@ -10,6 +10,7 @@ import static flix.Main.login;
 import static flix.util.DbManager.exists;
 import static flix.util.DbManager.logar;
 import static flix.util.Manager.icon;
+import static flix.util.Manager.nulo;
 
 /**
  *
@@ -21,7 +22,7 @@ public class Login extends javax.swing.JFrame {
      * Creates new form Login
      */
     public Login() {
-        super("(Desconectado) MyImagePro - Login");
+        super("(Usuário: " + nulo() + ") MyImagePro - Login");
         initComponents();
     }
 
@@ -38,7 +39,7 @@ public class Login extends javax.swing.JFrame {
         loginF = new javax.swing.JTextField();
         passF = new javax.swing.JPasswordField();
         forgetPassB = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        loginB = new javax.swing.JButton();
         background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -79,13 +80,14 @@ public class Login extends javax.swing.JFrame {
         forgetPassB.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         panelLogin.add(forgetPassB, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 160, 70, 20));
 
-        jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel1MouseClicked(evt);
+        loginB.setBorderPainted(false);
+        loginB.setContentAreaFilled(false);
+        loginB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginBActionPerformed(evt);
             }
         });
-        panelLogin.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 210, 135, 55));
+        panelLogin.add(loginB, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 210, 140, 60));
 
         getContentPane().add(panelLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 170, 290, 290));
 
@@ -106,7 +108,7 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_passFActionPerformed
 
-    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+    private void loginBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBActionPerformed
         String nome = loginF.getText();
         String senha = new String(passF.getPassword());
         if (!exists(nome)) JOptionPane.showMessageDialog(null, "Usuário não existe.");
@@ -122,7 +124,7 @@ public class Login extends javax.swing.JFrame {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(null, "Usuário ou senha inválida!");
             }
-    }//GEN-LAST:event_jLabel1MouseClicked
+    }//GEN-LAST:event_loginBActionPerformed
 
     /**
      * @param args the command line arguments
@@ -153,7 +155,7 @@ public class Login extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel background;
     private javax.swing.JLabel forgetPassB;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton loginB;
     private javax.swing.JTextField loginF;
     private javax.swing.JPanel panelLogin;
     private javax.swing.JPasswordField passF;

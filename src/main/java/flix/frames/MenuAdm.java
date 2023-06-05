@@ -52,6 +52,7 @@ public class MenuAdm extends javax.swing.JFrame {
         sair5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon2.png"))); // NOI18N
         sair5.setBorder(null);
         sair5.setBorderPainted(false);
+        sair5.setContentAreaFilled(false);
         sair5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sair5ActionPerformed(evt);
@@ -62,41 +63,45 @@ public class MenuAdm extends javax.swing.JFrame {
         menuP.setOpaque(false);
         menuP.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        catalogoB.setText("catalogo");
+        catalogoB.setBorderPainted(false);
+        catalogoB.setContentAreaFilled(false);
         catalogoB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 catalogoBActionPerformed(evt);
             }
         });
-        menuP.add(catalogoB, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 80, -1, -1));
+        menuP.add(catalogoB, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 50, 120, 40));
 
-        cadUserB.setText("Cadastrar usuário");
+        cadUserB.setBorderPainted(false);
+        cadUserB.setContentAreaFilled(false);
         cadUserB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cadUserBActionPerformed(evt);
             }
         });
-        menuP.add(cadUserB, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, -1, -1));
+        menuP.add(cadUserB, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 120, 200, 40));
 
-        managerUserB.setText("Gerenciar usuários");
+        managerUserB.setBorderPainted(false);
+        managerUserB.setContentAreaFilled(false);
         managerUserB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 managerUserBActionPerformed(evt);
             }
         });
-        menuP.add(managerUserB, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 180, -1, -1));
+        menuP.add(managerUserB, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 190, 210, 40));
 
-        managerFilmeB.setText("Gerenciar filmes");
+        managerFilmeB.setBorderPainted(false);
+        managerFilmeB.setContentAreaFilled(false);
         managerFilmeB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 managerFilmeBActionPerformed(evt);
             }
         });
-        menuP.add(managerFilmeB, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 230, -1, -1));
+        menuP.add(managerFilmeB, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 260, 190, 40));
 
         getContentPane().add(menuP, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 150, 420, 340));
 
-        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bbb2.png"))); // NOI18N
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bbb2 menuadm.png"))); // NOI18N
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
@@ -104,27 +109,27 @@ public class MenuAdm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void catalogoBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_catalogoBActionPerformed
-        this.dispose();
-        new Catalogo().setVisible(true);
+        dispose();
+        new Filmes().setVisible(true);
     }//GEN-LAST:event_catalogoBActionPerformed
 
     private void cadUserBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadUserBActionPerformed
-        this.dispose();
+        dispose();
         new CadUser().setVisible(true);
     }//GEN-LAST:event_cadUserBActionPerformed
 
     private void managerUserBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_managerUserBActionPerformed
-        this.dispose();
+        dispose();
         new Usuarios().setVisible(true);
     }//GEN-LAST:event_managerUserBActionPerformed
 
     private void managerFilmeBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_managerFilmeBActionPerformed
-        this.dispose();
+        dispose();
         new Filmes().setVisible(true);
     }//GEN-LAST:event_managerFilmeBActionPerformed
 
     private void sair5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sair5ActionPerformed
-        this.dispose();
+        dispose();
         Main.usuario = null;
         new Login().setVisible(true);
     }//GEN-LAST:event_sair5ActionPerformed

@@ -84,6 +84,7 @@ public class Dashboard extends javax.swing.JFrame {
         sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon2.png"))); // NOI18N
         sair.setBorder(null);
         sair.setBorderPainted(false);
+        sair.setContentAreaFilled(false);
         sair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sairActionPerformed(evt);
@@ -94,6 +95,7 @@ public class Dashboard extends javax.swing.JFrame {
         menu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon2.png"))); // NOI18N
         menu.setBorder(null);
         menu.setBorderPainted(false);
+        menu.setContentAreaFilled(false);
         menu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuActionPerformed(evt);
@@ -109,14 +111,14 @@ public class Dashboard extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sairActionPerformed
-        this.dispose();
+        dispose();
         usuario = null;
         new Login().setVisible(true);
     }//GEN-LAST:event_sairActionPerformed
 
     private void menuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuActionPerformed
-        this.dispose();
-        new MenuAdm().setVisible(true);
+        dispose();
+        new Menu().setVisible(true);
     }//GEN-LAST:event_menuActionPerformed
 
     /**
