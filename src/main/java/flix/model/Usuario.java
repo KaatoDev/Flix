@@ -9,15 +9,17 @@ import java.sql.Date;
 public class Usuario {
     private final long cpf;
     private final int id;
+    private final boolean adm;
     private GeneroFilme genero1, genero2;
     private Genero genero;
     private String nome, sobrenome, email;
     private Date nascimento;
     private ImageIcon icon;
 
-    public Usuario(int id, long cpf, String nome, String sobrenome, String email, Date nascimento, Genero genero, int icon, GeneroFilme genero1, GeneroFilme genero2) {
+    public Usuario(int id, boolean adm, long cpf, String nome, String sobrenome, String email, Date nascimento, Genero genero, int icon, GeneroFilme genero1, GeneroFilme genero2) {
         this.cpf = cpf;
         this.id = id;
+        this.adm = adm;
         this.genero1 = genero1;
         this.genero2 = genero2;
         this.genero = genero;
@@ -25,7 +27,11 @@ public class Usuario {
         this.sobrenome = sobrenome;
         this.email = email;
         this.nascimento = nascimento;
-        this.icon = new ImageIcon(this.getClass().getResource("/perfil" + icon + ".png"));
+        this.icon = new ImageIcon(this.getClass().getResource("/others/perfil" + icon + ".png"));
+    }
+
+    public boolean isAdm() {
+        return adm;
     }
 
     public ImageIcon getIcon() {

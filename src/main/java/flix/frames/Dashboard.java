@@ -5,7 +5,12 @@
  */
 package flix.frames;
 
+import com.formdev.flatlaf.FlatLightLaf;
+
 import javax.swing.*;
+
+import java.time.LocalDate;
+import java.time.Period;
 
 import static flix.Main.usuario;
 import static flix.util.Manager.icon;
@@ -21,6 +26,7 @@ public class Dashboard extends javax.swing.JFrame {
      */
     public Dashboard() {
         super("(Usuário: " + usuario.getNome() + ") MyImagePro - Dashboard");
+        FlatLightLaf.setup();
         initComponents();
     }
 
@@ -34,13 +40,13 @@ public class Dashboard extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
+        iconL = new javax.swing.JLabel();
         nomeL = new javax.swing.JLabel();
-        sobrenomeL = new javax.swing.JLabel();
         nascimentoL = new javax.swing.JLabel();
         generoL = new javax.swing.JLabel();
         generoFav1L = new javax.swing.JLabel();
         generoFav2L = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         sair = new javax.swing.JButton();
         menu = new javax.swing.JButton();
         background = new javax.swing.JLabel();
@@ -51,37 +57,44 @@ public class Dashboard extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(1280, 720));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel1.setOpaque(false);
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel3.setBackground(new java.awt.Color(100, 100, 100));
-        jLabel3.setIcon(usuario.getIcon());
-        jLabel3.setMaximumSize(new java.awt.Dimension(200, 200));
-        jLabel3.setMinimumSize(new java.awt.Dimension(200, 200));
-        jLabel3.setOpaque(true);
-        jLabel3.setPreferredSize(new java.awt.Dimension(200, 200));
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, -1, -1));
+        iconL.setBackground(new java.awt.Color(100, 100, 100));
+        iconL.setIcon(usuario.getIcon());
+        iconL.setMaximumSize(new java.awt.Dimension(200, 200));
+        iconL.setMinimumSize(new java.awt.Dimension(200, 200));
+        iconL.setOpaque(true);
+        iconL.setPreferredSize(new java.awt.Dimension(200, 200));
+        jPanel1.add(iconL, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, -1, -1));
 
-        nomeL.setText(usuario.getNome());
-        jPanel1.add(nomeL, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 70, 250, 80));
+        nomeL.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        nomeL.setText(nome());
+        jPanel1.add(nomeL, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 60, 470, 30));
 
-        sobrenomeL.setText(usuario.getSobrenome());
-        jPanel1.add(sobrenomeL, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 160, 260, 80));
+        nascimentoL.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        nascimentoL.setText(idade());
+        jPanel1.add(nascimentoL, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 130, 70, 30));
 
-        nascimentoL.setText(String.valueOf(usuario.getNascimento()));
-        jPanel1.add(nascimentoL, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 280, 180, 60));
+        generoL.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        generoL.setText(gen(0));
+        jPanel1.add(generoL, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 130, 120, 30));
 
-        generoL.setText(usuario.getGenero().toString());
-        jPanel1.add(generoL, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 280, 200, 60));
+        generoFav1L.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        generoFav1L.setText(gen(1));
+        jPanel1.add(generoFav1L, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 210, 220, 30));
 
-        generoFav1L.setText(usuario.getGenero1().toString());
-        jPanel1.add(generoFav1L, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 430, -1, -1));
+        generoFav2L.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        generoFav2L.setText(gen(2));
+        jPanel1.add(generoFav2L, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 210, 220, 30));
 
-        generoFav2L.setText(usuario.getGenero2().toString());
-        jPanel1.add(generoFav2L, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 430, -1, -1));
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel1.setText(usuario.getEmail().toString());
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 130, 210, 30));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, 830, 670));
 
-        sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon2.png"))); // NOI18N
+        sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/others/icon2.png"))); // NOI18N
         sair.setBorder(null);
         sair.setBorderPainted(false);
         sair.setContentAreaFilled(false);
@@ -92,7 +105,7 @@ public class Dashboard extends javax.swing.JFrame {
         });
         getContentPane().add(sair, new org.netbeans.lib.awtextra.AbsoluteConstraints(1130, 580, -1, -1));
 
-        menu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon2.png"))); // NOI18N
+        menu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/others/icon2.png"))); // NOI18N
         menu.setBorder(null);
         menu.setBorderPainted(false);
         menu.setContentAreaFilled(false);
@@ -104,10 +117,11 @@ public class Dashboard extends javax.swing.JFrame {
         getContentPane().add(menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 580, -1, -1));
 
         background.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bbb2 catalogo.png"))); // NOI18N
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/backgrounds/bbb2 perfil.png"))); // NOI18N
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sairActionPerformed
@@ -152,12 +166,33 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel generoFav1L;
     private javax.swing.JLabel generoFav2L;
     private javax.swing.JLabel generoL;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel iconL;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton menu;
     private javax.swing.JLabel nascimentoL;
     private javax.swing.JLabel nomeL;
     private javax.swing.JButton sair;
-    private javax.swing.JLabel sobrenomeL;
     // End of variables declaration//GEN-END:variables
+
+    public static String gen(int i) {
+        switch (i) {
+            case 0 -> {
+                return usuario.getGenero().nome();
+            }
+            case 1 -> {
+                return usuario.getGenero1().nome();
+            }
+            case 2 -> {
+                return usuario.getGenero2().nome();
+            }
+        }
+        return "erro";
+    }
+    public static String nome() {
+        return usuario.getNome() + " " + usuario.getSobrenome();
+    }
+    public static String idade() {
+        return Period.between(usuario.getNascimento().toLocalDate(), LocalDate.now()).getYears() + " anos";
+    }
 }

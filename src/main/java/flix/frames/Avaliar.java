@@ -4,6 +4,7 @@
  */
 package flix.frames;
 
+import com.formdev.flatlaf.FlatLightLaf;
 import flix.model.Filme;
 
 import javax.swing.*;
@@ -23,6 +24,7 @@ public class Avaliar extends javax.swing.JFrame {
      */
     public Avaliar() {
         super("(Usuário: " + usuario.getNome() + " ) MyImagePro - Catálogo de filmes");
+        FlatLightLaf.setup();
         initComponents();
     }
 
@@ -34,6 +36,7 @@ public class Avaliar extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        FlatLightLaf.setup();
 
         menu = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
@@ -52,7 +55,7 @@ public class Avaliar extends javax.swing.JFrame {
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        menu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon2.png"))); // NOI18N
+        menu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/others/icon2.png"))); // NOI18N
         menu.setBorder(null);
         menu.setBorderPainted(false);
         menu.setContentAreaFilled(false);
@@ -73,12 +76,8 @@ public class Avaliar extends javax.swing.JFrame {
         notaF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
         notaF.setToolTipText("8.1");
         jPanel2.add(notaF, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 200, 50, -1));
-
-        nota1.setText(".");
-        jPanel2.add(nota1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 130, 30, -1));
-
-        nota2.setText(".");
-        jPanel2.add(nota2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 130, 30, -1));
+        jPanel2.add(nota1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 130, 30, 20));
+        jPanel2.add(nota2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 130, 30, 20));
 
         avaliarB.setBorderPainted(false);
         avaliarB.setContentAreaFilled(false);
@@ -100,9 +99,9 @@ public class Avaliar extends javax.swing.JFrame {
         jPanel2.add(procurarB, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 30, 90, 40));
 
         filmesCB.setModel(new javax.swing.DefaultComboBoxModel<>(filmes(null)));
-        filmesCB.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                filmesCBMouseClicked(evt);
+        filmesCB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                filmesCBActionPerformed(evt);
             }
         });
         jPanel2.add(filmesCB, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 190, 50));
@@ -110,7 +109,7 @@ public class Avaliar extends javax.swing.JFrame {
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 150, 420, 340));
 
         background.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bbb2 avaliar.png"))); // NOI18N
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/backgrounds/bbb2 avaliar.png"))); // NOI18N
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
@@ -134,13 +133,16 @@ public class Avaliar extends javax.swing.JFrame {
         filmesCB.setModel(new javax.swing.DefaultComboBoxModel<>(filmes(nomeF.getText())));
     }//GEN-LAST:event_procurarBActionPerformed
 
-    private void filmesCBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_filmesCBMouseClicked
+    private void filmesCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filmesCBActionPerformed
         Filme a = filme(filmesCB.getSelectedItem().toString());
         if (a !=null) {
             nota1.setText(String.valueOf(a.getNota_IMDB()));
             nota2.setText(String.valueOf(a.getNota()));
+        } else {
+            nota1.setText("");
+            nota2.setText("");
         }
-    }//GEN-LAST:event_filmesCBMouseClicked
+    }//GEN-LAST:event_filmesCBActionPerformed
 
     /**
      * @param args the command line arguments

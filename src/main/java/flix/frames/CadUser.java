@@ -4,6 +4,7 @@
  */
 package flix.frames;
 
+import com.formdev.flatlaf.FlatLightLaf;
 import flix.enums.Genero;
 import flix.enums.GeneroFilme;
 
@@ -25,6 +26,7 @@ public class CadUser extends javax.swing.JFrame {
      */
     public CadUser() {
         super("(Usuário: " + usuario.getNome() + " ) MyImagePro - Cadastro de usuário");
+        FlatLightLaf.setup();
         initComponents();
     }
 
@@ -47,10 +49,16 @@ public class CadUser extends javax.swing.JFrame {
         cadastroB = new javax.swing.JButton();
         genFav1CB = new javax.swing.JComboBox<>();
         genFav2CB = new javax.swing.JComboBox<>();
+        suspenseR = new javax.swing.JRadioButton();
+        comediaR = new javax.swing.JRadioButton();
+        terrorR = new javax.swing.JRadioButton();
+        romanceR = new javax.swing.JRadioButton();
+        acaoR = new javax.swing.JRadioButton();
         menu = new javax.swing.JButton();
         background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setAlwaysOnTop(true);
         setFocusTraversalPolicyProvider(true);
         setIconImage(icon(this.getClass()));
         setLocationByPlatform(true);
@@ -63,36 +71,39 @@ public class CadUser extends javax.swing.JFrame {
         jPanel1.setPreferredSize(new java.awt.Dimension(400, 400));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        nomeF.setBorder(javax.swing.BorderFactory.createTitledBorder("Nome"));
-        jPanel1.add(nomeF, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, 160, -1));
+        nomeF.setBorder(null);
+        jPanel1.add(nomeF, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 220, 30));
 
-        sobrenomeF.setBorder(javax.swing.BorderFactory.createTitledBorder("Sobrenome"));
-        jPanel1.add(sobrenomeF, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 50, 160, -1));
+        sobrenomeF.setBorder(null);
+        jPanel1.add(sobrenomeF, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 36, 210, 30));
 
-        cpfF.setBorder(javax.swing.BorderFactory.createTitledBorder("CPF"));
-        jPanel1.add(cpfF, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 110, 160, -1));
+        cpfF.setBorder(null);
+        jPanel1.add(cpfF, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 200, 30));
 
-        emailF.setBorder(javax.swing.BorderFactory.createTitledBorder("email"));
-        jPanel1.add(emailF, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, 380, -1));
+        emailF.setBorder(null);
+        jPanel1.add(emailF, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, 440, 30));
 
-        senhaF.setBorder(javax.swing.BorderFactory.createTitledBorder("Senha"));
-        jPanel1.add(senhaF, new org.netbeans.lib.awtextra.AbsoluteConstraints(287, 110, 160, -1));
+        senhaF.setBorder(null);
+        jPanel1.add(senhaF, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 120, 210, 30));
 
-        nascimentoF.setBorder(javax.swing.BorderFactory.createTitledBorder("Data de Nascimento"));
+        nascimentoF.setBorder(null);
         nascimentoF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
-        jPanel1.add(nascimentoF, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 250, 128, -1));
+        nascimentoF.setToolTipText("dd/MM/yyyy");
+        jPanel1.add(nascimentoF, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 276, 180, 20));
 
         generoCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Não-binário", "Masculino", "Feminino" }));
-        generoCB.setBorder(javax.swing.BorderFactory.createTitledBorder("Gênero"));
-        jPanel1.add(generoCB, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 240, 123, -1));
+        generoCB.setBorder(null);
+        jPanel1.add(generoCB, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 340, 123, 30));
 
-        cadastroB.setText("Cadastrar");
+        cadastroB.setBorder(null);
+        cadastroB.setBorderPainted(false);
+        cadastroB.setContentAreaFilled(false);
         cadastroB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cadastroBActionPerformed(evt);
             }
         });
-        jPanel1.add(cadastroB, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 390, -1, -1));
+        jPanel1.add(cadastroB, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 390, 110, 30));
 
         genFav1CB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ação", "Comédia", "Romance", "Suspense", "Terror" }));
         genFav1CB.setBorder(javax.swing.BorderFactory.createTitledBorder("Gênero favorito 1"));
@@ -101,15 +112,40 @@ public class CadUser extends javax.swing.JFrame {
                 genFav1CBActionPerformed(evt);
             }
         });
-        jPanel1.add(genFav1CB, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 330, 123, -1));
+        jPanel1.add(genFav1CB, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 300, 123, -1));
 
         genFav2CB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ação", "Comédia", "Romance", "Suspense", "Terror" }));
         genFav2CB.setBorder(javax.swing.BorderFactory.createTitledBorder("Gênero favorito 2"));
-        jPanel1.add(genFav2CB, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 330, 128, -1));
+        jPanel1.add(genFav2CB, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 240, 128, -1));
+
+        suspenseR.setBorder(null);
+        suspenseR.setContentAreaFilled(false);
+        suspenseR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                suspenseRActionPerformed(evt);
+            }
+        });
+        jPanel1.add(suspenseR, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 300, -1, -1));
+
+        comediaR.setBorder(null);
+        comediaR.setContentAreaFilled(false);
+        jPanel1.add(comediaR, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 320, -1, -1));
+
+        terrorR.setBorder(null);
+        terrorR.setContentAreaFilled(false);
+        jPanel1.add(terrorR, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 320, -1, -1));
+
+        romanceR.setBorder(null);
+        romanceR.setContentAreaFilled(false);
+        jPanel1.add(romanceR, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 340, -1, -1));
+
+        acaoR.setBorder(null);
+        acaoR.setContentAreaFilled(false);
+        jPanel1.add(acaoR, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 300, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 90, 540, 440));
 
-        menu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon2.png"))); // NOI18N
+        menu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/others/icon2.png"))); // NOI18N
         menu.setBorder(null);
         menu.setBorderPainted(false);
         menu.setContentAreaFilled(false);
@@ -121,27 +157,13 @@ public class CadUser extends javax.swing.JFrame {
         getContentPane().add(menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 580, -1, -1));
 
         background.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bbb2 cad.png"))); // NOI18N
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/backgrounds/bbb2 caduser.png"))); // NOI18N
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-
-    private void cadastroBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastroBActionPerformed
-        Genero genero = (Genero) getE(generoCB.getSelectedItem().toString());
-        GeneroFilme a1 = (GeneroFilme) getE(genFav1CB.getSelectedItem().toString()), a2 = (GeneroFilme) getE(genFav2CB.getSelectedItem().toString());
-        String a = nascimentoF.getText();
-        if (!cpf(cpfF.getText())) {
-            JOptionPane.showMessageDialog(null, "Insira um CPF válido!");
-            return;
-        }
-        int dia = Integer.parseInt(a.substring(0, a.indexOf("/"))),
-                mes = Integer.parseInt(a.substring(a.indexOf("/")+1, a.lastIndexOf("/"))),
-                ano = Integer.parseInt(a.substring(a.lastIndexOf("/")+1));
-        LocalDate ld = LocalDate.of(ano, mes, dia);
-        cadUsuario(nomeF.getText(), sobrenomeF.getText(), Long.parseLong(cpfF.getText()), emailF.getText(), new String(senhaF.getPassword()), ld, genero, a1, a2);
-    }//GEN-LAST:event_cadastroBActionPerformed
 
     private void genFav1CBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_genFav1CBActionPerformed
         // TODO add your handling code here:
@@ -152,6 +174,25 @@ public class CadUser extends javax.swing.JFrame {
         new MenuAdm().setVisible(true);
     }//GEN-LAST:event_menuActionPerformed
 
+    private void cadastroBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastroBActionPerformed
+        Genero genero = (Genero) getE(generoCB.getSelectedItem().toString());
+        GeneroFilme a1 = (GeneroFilme) getE(genFav1CB.getSelectedItem().toString()), a2 = (GeneroFilme) getE(genFav2CB.getSelectedItem().toString());
+        String a = nascimentoF.getText();
+        if (!cpf(cpfF.getText())) {
+            JOptionPane.showMessageDialog(null, "Insira um CPF válido!");
+            return;
+        }
+        int dia = Integer.parseInt(a.substring(0, a.indexOf("/"))),
+        mes = Integer.parseInt(a.substring(a.indexOf("/")+1, a.lastIndexOf("/"))),
+        ano = Integer.parseInt(a.substring(a.lastIndexOf("/")+1));
+        LocalDate ld = LocalDate.of(ano, mes, dia);
+        cadUsuario(nomeF.getText(), sobrenomeF.getText(), Long.parseLong(cpfF.getText()), emailF.getText(), new String(senhaF.getPassword()), ld, genero, a1, a2);
+    }//GEN-LAST:event_cadastroBActionPerformed
+
+    private void suspenseRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_suspenseRActionPerformed
+        System.out.println("aaaaa");
+    }//GEN-LAST:event_suspenseRActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -161,9 +202,12 @@ public class CadUser extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
+        for (javax.swing.UIManager.LookAndFeelInfo infos : javax.swing.UIManager.getInstalledLookAndFeels())
+            System.out.println(infos);
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Windows".equals(info.getName())) {
+                System.out.println(info);
+                if ("FlatLightLaf".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -179,8 +223,10 @@ public class CadUser extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton acaoR;
     private javax.swing.JLabel background;
     private javax.swing.JButton cadastroB;
+    private javax.swing.JRadioButton comediaR;
     private javax.swing.JTextField cpfF;
     private javax.swing.JTextField emailF;
     private javax.swing.JComboBox<String> genFav1CB;
@@ -190,7 +236,26 @@ public class CadUser extends javax.swing.JFrame {
     private javax.swing.JButton menu;
     private javax.swing.JFormattedTextField nascimentoF;
     private javax.swing.JTextField nomeF;
+    private javax.swing.JRadioButton romanceR;
     private javax.swing.JPasswordField senhaF;
     private javax.swing.JTextField sobrenomeF;
+    private javax.swing.JRadioButton suspenseR;
+    private javax.swing.JRadioButton terrorR;
     // End of variables declaration//GEN-END:variables
+    private boolean select() {
+        JRadioButton[] aa = new JRadioButton[5];
+        aa[0] = acaoR;
+        aa[1] = comediaR;
+        aa[2] = romanceR;
+        aa[3] = suspenseR;
+        aa[4] = terrorR;
+        int i=0;
+        for (JRadioButton a : aa) {
+            if (a.isSelected())
+                i++;
+            if (i==2)
+                return false;
+        }
+        return true;
+    }
 }

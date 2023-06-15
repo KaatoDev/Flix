@@ -4,6 +4,7 @@
  */
 package flix.frames;
 
+import com.formdev.flatlaf.FlatLightLaf;
 import flix.enums.GeneroFilme;
 
 import javax.swing.*;
@@ -23,6 +24,7 @@ public class EditFilme1 extends javax.swing.JFrame {
      */
     public EditFilme1() {
         super("(Usuário: " + usuario.getNome() + ") MyImagePro - Cadastro de filmes");
+        FlatLightLaf.setup();
         initComponents();
     }
 
@@ -33,6 +35,7 @@ public class EditFilme1 extends javax.swing.JFrame {
      */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        FlatLightLaf.setup();
 
         jPanel1 = new javax.swing.JPanel();
         nomeF = new javax.swing.JTextField();

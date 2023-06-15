@@ -4,15 +4,18 @@
  */
 package flix.frames;
 
+import com.formdev.flatlaf.FlatLightLaf;
 import flix.enums.Classificacao;
 import flix.enums.Filtro;
 import flix.enums.GeneroFilme;
 
 import javax.swing.*;
+
 import java.util.HashMap;
 
 import static flix.Main.usuario;
 import static flix.enums.Filtro.*;
+import static flix.enums.Filtro.KID;
 import static flix.util.DbManager.getIdFrom;
 import static flix.util.Manager.*;
 
@@ -27,7 +30,9 @@ public class Filmes extends javax.swing.JFrame {
      */
     public Filmes() {
         super("(Usuário: " + usuario.getNome() + " ) MyImagePro - Catálogo de filmes");
+        FlatLightLaf.setup();
         initComponents();
+        filmesT.setAutoCreateRowSorter(true);
     }
 
     /**
@@ -59,7 +64,7 @@ public class Filmes extends javax.swing.JFrame {
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        sairB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon2.png"))); // NOI18N
+        sairB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/others/icon2.png"))); // NOI18N
         sairB.setBorder(null);
         sairB.setBorderPainted(false);
         sairB.setContentAreaFilled(false);
@@ -83,47 +88,87 @@ public class Filmes extends javax.swing.JFrame {
         filmesT.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         filmesT.setFocusable(false);
         filmesT.setOpaque(false);
-        filmesT.setAutoCreateRowSorter(true);
+        filmesT.setRowSelectionAllowed(false);
+        filmesT.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(filmesT);
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 830, 540));
 
         generoCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Gênero", "Ação", "Comédia", "Romance", "Suspense", "Terror" }));
-        jPanel2.add(generoCB, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 60, -1, -1));
+        generoCB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                generoCBActionPerformed(evt);
+            }
+        });
+        jPanel2.add(generoCB, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 70, -1, -1));
 
         userCB.setModel(new javax.swing.DefaultComboBoxModel<>(users()));
-        jPanel2.add(userCB, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 60, 170, -1));
+        userCB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userCBActionPerformed(evt);
+            }
+        });
+        jPanel2.add(userCB, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, 170, -1));
 
         anoCB.setModel(new javax.swing.DefaultComboBoxModel<>(anos()));
-        jPanel2.add(anoCB, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 60, 70, -1));
+        anoCB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                anoCBActionPerformed(evt);
+            }
+        });
+        jPanel2.add(anoCB, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 70, 70, -1));
 
         classificacaoCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Livre", "10+", "12+", "14+", "16+", "18+" }));
-        jPanel2.add(classificacaoCB, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 60, -1, -1));
+        classificacaoCB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                classificacaoCBActionPerformed(evt);
+            }
+        });
+        jPanel2.add(classificacaoCB, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 70, -1, -1));
 
-        kidC.setText("Infantil");
-        jPanel2.add(kidC, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 60, -1, -1));
-        jPanel2.add(nomeF, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 220, 40));
+        kidC.setForeground(new java.awt.Color(255, 0, 0));
+        kidC.setBorder(null);
+        kidC.setContentAreaFilled(false);
+        kidC.setFocusPainted(false);
+        kidC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kidCActionPerformed(evt);
+            }
+        });
+        jPanel2.add(kidC, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 80, 20, 20));
 
-        filtrarB.setText("Filtrar");
+        nomeF.setBorder(null);
+        nomeF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nomeFActionPerformed(evt);
+            }
+        });
+        jPanel2.add(nomeF, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 210, 30));
+
+        filtrarB.setBorder(null);
+        filtrarB.setBorderPainted(false);
+        filtrarB.setContentAreaFilled(false);
         filtrarB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 filtrarBActionPerformed(evt);
             }
         });
-        jPanel2.add(filtrarB, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 10, 330, 40));
+        jPanel2.add(filtrarB, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 60, 80, 40));
 
-        limparB.setText("Limpar");
+        limparB.setBorder(null);
+        limparB.setBorderPainted(false);
+        limparB.setContentAreaFilled(false);
         limparB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 limparBActionPerformed(evt);
             }
         });
-        jPanel2.add(limparB, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 10, 70, 40));
+        jPanel2.add(limparB, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 0, 80, 40));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 30, 830, 650));
 
         background.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bbb2 catalogo.png"))); // NOI18N
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/backgrounds/bbb2 filmes.png"))); // NOI18N
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
@@ -138,35 +183,7 @@ public class Filmes extends javax.swing.JFrame {
     }//GEN-LAST:event_sairBActionPerformed
 
     private void filtrarBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filtrarBActionPerformed
-        HashMap<Filtro, String> ob = new HashMap<>();
-        if (!nomeF.getText().equals(""))
-            ob.put(NOME, nomeF.getText());
-        if (!userCB.getSelectedItem().toString().equals("Selecione o usuário"))
-            ob.put(USERID, String.valueOf(getIdFrom(userCB.getSelectedItem().toString())));
-        if (!anoCB.getSelectedItem().toString().equals("Ano"))
-            ob.put(ANO, anoCB.getSelectedItem().toString());
-        if (!generoCB.getSelectedItem().toString().equals("Gênero")) {
-            GeneroFilme g = (GeneroFilme) getE(generoCB.getSelectedItem().toString());
-            ob.put(GENERO, String.valueOf(g.id()));
-        }
-        if (!classificacaoCB.getSelectedItem().toString().equals("Todos")) {
-            Classificacao c = (Classificacao) getE(classificacaoCB.getSelectedItem().toString());
-            ob.put(CLASSIFICACAO, String.valueOf(c.id()-1));
-        }
-        if (kidC.isSelected())
-            ob.put(KID, "true");
-        if (ob.isEmpty()) filmesT.setModel(new javax.swing.table.DefaultTableModel(
-                    getFilmes(null),
-                    new String[]{
-                            "Nome", "Sinopse", "Ano", "Nota IMDB", "Nota público", "Gênero", "Subgênero", "Classificação", "Infantil", "Adicionado por"
-                    }
-            ));
-        else filmesT.setModel(new javax.swing.table.DefaultTableModel(
-                getFilmes(ob),
-                new String[]{
-                        "Nome", "Sinopse", "Ano", "Nota IMDB", "Nota público", "Gênero", "Subgênero", "Classificação", "Infantil", "Adicionado por"
-                }
-        ));
+        filtro();
     }//GEN-LAST:event_filtrarBActionPerformed
 
     private void limparBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limparBActionPerformed
@@ -177,6 +194,30 @@ public class Filmes extends javax.swing.JFrame {
         classificacaoCB.setSelectedItem(classificacaoCB.getItemAt(0));
         kidC.setSelected(false);
     }//GEN-LAST:event_limparBActionPerformed
+
+    private void userCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userCBActionPerformed
+        filtro();
+    }//GEN-LAST:event_userCBActionPerformed
+
+    private void anoCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anoCBActionPerformed
+        filtro();
+    }//GEN-LAST:event_anoCBActionPerformed
+
+    private void generoCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generoCBActionPerformed
+        filtro();
+    }//GEN-LAST:event_generoCBActionPerformed
+
+    private void classificacaoCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_classificacaoCBActionPerformed
+        filtro();
+    }//GEN-LAST:event_classificacaoCBActionPerformed
+
+    private void kidCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kidCActionPerformed
+        filtro();
+    }//GEN-LAST:event_kidCActionPerformed
+
+    private void nomeFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomeFActionPerformed
+        filtro();
+    }//GEN-LAST:event_nomeFActionPerformed
 
     /**
      * @param args the command line arguments
@@ -220,4 +261,35 @@ public class Filmes extends javax.swing.JFrame {
     private javax.swing.JButton sairB;
     private javax.swing.JComboBox<String> userCB;
     // End of variables declaration//GEN-END:variables
+    public void filtro() {
+        HashMap<Filtro, String> ob = new HashMap<>();
+        if (!nomeF.getText().equals(""))
+            ob.put(NOME, nomeF.getText());
+        if (!userCB.getSelectedItem().toString().equals("Selecione o usuário"))
+            ob.put(USERID, String.valueOf(getIdFrom(userCB.getSelectedItem().toString())));
+        if (!anoCB.getSelectedItem().toString().equals("Ano"))
+            ob.put(ANO, anoCB.getSelectedItem().toString());
+        if (!generoCB.getSelectedItem().toString().equals("Gênero")) {
+            GeneroFilme g = (GeneroFilme) getE(generoCB.getSelectedItem().toString());
+            ob.put(GENERO, String.valueOf(g.id()));
+        }
+        if (!classificacaoCB.getSelectedItem().toString().equals("Todos")) {
+            Classificacao c = (Classificacao) getE(classificacaoCB.getSelectedItem().toString());
+            ob.put(CLASSIFICACAO, String.valueOf(c.id()-1));
+        }
+        if (kidC.isSelected())
+            ob.put(KID, "true");
+        if (ob.isEmpty()) filmesT.setModel(new javax.swing.table.DefaultTableModel(
+                getFilmes(null),
+                new String[]{
+                        "Nome", "Sinopse", "Ano", "Nota IMDB", "Nota público", "Gênero", "Subgênero", "Classificação", "Infantil", "Adicionado por"
+                }
+        ));
+        else filmesT.setModel(new javax.swing.table.DefaultTableModel(
+                getFilmes(ob),
+                new String[]{
+                        "Nome", "Sinopse", "Ano", "Nota IMDB", "Nota público", "Gênero", "Subgênero", "Classificação", "Infantil", "Adicionado por"
+                }
+        ));
+    }
 }

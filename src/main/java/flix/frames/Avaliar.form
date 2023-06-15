@@ -35,7 +35,7 @@
     <Component class="javax.swing.JButton" name="menu">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/icon2.png"/>
+          <Image iconType="3" name="/others/icon2.png"/>
         </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="null"/>
@@ -95,22 +95,16 @@
           </Constraints>
         </Component>
         <Component class="javax.swing.JLabel" name="nota1">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="."/>
-          </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="260" y="130" width="30" height="-1"/>
+              <AbsoluteConstraints x="260" y="130" width="30" height="20"/>
             </Constraint>
           </Constraints>
         </Component>
         <Component class="javax.swing.JLabel" name="nota2">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="."/>
-          </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="350" y="130" width="30" height="-1"/>
+              <AbsoluteConstraints x="350" y="130" width="30" height="20"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -152,7 +146,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="filmesCBMouseClicked"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="filmesCBActionPerformed"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -169,7 +163,7 @@
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/bbb2 avaliar.png"/>
+          <Image iconType="3" name="/backgrounds/bbb2 avaliar.png"/>
         </Property>
       </Properties>
       <AuxValues>

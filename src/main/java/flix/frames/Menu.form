@@ -116,7 +116,7 @@
     <Component class="javax.swing.JButton" name="sair">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/icon2.png"/>
+          <Image iconType="3" name="/others/icon2.png"/>
         </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="null"/>
@@ -136,7 +136,7 @@
     <Component class="javax.swing.JLabel" name="background">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/bbb2 menu.png"/>
+          <Image iconType="3" name="/backgrounds/bbb2 menu.png"/>
         </Property>
       </Properties>
       <Constraints>

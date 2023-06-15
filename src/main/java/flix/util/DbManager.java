@@ -95,6 +95,7 @@ public class DbManager {
                     int id = rs.getInt("id");
                     String nome = rs.getString("nome"), sobrenome = rs.getString("sobrenome"),
                             email = rs.getString("email");
+                    boolean adm = rs.getBoolean("adm");
                     long cpf = rs.getLong("cpf");
                     Date nascimento = rs.getDate("nascimento");
                     int icon = rs.getInt("icon");
@@ -102,7 +103,7 @@ public class DbManager {
                     GeneroFilme genero1 = Arrays.stream(GeneroFilme.values()).toList().get(rs.getInt("genero1"));
                     GeneroFilme genero2 = Arrays.stream(GeneroFilme.values()).toList().get(rs.getInt("genero2"));
                     if (genero1 == genero2) genero2 = null;
-                    usuarios.add(new Usuario(id, cpf, nome, sobrenome, email, nascimento, genero, icon, genero1, genero2));
+                    usuarios.add(new Usuario(id, adm, cpf, nome, sobrenome, email, nascimento, genero, icon, genero1, genero2));
                 }
                 return usuarios;
             }
@@ -114,11 +115,12 @@ public class DbManager {
     public static List<Usuario> genUsuarios(String nome2, String email2) {
         String sql = "select * from usuarios";
         if (nome2 != null && email2 != null)
-            sql += " where nome like %" + nome2 + "%" + " or sobrenome like %" + nome2 + "% or email like " + email2 + "%";
-        if (nome2 != null && email2 == null)
-            sql += " where nome like %" + nome2 + "%" + " or sobrenome like %" + nome2 + "%";
-        if (nome2 == null && email2 != null)
-            sql += " where email like %" + email2 + "%";
+            sql += " where nome like '%" + nome2 + "%'" + " and email like '%" + email2 + "%' or sobrenome like '%" + nome2 + "%' and email like '%" + email2 + "%'";
+        else if (nome2 != null && email2 == null)
+            sql += " where nome like '%" + nome2 + "%'" + " or sobrenome like '%" + nome2 + "%'";
+        else if (nome2 == null && email2 != null)
+            sql += " where email like '%" + email2 + "%'";
+        System.out.println(sql);
         try (Connection c = Database.connect();
              PreparedStatement ps = c.prepareStatement(sql)) {
             try (ResultSet rs = ps.executeQuery()) {
@@ -127,6 +129,7 @@ public class DbManager {
                     int id = rs.getInt("id");
                     String nome = rs.getString("nome"), sobrenome = rs.getString("sobrenome"),
                             email = rs.getString("email");
+                    boolean adm = rs.getBoolean("adm");
                     long cpf = rs.getLong("cpf");
                     Date nascimento = rs.getDate("nascimento");
                     int icon = rs.getInt("icon");
@@ -134,7 +137,7 @@ public class DbManager {
                     GeneroFilme genero1 = Arrays.stream(GeneroFilme.values()).toList().get(rs.getInt("genero1"));
                     GeneroFilme genero2 = Arrays.stream(GeneroFilme.values()).toList().get(rs.getInt("genero2"));
                     if (genero1 == genero2) genero2 = null;
-                    usuarios.add(new Usuario(id, cpf, nome, sobrenome, email, nascimento, genero, icon, genero1, genero2));
+                    usuarios.add(new Usuario(id, adm, cpf, nome, sobrenome, email, nascimento, genero, icon, genero1, genero2));
                 }
                 return usuarios;
             }
@@ -215,12 +218,11 @@ public class DbManager {
             sb.append(f.sql()).append(filtros.get(f));
             switch (f) {
                 case GENERO -> sb.append(" and genero1 =").append(filtros.get(f));
-                case NOME -> sb.append("%");
+                case NOME -> sb.append("%'");
             }
         }
         String sql = "select (select count(notas.id) from notas where notas.filmeId = filmes.id) quantidade_notas, filmes.id, nome, sinopse, ano, userId, capa, icon, classificacao, kid, genero1, genero2, (select avg(notas.nota) from notas where notas.filmeId = filmes.id) nota_publico, filmes.nota nota_IMDB from notas inner join filmes where notas.filmeId = filmes.id "
                 + sb + " group by filmes.id order by nota_publico desc";
-        System.out.println(sql);
         try (Connection c = Database.connect();
              PreparedStatement ps = c.prepareStatement(sql)) {
             try (ResultSet rs = ps.executeQuery()) {
@@ -298,19 +300,17 @@ public class DbManager {
                 ps.setString(1, user);
                 try (ResultSet rs = ps.executeQuery()) {
                     rs.next();
-                    String pass = rs.getString("senha");
-                    int id = rs.getInt("id");
+                    int id = rs.getInt("id"), icone = rs.getInt("icon");
                     long cpf = rs.getLong("cpf");
-                    String nome = rs.getString("nome");
-                    String email = rs.getString("email");
-                    String sobrenome = rs.getString("sobrenome");
+                    boolean adm = rs.getBoolean("adm");
+                    String nome = rs.getString("nome"), email = rs.getString("email"), sobrenome = rs.getString("sobrenome"),
+                            pass = rs.getString("senha");
                     Date nascimento = rs.getDate("nascimento");
-                    int icone = rs.getInt("icon");
                     Genero genero = Arrays.stream(Genero.values()).toList().get(rs.getInt("genero"));
-                    GeneroFilme genero1 = Arrays.stream(GeneroFilme.values()).toList().get(rs.getInt("genero1"));
-                    GeneroFilme genero2 = Arrays.stream(GeneroFilme.values()).toList().get(rs.getInt("genero2"));
+                    GeneroFilme genero1 = Arrays.stream(GeneroFilme.values()).toList().get(rs.getInt("genero1")),
+                            genero2 = Arrays.stream(GeneroFilme.values()).toList().get(rs.getInt("genero2"));
                     if (genero1 == genero2) genero2 = null;
-                    return new Usuario(id, cpf, nome, sobrenome, email, nascimento, genero, icone, genero1, genero2);
+                    return new Usuario(id, adm, cpf, nome, sobrenome, email, nascimento, genero, icone, genero1, genero2);
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);

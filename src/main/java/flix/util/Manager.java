@@ -59,7 +59,7 @@ public class Manager {
     }
     public static String[] filmes(String nome) {
         List<String> a = new ArrayList<>();
-        a.add("Selecione o usuário");
+        a.add("Selecione o filme");
         if (nome == null)
             for (Filme w : genFilmes())
                 a.add(w.getNome());
@@ -89,9 +89,9 @@ public class Manager {
             a[i][2] = s.getAno();
             a[i][3] = s.getNota_IMDB();
             a[i][4] = s.getNota();
-            a[i][5] = s.getGenero1();
-            a[i][6] = s.getGenero2();
-            a[i][7] = s.getClassificacao();
+            a[i][5] = s.getGenero1().nome();
+            a[i][6] = s.getGenero2().nome();
+            a[i][7] = s.getClassificacao().nome();
             a[i][8] = s.isKid();
             a[i][9] = s.getUsuario();
             /*jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -103,11 +103,19 @@ public class Manager {
         }
         return a;
     }
-    public static Object[][] getUsuarios(String nome, String sobrenome) {
+    public static Object[][] getUsuarios(String nome, String email) {
         List<Usuario> usuarios;
-        if (nome == null && sobrenome == null)
-            usuarios = genUsuarios(nome, sobrenome);
-        else usuarios = genUsuarios();
+        if (nome == null && email == null)
+            usuarios = genUsuarios();
+        else {
+            if (nome.equals(""))
+                nome = null;
+            if (email.equals(""))
+                email = null;
+            usuarios = genUsuarios(nome, email);
+        }
+        if (usuarios == null)
+            return null;
         Object[][] a = new Object[usuarios.size()][8];
         for (int i=0; i<usuarios.size(); i++) {
             Usuario u = usuarios.get(i);
@@ -115,7 +123,7 @@ public class Manager {
             a[i][1] = u.getSobrenome();
             a[i][2] = u.getCpf();
             a[i][3] = u.getEmail();
-            a[i][4] = Period.between(u.getNascimento().toLocalDate(), LocalDate.now()).getYears() + "anos";
+            a[i][4] = Period.between(u.getNascimento().toLocalDate(), LocalDate.now()).getYears() + " anos";
             a[i][5] = u.getGenero();
             a[i][6] = u.getGenero1();
             a[i][7] = u.getGenero2();
@@ -129,7 +137,7 @@ public class Manager {
         return a;
     }
     public static Image icon(Class classe) {
-        return new ImageIcon(classe.getResource("/icon1.png")).getImage();
+        return new ImageIcon(classe.getResource("/others/icon1.png")).getImage();
     }
     public static Enum getE(String a) {
         for (Genero s : Genero.values())

@@ -4,9 +4,12 @@
  */
 package flix.frames;
 
+import com.formdev.flatlaf.FlatLightLaf;
+
 import javax.swing.*;
 
 import static flix.Main.login;
+import static flix.Main.usuario;
 import static flix.util.DbManager.exists;
 import static flix.util.DbManager.logar;
 import static flix.util.Manager.icon;
@@ -23,6 +26,7 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         super("(Usuário: " + nulo() + ") MyImagePro - Login");
+        FlatLightLaf.setup();
         initComponents();
     }
 
@@ -92,7 +96,7 @@ public class Login extends javax.swing.JFrame {
         getContentPane().add(panelLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 170, 290, 290));
 
         background.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bbb2 login.png"))); // NOI18N
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/backgrounds/bbb2 login.png"))); // NOI18N
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
@@ -101,29 +105,15 @@ public class Login extends javax.swing.JFrame {
 
 
     private void loginFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginFActionPerformed
-        // TODO add your handling code here:
+        loginD();
     }//GEN-LAST:event_loginFActionPerformed
 
     private void passFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passFActionPerformed
-        // TODO add your handling code here:
+        loginD();
     }//GEN-LAST:event_passFActionPerformed
 
     private void loginBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBActionPerformed
-        String nome = loginF.getText();
-        String senha = new String(passF.getPassword());
-        if (!exists(nome)) JOptionPane.showMessageDialog(null, "Usuário não existe.");
-        else if (!logar(nome, senha)) JOptionPane.showMessageDialog(null, "Senha inválida.");
-        else try {
-                login(nome, senha);
-                if (nome.equals("admin"))
-                    new MenuAdm().setVisible(true);
-                else new Menu().setVisible(true);
-                dispose();
-                JOptionPane.showMessageDialog(null, "Logado com sucesso!");
-            } catch (Exception e) {
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(null, "Usuário ou senha inválida!");
-            }
+        loginD();
     }//GEN-LAST:event_loginBActionPerformed
 
     /**
@@ -160,4 +150,21 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPanel panelLogin;
     private javax.swing.JPasswordField passF;
     // End of variables declaration//GEN-END:variables
+    private void loginD() {
+        String nome = loginF.getText();
+        String senha = new String(passF.getPassword());
+        if (!exists(nome)) JOptionPane.showMessageDialog(null, "Usuário não existe.");
+        else if (!logar(nome, senha)) JOptionPane.showMessageDialog(null, "Senha inválida.");
+        else try {
+                dispose();
+                login(nome, senha);
+                if (usuario.isAdm())
+                    new MenuAdm().setVisible(true);
+                else new Menu().setVisible(true);
+                JOptionPane.showMessageDialog(null, "Logado com sucesso!");
+            } catch (Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Usuário ou senha inválida!");
+            }
+    }
 }

@@ -4,6 +4,7 @@
  */
 package flix.frames;
 
+import com.formdev.flatlaf.FlatLightLaf;
 import flix.enums.GeneroFilme;
 
 import javax.swing.*;
@@ -24,6 +25,7 @@ public class CadFilme extends javax.swing.JFrame {
      */
     public CadFilme() {
         super("(Usuário: " + usuario.getNome() + ") MyImagePro - Cadastro de filmes");
+        FlatLightLaf.setup();
         initComponents();
     }
 
@@ -61,7 +63,7 @@ public class CadFilme extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(1280, 720));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        menu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon2.png"))); // NOI18N
+        menu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/others/icon2.png"))); // NOI18N
         menu.setBorder(null);
         menu.setBorderPainted(false);
         menu.setContentAreaFilled(false);
@@ -178,10 +180,11 @@ public class CadFilme extends javax.swing.JFrame {
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 30, 830, 650));
 
         background.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bbb2 catalogo.png"))); // NOI18N
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/backgrounds/bbb2 catalogo.png"))); // NOI18N
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cadastrarBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarBActionPerformed

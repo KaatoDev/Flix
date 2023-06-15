@@ -5,6 +5,7 @@
  */
 package flix.frames;
 
+import com.formdev.flatlaf.FlatLightLaf;
 import flix.Main;
 
 import javax.swing.*;
@@ -23,6 +24,7 @@ public class MenuAdm extends javax.swing.JFrame {
      */
     public MenuAdm() {
         super("(Usuário: " + usuario.getNome() + ") MyImagePro - Menu Admin");
+        FlatLightLaf.setup();
         initComponents();
     }
 
@@ -49,7 +51,7 @@ public class MenuAdm extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(1280, 720));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        sair5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon2.png"))); // NOI18N
+        sair5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/others/icon2.png"))); // NOI18N
         sair5.setBorder(null);
         sair5.setBorderPainted(false);
         sair5.setContentAreaFilled(false);
@@ -101,7 +103,7 @@ public class MenuAdm extends javax.swing.JFrame {
 
         getContentPane().add(menuP, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 150, 420, 340));
 
-        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bbb2 menuadm.png"))); // NOI18N
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/backgrounds/bbb2 menuadm.png"))); // NOI18N
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
