@@ -47,8 +47,6 @@ public class CadUser extends javax.swing.JFrame {
         nascimentoF = new javax.swing.JFormattedTextField();
         generoCB = new javax.swing.JComboBox<>();
         cadastroB = new javax.swing.JButton();
-        genFav1CB = new javax.swing.JComboBox<>();
-        genFav2CB = new javax.swing.JComboBox<>();
         suspenseR = new javax.swing.JRadioButton();
         comediaR = new javax.swing.JRadioButton();
         terrorR = new javax.swing.JRadioButton();
@@ -56,13 +54,14 @@ public class CadUser extends javax.swing.JFrame {
         acaoR = new javax.swing.JRadioButton();
         menu = new javax.swing.JButton();
         background = new javax.swing.JLabel();
+        genFav2CB = new javax.swing.JComboBox<>();
+        genFav1CB = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAlwaysOnTop(true);
         setFocusTraversalPolicyProvider(true);
         setIconImage(icon(this.getClass()));
         setLocationByPlatform(true);
-        setMaximumSize(new java.awt.Dimension(1280, 720));
         setMinimumSize(new java.awt.Dimension(1280, 720));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -104,19 +103,6 @@ public class CadUser extends javax.swing.JFrame {
             }
         });
         jPanel1.add(cadastroB, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 390, 110, 30));
-
-        genFav1CB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ação", "Comédia", "Romance", "Suspense", "Terror" }));
-        genFav1CB.setBorder(javax.swing.BorderFactory.createTitledBorder("Gênero favorito 1"));
-        genFav1CB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                genFav1CBActionPerformed(evt);
-            }
-        });
-        jPanel1.add(genFav1CB, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 300, 123, -1));
-
-        genFav2CB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ação", "Comédia", "Romance", "Suspense", "Terror" }));
-        genFav2CB.setBorder(javax.swing.BorderFactory.createTitledBorder("Gênero favorito 2"));
-        jPanel1.add(genFav2CB, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 240, 128, -1));
 
         suspenseR.setBorder(null);
         suspenseR.setContentAreaFilled(false);
@@ -160,14 +146,23 @@ public class CadUser extends javax.swing.JFrame {
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/backgrounds/bbb2 caduser.png"))); // NOI18N
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
+        genFav2CB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ação", "Comédia", "Romance", "Suspense", "Terror" }));
+        genFav2CB.setBorder(javax.swing.BorderFactory.createTitledBorder("Gênero favorito 2"));
+        getContentPane().add(genFav2CB, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 340, 128, -1));
+
+        genFav1CB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ação", "Comédia", "Romance", "Suspense", "Terror" }));
+        genFav1CB.setBorder(javax.swing.BorderFactory.createTitledBorder("Gênero favorito 1"));
+        genFav1CB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                genFav1CBActionPerformed(evt);
+            }
+        });
+        getContentPane().add(genFav1CB, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 390, 123, -1));
+
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-
-    private void genFav1CBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_genFav1CBActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_genFav1CBActionPerformed
 
     private void menuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuActionPerformed
         dispose();
@@ -192,6 +187,10 @@ public class CadUser extends javax.swing.JFrame {
     private void suspenseRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_suspenseRActionPerformed
         System.out.println("aaaaa");
     }//GEN-LAST:event_suspenseRActionPerformed
+
+    private void genFav1CBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_genFav1CBActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_genFav1CBActionPerformed
 
     /**
      * @param args the command line arguments

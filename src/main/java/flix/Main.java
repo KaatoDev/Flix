@@ -16,7 +16,6 @@ public class Main {
         System.out.println("Inicializando aplicação...");
         iniciarDatabase();
 
-        int s = genFilmes().size();
         new Login().setVisible(true);
     }
 
@@ -31,7 +30,7 @@ public class Main {
         try {
             usuario = getUsuario(nome, senha);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 }

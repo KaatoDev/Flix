@@ -150,6 +150,17 @@ public class Manager {
             if (s.nome().equals(a))
                 return s;
         return null;
+    }public static Enum getE(int a) {
+        for (Genero s : Genero.values())
+            if (s.id() == a)
+                return s;
+        for (GeneroFilme s : GeneroFilme.values())
+            if (s.id() == a)
+                return s;
+        for (Classificacao s : Classificacao.values())
+            if (s.id() == a)
+                return s;
+        return null;
     }
     public static String nulo() {
         if (usuario == null)

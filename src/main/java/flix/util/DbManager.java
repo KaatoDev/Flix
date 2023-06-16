@@ -306,7 +306,7 @@ public class DbManager {
                     String nome = rs.getString("nome"), email = rs.getString("email"), sobrenome = rs.getString("sobrenome"),
                             pass = rs.getString("senha");
                     Date nascimento = rs.getDate("nascimento");
-                    Genero genero = Arrays.stream(Genero.values()).toList().get(rs.getInt("genero"));
+                    Genero genero = (Genero) getE(String.valueOf(rs.getInt("genero")));
                     GeneroFilme genero1 = Arrays.stream(GeneroFilme.values()).toList().get(rs.getInt("genero1")),
                             genero2 = Arrays.stream(GeneroFilme.values()).toList().get(rs.getInt("genero2"));
                     if (genero1 == genero2) genero2 = null;
