@@ -7,12 +7,15 @@ package flix.frames;
 import com.formdev.flatlaf.FlatLightLaf;
 import flix.enums.Genero;
 import flix.enums.GeneroFilme;
+import flix.model.Usuario;
 
 import javax.swing.*;
+import java.awt.event.ItemEvent;
 import java.time.LocalDate;
 
 import static flix.Main.usuario;
 import static flix.util.DbManager.cadUsuario;
+import static flix.util.DbManager.genUsuarios;
 import static flix.util.Manager.*;
 
 /**
@@ -46,19 +49,16 @@ public class CadUser extends javax.swing.JFrame {
         senhaF = new javax.swing.JPasswordField();
         nascimentoF = new javax.swing.JFormattedTextField();
         generoCB = new javax.swing.JComboBox<>();
-        cadastroB = new javax.swing.JButton();
         suspenseR = new javax.swing.JRadioButton();
         comediaR = new javax.swing.JRadioButton();
         terrorR = new javax.swing.JRadioButton();
         romanceR = new javax.swing.JRadioButton();
         acaoR = new javax.swing.JRadioButton();
+        cadB = new javax.swing.JButton();
         menu = new javax.swing.JButton();
         background = new javax.swing.JLabel();
-        genFav2CB = new javax.swing.JComboBox<>();
-        genFav1CB = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setAlwaysOnTop(true);
         setFocusTraversalPolicyProvider(true);
         setIconImage(icon(this.getClass()));
         setLocationByPlatform(true);
@@ -94,40 +94,60 @@ public class CadUser extends javax.swing.JFrame {
         generoCB.setBorder(null);
         jPanel1.add(generoCB, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 340, 123, 30));
 
-        cadastroB.setBorder(null);
-        cadastroB.setBorderPainted(false);
-        cadastroB.setContentAreaFilled(false);
-        cadastroB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cadastroBActionPerformed(evt);
-            }
-        });
-        jPanel1.add(cadastroB, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 390, 110, 30));
-
         suspenseR.setBorder(null);
         suspenseR.setContentAreaFilled(false);
-        suspenseR.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                suspenseRActionPerformed(evt);
+        suspenseR.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                suspenseRItemStateChanged(evt);
             }
         });
         jPanel1.add(suspenseR, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 300, -1, -1));
 
         comediaR.setBorder(null);
         comediaR.setContentAreaFilled(false);
+        comediaR.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                comediaRItemStateChanged(evt);
+            }
+        });
         jPanel1.add(comediaR, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 320, -1, -1));
 
         terrorR.setBorder(null);
         terrorR.setContentAreaFilled(false);
+        terrorR.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                terrorRItemStateChanged(evt);
+            }
+        });
         jPanel1.add(terrorR, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 320, -1, -1));
 
         romanceR.setBorder(null);
         romanceR.setContentAreaFilled(false);
+        romanceR.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                romanceRItemStateChanged(evt);
+            }
+        });
         jPanel1.add(romanceR, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 340, -1, -1));
 
         acaoR.setBorder(null);
         acaoR.setContentAreaFilled(false);
+        acaoR.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                acaoRItemStateChanged(evt);
+            }
+        });
         jPanel1.add(acaoR, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 300, -1, -1));
+
+        cadB.setBorder(null);
+        cadB.setBorderPainted(false);
+        cadB.setContentAreaFilled(false);
+        cadB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cadBActionPerformed(evt);
+            }
+        });
+        jPanel1.add(cadB, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 390, 110, 30));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 90, 540, 440));
 
@@ -146,19 +166,6 @@ public class CadUser extends javax.swing.JFrame {
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/backgrounds/bbb2 caduser.png"))); // NOI18N
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        genFav2CB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ação", "Comédia", "Romance", "Suspense", "Terror" }));
-        genFav2CB.setBorder(javax.swing.BorderFactory.createTitledBorder("Gênero favorito 2"));
-        getContentPane().add(genFav2CB, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 340, 128, -1));
-
-        genFav1CB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ação", "Comédia", "Romance", "Suspense", "Terror" }));
-        genFav1CB.setBorder(javax.swing.BorderFactory.createTitledBorder("Gênero favorito 1"));
-        genFav1CB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                genFav1CBActionPerformed(evt);
-            }
-        });
-        getContentPane().add(genFav1CB, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 390, 123, -1));
-
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -169,28 +176,29 @@ public class CadUser extends javax.swing.JFrame {
         new MenuAdm().setVisible(true);
     }//GEN-LAST:event_menuActionPerformed
 
-    private void cadastroBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastroBActionPerformed
-        Genero genero = (Genero) getE(generoCB.getSelectedItem().toString());
-        GeneroFilme a1 = (GeneroFilme) getE(genFav1CB.getSelectedItem().toString()), a2 = (GeneroFilme) getE(genFav2CB.getSelectedItem().toString());
-        String a = nascimentoF.getText();
-        if (!cpf(cpfF.getText())) {
-            JOptionPane.showMessageDialog(null, "Insira um CPF válido!");
-            return;
-        }
-        int dia = Integer.parseInt(a.substring(0, a.indexOf("/"))),
-        mes = Integer.parseInt(a.substring(a.indexOf("/")+1, a.lastIndexOf("/"))),
-        ano = Integer.parseInt(a.substring(a.lastIndexOf("/")+1));
-        LocalDate ld = LocalDate.of(ano, mes, dia);
-        cadUsuario(nomeF.getText(), sobrenomeF.getText(), Long.parseLong(cpfF.getText()), emailF.getText(), new String(senhaF.getPassword()), ld, genero, a1, a2);
-    }//GEN-LAST:event_cadastroBActionPerformed
+    private void acaoRItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_acaoRItemStateChanged
+        select(evt, acaoR);
+    }//GEN-LAST:event_acaoRItemStateChanged
 
-    private void suspenseRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_suspenseRActionPerformed
-        System.out.println("aaaaa");
-    }//GEN-LAST:event_suspenseRActionPerformed
+    private void comediaRItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comediaRItemStateChanged
+        select(evt, comediaR);
+    }//GEN-LAST:event_comediaRItemStateChanged
 
-    private void genFav1CBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_genFav1CBActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_genFav1CBActionPerformed
+    private void romanceRItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_romanceRItemStateChanged
+        select(evt, romanceR);
+    }//GEN-LAST:event_romanceRItemStateChanged
+
+    private void suspenseRItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_suspenseRItemStateChanged
+        select(evt, suspenseR);
+    }//GEN-LAST:event_suspenseRItemStateChanged
+
+    private void terrorRItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_terrorRItemStateChanged
+        select(evt, terrorR);
+    }//GEN-LAST:event_terrorRItemStateChanged
+
+    private void cadBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadBActionPerformed
+        cadd();
+    }//GEN-LAST:event_cadBActionPerformed
 
     /**
      * @param args the command line arguments
@@ -224,12 +232,10 @@ public class CadUser extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton acaoR;
     private javax.swing.JLabel background;
-    private javax.swing.JButton cadastroB;
+    private javax.swing.JButton cadB;
     private javax.swing.JRadioButton comediaR;
     private javax.swing.JTextField cpfF;
     private javax.swing.JTextField emailF;
-    private javax.swing.JComboBox<String> genFav1CB;
-    private javax.swing.JComboBox<String> genFav2CB;
     private javax.swing.JComboBox<String> generoCB;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton menu;
@@ -241,7 +247,39 @@ public class CadUser extends javax.swing.JFrame {
     private javax.swing.JRadioButton suspenseR;
     private javax.swing.JRadioButton terrorR;
     // End of variables declaration//GEN-END:variables
-    private boolean select() {
+    private GeneroFilme[] selected() {
+        JRadioButton[] aa = new JRadioButton[5];
+        aa[0] = acaoR;
+        aa[1] = comediaR;
+        aa[2] = romanceR;
+        aa[3] = suspenseR;
+        aa[4] = terrorR;
+        int i=0;
+        for (JRadioButton a : aa)
+            if (a.isSelected())
+                i++;
+        if (i>0 && i<3) {
+            GeneroFilme[] s = new GeneroFilme[2];
+            int u=0;
+            for (JRadioButton a : aa)
+                if (a.isSelected()) {
+                    if (a.equals(acaoR)) {
+                        s[u++] = GeneroFilme.ACAO;
+                    } else if (a.equals(comediaR)) {
+                        s[u++] = GeneroFilme.COMEDIA;
+                    } else if (a.equals(romanceR)) {
+                        s[u++] = GeneroFilme.ROMANCE;
+                    } else if (a.equals(suspenseR)) {
+                        s[u++] = GeneroFilme.SUSPENSE;
+                    } else if (a.equals(terrorR)) {
+                        s[u++] = GeneroFilme.TERROR;
+                    }
+                }
+            return s;
+        }
+        return null;
+    }
+    private boolean isSelected() {
         JRadioButton[] aa = new JRadioButton[5];
         aa[0] = acaoR;
         aa[1] = comediaR;
@@ -252,9 +290,59 @@ public class CadUser extends javax.swing.JFrame {
         for (JRadioButton a : aa) {
             if (a.isSelected())
                 i++;
-            if (i==2)
-                return false;
+            if (i==3) {
+                return true;
+            }
         }
-        return true;
+        return false;
+    }
+    private void select(ItemEvent evt, JRadioButton aa) {
+        if (evt.getStateChange() == ItemEvent.SELECTED)
+            if (isSelected()) aa.setSelected(false);
+    }
+    private void limpar() {
+        nomeF.setText("");
+        sobrenomeF.setText("");
+        cpfF.setText("");
+        senhaF.setText("");
+        emailF.setText("");
+        nascimentoF.setText("");
+        generoCB.setSelectedItem(0);
+        acaoR.setSelected(false);
+        comediaR.setSelected(false);
+        romanceR.setSelected(false);
+        suspenseR.setSelected(false);
+        terrorR.setSelected(false);
+    }
+    private void cadd() {
+        Genero genero = (Genero) getE(generoCB.getSelectedItem().toString());
+        System.out.println(generoCB.getSelectedItem().toString());
+        String a = nascimentoF.getText();
+        GeneroFilme[] q = selected();
+        if (nomeF.getText().equals("") || sobrenomeF.getText().equals("") || cpfF.getText().equals("") || new String(senhaF.getPassword()).equals("")
+                || emailF.getText().equals("") || nascimentoF.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Há campos não preenchidos!");
+            return;
+        }
+        int dia = Integer.parseInt(a.substring(0, a.indexOf("/"))),
+                mes = Integer.parseInt(a.substring(a.indexOf("/")+1, a.lastIndexOf("/"))),
+                ano = Integer.parseInt(a.substring(a.lastIndexOf("/")+1));
+        if (cpfF.getText().length() != 11 || !cpf(cpfF.getText())) {
+            JOptionPane.showMessageDialog(null, "Insira um CPF válido!");
+            return;
+        } else if (ano < 1900 || ano > 2010) {
+            JOptionPane.showMessageDialog(null, "O ano inserido é inválido.");
+            return;
+        } else if (q == null || q[0] == null) {
+            JOptionPane.showMessageDialog(null, "Selecione pelo menos 1 gênero de filme.");
+            return;
+        } else for (Usuario s : genUsuarios()) if (s.getCpf() == Long.parseLong(cpfF.getText())) {
+            JOptionPane.showMessageDialog(null, "CPF já cadastrado.");
+            return;
+        }
+        LocalDate ld = LocalDate.of(ano, mes, dia);
+        if (cadUsuario(nomeF.getText(), sobrenomeF.getText(), Long.parseLong(cpfF.getText()), emailF.getText(), new String(senhaF.getPassword()), ld, genero, q[0], q[1])) {
+            limpar();
+        } else JOptionPane.showMessageDialog(null, "Este usuário já existe!");
     }
 }

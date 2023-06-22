@@ -67,20 +67,23 @@ public class Usuarios extends javax.swing.JFrame {
         jPanel2.setOpaque(false);
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        usuariosT.setAutoCreateRowSorter(true);
         usuariosT.setModel(new javax.swing.table.DefaultTableModel(
             getUsuarios(null, null),
             new String [] {
-                "Nome", "Sobrenome", "CPF", "Email", "Idade", "Gênero", "Gênero favorito 1", "Gênero favorito 2"
+                "Nome", "Sobrenome", "CPF", "Email", "Idade", "Gênero", "Gênero1 fav", "Gênero2 fav", "Admin"
             }
         ));
         usuariosT.setToolTipText("");
-        usuariosT.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
+        usuariosT.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         usuariosT.setColumnSelectionAllowed(true);
+        usuariosT.setDoubleBuffered(true);
         usuariosT.setEnabled(false);
         usuariosT.setFocusable(false);
+        usuariosT.setName(""); // NOI18N
         usuariosT.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(usuariosT);
-        usuariosT.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        resizeColumns();
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 830, 540));
 
@@ -145,7 +148,7 @@ public class Usuarios extends javax.swing.JFrame {
         usuariosT.setModel(new javax.swing.table.DefaultTableModel(
                 getUsuarios(null, null),
                 new String[]{
-                        "Nome", "Sobrenome", "CPF", "Email", "Idade", "Gênero", "Gênero favorito 1", "Gênero favorito 2"
+                        "Nome", "Sobrenome", "CPF", "Email", "Idade", "Gênero", "Gênero1 fav", "Gênero2 fav", "Admin"
                 }));
     }//GEN-LAST:event_limparBActionPerformed
 
@@ -201,14 +204,18 @@ public class Usuarios extends javax.swing.JFrame {
         if (nomeF.getText().equals("") && emailF.getText().equals("")) usuariosT.setModel(new javax.swing.table.DefaultTableModel(
                 getUsuarios(null, null),
                 new String[]{
-                        "Nome", "Sobrenome", "CPF", "Email", "Idade", "Gênero", "Gênero favorito 1", "Gênero favorito 2"
+                        "Nome", "Sobrenome", "CPF", "Email", "Idade", "Gênero", "Gênero1 fav", "Gênero2 fav", "Admin"
                 }
         ));
         else usuariosT.setModel(new javax.swing.table.DefaultTableModel(
                 getUsuarios(nomeF.getText(), emailF.getText()),
                 new String[]{
-                        "Nome", "Sobrenome", "CPF", "Email", "Idade", "Gênero", "Gênero favorito 1", "Gênero favorito 2"
+                        "Nome", "Sobrenome", "CPF", "Email", "Idade", "Gênero", "Gênero1 fav", "Gênero2 fav", "Admin"
                 }
         ));
+    }
+    private void resizeColumns() {
+        for (int i=0; i<usuariosT.getColumnCount(); i++)
+            usuariosT.getColumnModel().getColumn(i).sizeWidthToFit();
     }
 }

@@ -49,26 +49,31 @@ public class DbManager {
             return false;
         }
     }
-    public static Filme getFilme(String nome2) {
+    public static boolean avaliar(int filme, double nota) {
+        String sql = "insert into notas values (default, ?, ?)";
+        try (Connection c = Database.connect();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setDouble(1, nota);
+            ps.setInt(2, filme);
+            ps.execute();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public static int getFilmeId(String nome2) {
         String sql = "select * from filmes where nome=?";
         try (Connection c = Database.connect();
              PreparedStatement ps = c.prepareStatement(sql)) {
             ps.setString(1, nome2);
             try (ResultSet rs = ps.executeQuery()) {
                 rs.next();
-                int id = rs.getInt("id"), ano = rs.getInt("ano"), userId = rs.getInt("userId"), qtt = rs.getInt("quantidade_notas");
-                String nome = rs.getString("nome"), sinopse = rs.getString("sinopse"), capa = rs.getString("capa"), icon = rs.getString("icon");
-                double imdb = rs.getDouble("nota_IMDB"), nota = rs.getDouble("nota_publico");
-                boolean kid = rs.getBoolean("kid");
-                Classificacao classificacao = Arrays.stream(Classificacao.values()).toList().get(rs.getInt("classificacao"));
-                GeneroFilme genero1 = Arrays.stream(GeneroFilme.values()).toList().get(rs.getInt("genero1"));
-                GeneroFilme genero2 = Arrays.stream(GeneroFilme.values()).toList().get(rs.getInt("genero2"));
-                if (genero1 == genero2) genero2 = null;
-                return new Filme(id, nome, sinopse, imdb, nota, qtt, ano, getNome(userId), icon, capa, kid, classificacao, genero1, genero2);
+                return rs.getInt("id");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return 0;
         }
     }
     public static boolean exists(String user) {
@@ -99,9 +104,9 @@ public class DbManager {
                     long cpf = rs.getLong("cpf");
                     Date nascimento = rs.getDate("nascimento");
                     int icon = rs.getInt("icon");
-                    Genero genero = Arrays.stream(Genero.values()).toList().get(rs.getInt("genero"));
-                    GeneroFilme genero1 = Arrays.stream(GeneroFilme.values()).toList().get(rs.getInt("genero1"));
-                    GeneroFilme genero2 = Arrays.stream(GeneroFilme.values()).toList().get(rs.getInt("genero2"));
+                    Genero genero = (Genero) getE(rs.getInt("genero"), "genero");
+                    GeneroFilme genero1 = (GeneroFilme) getE(rs.getInt("genero1"), "generofilme");
+                    GeneroFilme genero2 = (GeneroFilme) getE(rs.getInt("genero2"), "generofilme");
                     if (genero1 == genero2) genero2 = null;
                     usuarios.add(new Usuario(id, adm, cpf, nome, sobrenome, email, nascimento, genero, icon, genero1, genero2));
                 }
@@ -133,9 +138,9 @@ public class DbManager {
                     long cpf = rs.getLong("cpf");
                     Date nascimento = rs.getDate("nascimento");
                     int icon = rs.getInt("icon");
-                    Genero genero = Arrays.stream(Genero.values()).toList().get(rs.getInt("genero"));
-                    GeneroFilme genero1 = Arrays.stream(GeneroFilme.values()).toList().get(rs.getInt("genero1"));
-                    GeneroFilme genero2 = Arrays.stream(GeneroFilme.values()).toList().get(rs.getInt("genero2"));
+                    Genero genero = (Genero) getE(rs.getInt("genero"), "genero");
+                    GeneroFilme genero1 = (GeneroFilme) getE(rs.getInt("genero1"), "generofilme");
+                    GeneroFilme genero2 = (GeneroFilme) getE(rs.getInt("genero2"), "generofilme");
                     if (genero1 == genero2) genero2 = null;
                     usuarios.add(new Usuario(id, adm, cpf, nome, sobrenome, email, nascimento, genero, icon, genero1, genero2));
                 }
@@ -165,9 +170,9 @@ public class DbManager {
     public static boolean cadUsuario(String nome, String sobrenome, long cpf, String email, String senha, LocalDate nascimento, Genero genero, GeneroFilme genero1, GeneroFilme genero2) {
         if (exists(nome) && exists(email))
             return false;
-        String sql = "insert into usuarios values(default, ?, ?, ?, ?, ?, ?, ?, 2, ?, null)";
+        String sql = "insert into usuarios values(default, false, ?, ?, ?, ?, ?, ?, ?, 2, ?, null)";
         if (genero2 != null)
-            sql = "insert into usuarios values(default, ?, ?, ?, ?, ?, ?, ?, 2, ?, ?)";
+            sql = "insert into usuarios values(default, false, ?, ?, ?, ?, ?, ?, ?, 2, ?, ?)";
         try (Connection c = Database.connect();
              PreparedStatement ps = c.prepareStatement(sql)) {
             ps.setString(1, nome);
@@ -181,7 +186,7 @@ public class DbManager {
             if (genero2 != null) ps.setInt(9, genero2.id());
 
             ps.execute();
-            JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
+            JOptionPane.showMessageDialog(null, "Usuário <" + nome + "> cadastrado com sucesso!");
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -189,7 +194,7 @@ public class DbManager {
         }
     }
     public static List<Filme> genFilmes() {
-        String sql = "select (select count(notas.id) from notas where notas.filmeId = filmes.id) quantidade_notas, filmes.id, nome, sinopse, ano, userId, capa, icon, classificacao, kid, genero1, genero2, (select avg(notas.nota) from notas where notas.filmeId = filmes.id) nota_publico, filmes.nota nota_IMDB from notas inner join filmes where notas.filmeId = filmes.id group by filmes.id order by nota_publico desc";
+        String sql = "select (select count(notas.id) from notas where notas.filmeId = filmes.id) quantidade_notas, nota_imdb, filmes.id, nome, sinopse, ano, userId, capa, icon, classificacao, kid, genero1, genero2, (select avg(notas.nota) from notas where notas.filmeId = filmes.id) nota_publico, nota_imdb from notas inner join filmes where notas.filmeId = filmes.id group by filmes.id order by nota_publico desc";
         try (Connection c = Database.connect();
              PreparedStatement ps = c.prepareStatement(sql)) {
             try (ResultSet rs = ps.executeQuery()) {
@@ -197,11 +202,11 @@ public class DbManager {
                 while (rs.next()) {
                     int id = rs.getInt("id"), ano = rs.getInt("ano"), userId = rs.getInt("userId"), qtt = rs.getInt("quantidade_notas");
                     String nome = rs.getString("nome"), sinopse = rs.getString("sinopse"), capa = rs.getString("capa"), icon = rs.getString("icon");
-                    double imdb = rs.getDouble("nota_IMDB"), nota = rs.getDouble("nota_publico");
+                    double imdb = rs.getDouble("nota_imdb"), nota = rs.getDouble("nota_publico");
                     boolean kid = rs.getBoolean("kid");
-                    Classificacao classificacao = Arrays.stream(Classificacao.values()).toList().get(rs.getInt("classificacao"));
-                    GeneroFilme genero1 = Arrays.stream(GeneroFilme.values()).toList().get(rs.getInt("genero1"));
-                    GeneroFilme genero2 = Arrays.stream(GeneroFilme.values()).toList().get(rs.getInt("genero2"));
+                    Classificacao classificacao = (Classificacao) getE(rs.getInt("classificacao"), "classificacao");
+                    GeneroFilme genero1 = (GeneroFilme) getE(rs.getInt("genero1"), "generofilme");
+                    GeneroFilme genero2 = (GeneroFilme) getE(rs.getInt("genero2"), "generofilme");
                     if (genero1 == genero2) genero2 = null;
                     filmes.add(new Filme(id, nome, sinopse, imdb, nota, qtt, ano, getNome(userId), icon, capa, kid, classificacao, genero1, genero2));
                 }
@@ -221,7 +226,7 @@ public class DbManager {
                 case NOME -> sb.append("%'");
             }
         }
-        String sql = "select (select count(notas.id) from notas where notas.filmeId = filmes.id) quantidade_notas, filmes.id, nome, sinopse, ano, userId, capa, icon, classificacao, kid, genero1, genero2, (select avg(notas.nota) from notas where notas.filmeId = filmes.id) nota_publico, filmes.nota nota_IMDB from notas inner join filmes where notas.filmeId = filmes.id "
+        String sql = "select (select count(notas.id) from notas where notas.filmeId = filmes.id) quantidade_notas, nota_imdb, filmes.id, nome, sinopse, ano, userId, capa, icon, classificacao, kid, genero1, genero2, (select avg(notas.nota) from notas where notas.filmeId = filmes.id) nota_publico, nota_imdb from notas inner join filmes where notas.filmeId = filmes.id "
                 + sb + " group by filmes.id order by nota_publico desc";
         try (Connection c = Database.connect();
              PreparedStatement ps = c.prepareStatement(sql)) {
@@ -230,11 +235,11 @@ public class DbManager {
                 while (rs.next()) {
                     int id = rs.getInt("id"), ano = rs.getInt("ano"), userId = rs.getInt("userId"), qtt = rs.getInt("quantidade_notas");
                     String nome = rs.getString("nome"), sinopse = rs.getString("sinopse"), capa = rs.getString("capa"), icon = rs.getString("icon");
-                    double imdb = rs.getDouble("nota_IMDB"), nota = rs.getDouble("nota_publico");
+                    double imdb = rs.getDouble("nota_imdb"), nota = rs.getDouble("nota_publico");
                     boolean kid = rs.getBoolean("kid");
-                    Classificacao classificacao = Arrays.stream(Classificacao.values()).toList().get(rs.getInt("classificacao"));
-                    GeneroFilme genero1 = Arrays.stream(GeneroFilme.values()).toList().get(rs.getInt("genero1"));
-                    GeneroFilme genero2 = Arrays.stream(GeneroFilme.values()).toList().get(rs.getInt("genero2"));
+                    Classificacao classificacao = (Classificacao) getE(rs.getInt("classificacao"), "classificacao");
+                    GeneroFilme genero1 = (GeneroFilme) getE(rs.getInt("genero1"), "generofilme");
+                    GeneroFilme genero2 = (GeneroFilme) getE(rs.getInt("genero2"), "generofilme");
                     if (genero1 == genero2) genero2 = null;
                     filmes.add(new Filme(id, nome, sinopse, imdb, nota, qtt, ano, getNome(userId), icon, capa, kid, classificacao, genero1, genero2));
                 }
@@ -306,9 +311,9 @@ public class DbManager {
                     String nome = rs.getString("nome"), email = rs.getString("email"), sobrenome = rs.getString("sobrenome"),
                             pass = rs.getString("senha");
                     Date nascimento = rs.getDate("nascimento");
-                    Genero genero = (Genero) getE(String.valueOf(rs.getInt("genero")));
-                    GeneroFilme genero1 = Arrays.stream(GeneroFilme.values()).toList().get(rs.getInt("genero1")),
-                            genero2 = Arrays.stream(GeneroFilme.values()).toList().get(rs.getInt("genero2"));
+                    Genero genero = (Genero) getE(rs.getInt("genero"), "genero");
+                    GeneroFilme genero1 = (GeneroFilme) getE(rs.getInt("genero1"), "generofilme"),
+                            genero2 = (GeneroFilme) getE(rs.getInt("genero2"), "generofilme");
                     if (genero1 == genero2) genero2 = null;
                     return new Usuario(id, adm, cpf, nome, sobrenome, email, nascimento, genero, icone, genero1, genero2);
                 }
@@ -335,26 +340,34 @@ public class DbManager {
     }
 
     public static boolean registrarFilme(Usuario user, String nome, String sinopse, String capa, String icon, int ano, double nota, String classificacao, boolean kid, GeneroFilme genero1, GeneroFilme genero2) {
-        String sql = "insert into filmes values(default, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        if (genero1 == genero2)
-            sql = "insert into filmes values(default, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, null)";
+        StringBuilder sql = new StringBuilder("insert into filmes values (default, ?, ?, ?");
+        if (!capa.equals("")) sql.append(", ?");
+        else sql.append(", null");
+        if (!icon.equals("")) sql.append(", ?");
+        else sql.append(", null");
+        sql.append(", ?, ?, ?");
+        if (kid) sql.append(", true");
+        else sql.append(", false");
+        sql.append(", ?");
+        if (genero1 != genero2) sql.append(", ?);");
+        else sql.append(", null)");
         try (Connection c = Database.connect();
-             PreparedStatement ps = c.prepareStatement(sql)) {
+             PreparedStatement ps = c.prepareStatement(sql.toString())) {
 
+            int i=4;
             ps.setInt(1, user.getId());
             ps.setString(2, nome);
             ps.setString(3, sinopse);
-            ps.setString(4, capa);
-            ps.setString(5, icon);
-            ps.setInt(6, ano);
-            ps.setDouble(7, nota);
+            if (!capa.equals("")) ps.setString(i++, capa);
+            if (!icon.equals("")) ps.setString(i++, icon);
+            ps.setInt(i++, ano);
+            ps.setDouble(i++, nota);
             Classificacao a = (Classificacao) getE(classificacao);
-            ps.setInt(8, a.id());
-            ps.setBoolean(9, kid);
-            ps.setInt(10, genero1.id());
-            if (genero1 != genero2) ps.setInt(11, genero2.id());
+            ps.setInt(i++, a.id());
+            ps.setInt(i++, genero1.id());
+            if (genero1 != genero2) ps.setInt(i, genero2.id());
             ps.execute();
-            return true;
+            return avaliar(getFilmeId(nome), nota);
         } catch (Exception e) {
             e.printStackTrace();
             return false;

@@ -78,62 +78,71 @@ public class CadFilme extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         nomeF.setText("Velozes e furiosos");
-        nomeF.setBorder(javax.swing.BorderFactory.createTitledBorder("Nome do filme"));
+        nomeF.setToolTipText("");
+        nomeF.setBorder(null);
         nomeF.setMaximumSize(new java.awt.Dimension(220, 50));
         nomeF.setMinimumSize(new java.awt.Dimension(220, 50));
         nomeF.setPreferredSize(new java.awt.Dimension(220, 50));
-        jPanel1.add(nomeF, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 50, -1, -1));
+        jPanel1.add(nomeF, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, 280, 30));
 
+        jScrollPane1.setBorder(null);
         jScrollPane1.setMaximumSize(new java.awt.Dimension(300, 150));
         jScrollPane1.setMinimumSize(new java.awt.Dimension(300, 150));
+        jScrollPane1.setOpaque(false);
         jScrollPane1.setPreferredSize(new java.awt.Dimension(300, 150));
 
         sinopseF.setColumns(20);
         sinopseF.setLineWrap(true);
         sinopseF.setRows(5);
-        sinopseF.setText("Um policial de Los Angeles, deverá decidir onde fica sua lealdade quando se apaixona pelo mundo que teve que destruir.");
-        sinopseF.setWrapStyleWord(true);
-        sinopseF.setBorder(javax.swing.BorderFactory.createTitledBorder("Sinopse do filme"));
+        sinopseF.setText("Um policial de Los Angeles, deverá decidir onde fica sua lealdade quando se apaixona pelo mundo que teve que destruir.\n");
+        sinopseF.setToolTipText("");
+        sinopseF.setBorder(null);
+        sinopseF.setCaretPosition(0);
         sinopseF.setMaximumSize(new java.awt.Dimension(250, 100));
         sinopseF.setMinimumSize(new java.awt.Dimension(250, 100));
         sinopseF.setPreferredSize(new java.awt.Dimension(250, 100));
         jScrollPane1.setViewportView(sinopseF);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 150, 720, 160));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 190, 710, 130));
 
+        jScrollPane2.setBorder(null);
         jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         jScrollPane2.setMaximumSize(new java.awt.Dimension(440, 60));
         jScrollPane2.setMinimumSize(new java.awt.Dimension(440, 60));
+        jScrollPane2.setOpaque(false);
         jScrollPane2.setPreferredSize(new java.awt.Dimension(440, 60));
 
         capaF.setColumns(20);
         capaF.setLineWrap(true);
         capaF.setRows(5);
-        capaF.setBorder(javax.swing.BorderFactory.createTitledBorder("Link da capa"));
+        capaF.setToolTipText("");
+        capaF.setBorder(null);
         capaF.setMaximumSize(new java.awt.Dimension(440, 60));
         capaF.setMinimumSize(new java.awt.Dimension(440, 60));
-        capaF.setPreferredSize(new java.awt.Dimension(440, 60));
         jScrollPane2.setViewportView(capaF);
 
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 470, 720, 50));
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 480, 710, 30));
 
+        jScrollPane3.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane3.setBorder(null);
         jScrollPane3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane3.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         jScrollPane3.setMaximumSize(new java.awt.Dimension(440, 60));
         jScrollPane3.setMinimumSize(new java.awt.Dimension(440, 60));
+        jScrollPane3.setOpaque(false);
         jScrollPane3.setPreferredSize(new java.awt.Dimension(440, 60));
 
         iconF.setColumns(20);
         iconF.setLineWrap(true);
         iconF.setRows(5);
-        iconF.setBorder(javax.swing.BorderFactory.createTitledBorder("Link do icon"));
+        iconF.setToolTipText("");
+        iconF.setBorder(null);
         jScrollPane3.setViewportView(iconF);
 
-        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 370, 720, 50));
+        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 390, 710, 30));
 
-        anoF.setBorder(javax.swing.BorderFactory.createTitledBorder("Ano de lançamento"));
+        anoF.setBorder(null);
         anoF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("YYYY"))));
         anoF.setToolTipText("");
         anoF.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
@@ -141,46 +150,47 @@ public class CadFilme extends javax.swing.JFrame {
         anoF.setMinimumSize(new java.awt.Dimension(130, 40));
         anoF.setPreferredSize(new java.awt.Dimension(130, 40));
         anoF.setVerifyInputWhenFocusTarget(false);
-        jPanel1.add(anoF, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 50, 130, 50));
+        jPanel1.add(anoF, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 80, 110, 30));
+        jPanel1.add(kidB, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 70, 110, 40));
 
-        kidB.setText("Filme infantil");
-        jPanel1.add(kidB, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 540, 110, 40));
-
-        notaF.setBorder(javax.swing.BorderFactory.createTitledBorder("Nota IMDB"));
+        notaF.setBorder(null);
         notaF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("0.0"))));
+        notaF.setToolTipText("");
         notaF.setMinimumSize(new java.awt.Dimension(105, 40));
         notaF.setPreferredSize(new java.awt.Dimension(150, 50));
-        jPanel1.add(notaF, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 50, 80, -1));
+        jPanel1.add(notaF, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 80, 110, 30));
 
         classCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Livre", "10+", "12+", "14+", "16+", "18+" }));
-        classCB.setBorder(javax.swing.BorderFactory.createTitledBorder("Classsificação etária"));
+        classCB.setToolTipText("");
+        classCB.setBorder(null);
         classCB.setMaximumSize(new java.awt.Dimension(125, 50));
         classCB.setMinimumSize(new java.awt.Dimension(125, 50));
         classCB.setPreferredSize(new java.awt.Dimension(125, 50));
-        jPanel1.add(classCB, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 50, -1, -1));
+        jPanel1.add(classCB, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 580, -1, 30));
 
         genCB2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ação", "Comédia", "Romance", "Suspense", "Terror" }));
-        genCB2.setBorder(javax.swing.BorderFactory.createTitledBorder("Gênero 2"));
-        jPanel1.add(genCB2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 540, 90, 40));
+        genCB2.setBorder(null);
+        jPanel1.add(genCB2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 580, 90, 30));
 
         genCB1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ação", "Comédia", "Romance", "Suspense", "Terror" }));
-        genCB1.setBorder(javax.swing.BorderFactory.createTitledBorder("Gênero 1"));
+        genCB1.setBorder(null);
         genCB1.setMaximumSize(new java.awt.Dimension(92, 43));
-        jPanel1.add(genCB1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 540, 90, 40));
+        jPanel1.add(genCB1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 580, 90, 30));
 
         cadastrarB.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        cadastrarB.setText("Cadastrar");
+        cadastrarB.setBorderPainted(false);
+        cadastrarB.setContentAreaFilled(false);
         cadastrarB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cadastrarBActionPerformed(evt);
             }
         });
-        jPanel1.add(cadastrarB, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 570, 120, 42));
+        jPanel1.add(cadastrarB, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 570, 140, 40));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 30, 830, 650));
 
         background.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/backgrounds/bbb2 catalogo.png"))); // NOI18N
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/backgrounds/bbb2 cadfilme.png"))); // NOI18N
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
@@ -188,12 +198,16 @@ public class CadFilme extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cadastrarBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarBActionPerformed
+        if (nomeF.getText().equals("") || anoF.getText().equals("") || notaF.getText().equals("") || sinopseF.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Há campos não preenchidos.");
+            return;
+        }
         GeneroFilme a1 = (GeneroFilme) getE(genCB1.getSelectedItem().toString()), a2 = (GeneroFilme) getE(genCB1.getSelectedItem().toString());
         if (registrarFilme(usuario, nomeF.getText(), sinopseF.getText(), capaF.getText(), iconF.getText(), Integer.parseInt(anoF.getText()), Double.parseDouble(notaF.getText().replace(",", ".")), classCB.getSelectedItem().toString(), kidB.isSelected(), a1, a2)) {
             JOptionPane.showMessageDialog(null, "Filme <" + nomeF.getText() +  "> cadastrado com sucesso!");
             dispose();
             new Avaliar().setVisible(true);
-        }
+        } else JOptionPane.showMessageDialog(null, "Não foi possível cadastrar o filme!");
     }//GEN-LAST:event_cadastrarBActionPerformed
 
     private void menuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuActionPerformed

@@ -184,7 +184,8 @@ public class Dashboard extends javax.swing.JFrame {
                 return usuario.getGenero1().nome();
             }
             case 2 -> {
-                return usuario.getGenero2().nome();
+                if (usuario.getGenero2() == null) return "";
+                else return usuario.getGenero2().nome();
             }
         }
         return "erro";

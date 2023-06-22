@@ -79,6 +79,7 @@ public class Filmes extends javax.swing.JFrame {
         jPanel2.setOpaque(false);
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        filmesT.setAutoCreateRowSorter(true);
         filmesT.setModel(new javax.swing.table.DefaultTableModel(
             getFilmes(null),
             new String [] {
@@ -86,6 +87,7 @@ public class Filmes extends javax.swing.JFrame {
             }
         ));
         filmesT.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        filmesT.setDoubleBuffered(true);
         filmesT.setFocusable(false);
         filmesT.setOpaque(false);
         filmesT.setRowSelectionAllowed(false);

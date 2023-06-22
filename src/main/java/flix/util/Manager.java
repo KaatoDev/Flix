@@ -22,27 +22,31 @@ import static flix.util.DbManager.genUsuarios;
 
 public class Manager {
     public static boolean cpf(String cpf) {
-        String a = cpf.substring(0, 10);
-        int t=0, w=10, a1, a2;
-        for (int i=0; i<9; i++) {
-            t += Integer.parseInt(a.split("")[i]) * w--;
+        try {
+            String a = cpf.substring(0, 10);
+            int t = 0, w = 10, a1, a2;
+            for (int i = 0; i < 9; i++) {
+                t += Integer.parseInt(a.split("")[i]) * w--;
+            }
+            w = 10;
+            a1 = t % 11;
+            if (a1 == 1)
+                a1 = 0;
+            else if (a1 != 0)
+                a1 = 11 - a1;
+            t = 0;
+            for (int i = 1; i < 9; i++)
+                t += Integer.parseInt(a.split("")[i]) * w--;
+            t += a1 * w;
+            a2 = t % 11;
+            if (a2 == 1)
+                a2 = 0;
+            else if (a2 != 0)
+                a2 = 11 - a2;
+            return Integer.parseInt(String.valueOf(cpf.charAt(9))) == a1 && Integer.parseInt(String.valueOf(cpf.charAt(10))) == a2;
+        } catch (Exception e) {
+            return false;
         }
-        w=10;
-        a1 = t%11;
-        if (a1 == 1)
-            a1 = 0;
-        else if (a1 != 0)
-            a1 = 11-a1;
-        t=0;
-        for (int i=1; i<9; i++)
-            t += Integer.parseInt(a.split("")[i]) * w--;
-        t+= a1*w;
-        a2 = t%11;
-        if (a2 == 1)
-            a2 = 0;
-        else if (a2 != 0)
-            a2 = 11-a2;
-        return Integer.parseInt(String.valueOf(cpf.charAt(9))) == a1 && Integer.parseInt(String.valueOf(cpf.charAt(10))) == a2;
     }
     public static String[] users() {
         List<String> a = new ArrayList<>();
@@ -90,7 +94,8 @@ public class Manager {
             a[i][3] = s.getNota_IMDB();
             a[i][4] = s.getNota();
             a[i][5] = s.getGenero1().nome();
-            a[i][6] = s.getGenero2().nome();
+            if (s.getGenero2() != null)
+                a[i][6] = s.getGenero2().nome();
             a[i][7] = s.getClassificacao().nome();
             a[i][8] = s.isKid();
             a[i][9] = s.getUsuario();
@@ -116,7 +121,7 @@ public class Manager {
         }
         if (usuarios == null)
             return null;
-        Object[][] a = new Object[usuarios.size()][8];
+        Object[][] a = new Object[usuarios.size()][9];
         for (int i=0; i<usuarios.size(); i++) {
             Usuario u = usuarios.get(i);
             a[i][0] = u.getNome();
@@ -127,6 +132,8 @@ public class Manager {
             a[i][5] = u.getGenero();
             a[i][6] = u.getGenero1();
             a[i][7] = u.getGenero2();
+            if (u.isAdm()) a[i][8] = "Admin";
+            else a[i][8] = "Comum";
             /*jTable1.setModel(new javax.swing.table.DefaultTableModel(
                     getFilmes(),
                     new String [] {
@@ -141,25 +148,32 @@ public class Manager {
     }
     public static Enum getE(String a) {
         for (Genero s : Genero.values())
-            if (s.nome().equals(a))
+            if (s.nome().equals(a) || s.toString().equals(a))
                 return s;
         for (GeneroFilme s : GeneroFilme.values())
-            if (s.nome().equals(a))
+            if (s.nome().equals(a) || s.toString().equals(a))
                 return s;
         for (Classificacao s : Classificacao.values())
-            if (s.nome().equals(a))
+            if (s.nome().equals(a) || s.toString().equals(a))
                 return s;
         return null;
-    }public static Enum getE(int a) {
-        for (Genero s : Genero.values())
-            if (s.id() == a)
-                return s;
-        for (GeneroFilme s : GeneroFilme.values())
-            if (s.id() == a)
-                return s;
-        for (Classificacao s : Classificacao.values())
-            if (s.id() == a)
-                return s;
+    }
+    public static Enum getE(int a, String enu) {
+        switch (enu.toLowerCase()) {
+            case "genero" -> {
+                for (Genero s : Genero.values())
+                    if (s.id() == a)
+                        return s;
+            } case "generofilme" -> {
+                for (GeneroFilme s : GeneroFilme.values())
+                    if (s.id() == a)
+                        return s;
+            } case "classificacao" -> {
+                for (Classificacao s : Classificacao.values())
+                    if (s.id() == a)
+                        return s;
+            }
+        }
         return null;
     }
     public static String nulo() {

@@ -124,9 +124,18 @@ public class Avaliar extends javax.swing.JFrame {
     private void avaliarBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_avaliarBActionPerformed
         double nota = Double.parseDouble(notaF.getText().replace(",", "."));
         String nome = filmesCB.getSelectedItem().toString();
-        if (avaliar(filme(nome), nota))
+        if (avaliar(filme(nome), nota)) {
             JOptionPane.showMessageDialog(null, "Nota " + nota + " cadastrada");
-        else JOptionPane.showMessageDialog(null, "erro");
+            Filme a = filme(filmesCB.getSelectedItem().toString());
+            if (a !=null) {
+                nota1.setText(String.format("%.2f", a.getNota_IMDB()));
+                nota2.setText(String.format("%.2f", a.getNota()));
+            } else {
+                nota1.setText("");
+                nota2.setText("");
+            }
+            notaF.setText("");
+        } else JOptionPane.showMessageDialog(null, "erro");
     }//GEN-LAST:event_avaliarBActionPerformed
 
     private void procurarBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_procurarBActionPerformed
@@ -136,12 +145,13 @@ public class Avaliar extends javax.swing.JFrame {
     private void filmesCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filmesCBActionPerformed
         Filme a = filme(filmesCB.getSelectedItem().toString());
         if (a !=null) {
-            nota1.setText(String.valueOf(a.getNota_IMDB()));
-            nota2.setText(String.valueOf(a.getNota()));
+            nota1.setText(String.format("%.2f", a.getNota_IMDB()));
+            nota2.setText(String.format("%.2f", a.getNota()));
         } else {
             nota1.setText("");
             nota2.setText("");
         }
+        notaF.setText("");
     }//GEN-LAST:event_filmesCBActionPerformed
 
     /**
